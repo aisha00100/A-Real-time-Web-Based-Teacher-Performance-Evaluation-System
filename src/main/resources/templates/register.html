@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base :: layout(~{::section})">
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+
+</head>
+<body>
+    <section>
+        <div class="container p-4">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body p-4">
+                          
+
+                           <div class="text-center mb-3">
+                                <h2 class="fw-bold text-primary">TPES</h2>
+                            </div>
+                          <!-- الخطوة 2: إضافة الجملة -->
+                            <div class="text-center mb-4">
+                                <h4 class="fw-bold" style="color: #1c1e21;">Create a new account</h4>
+                                <p class="text-muted small">It's quick and easy.</p>
+                            </div>
+
+
+
+
+
+
+                          <div th:if="${param.error == 'USERNAME_EXISTS'}" class="alert alert-warning">
+    <strong>Username Not Available</strong><br>
+    This username is already taken. Please choose a different one.
+</div>
+                            <form action="/creatUser" method="post" target="_blank">
+                                <div class="mb-3">
+                                  
+                                    <input type="text" name="username" class="form-control" placeholder="User Name" autocomplete="off" list="none" required>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <input type="email" name="email" class="form-control" placeholder="Email"  autocomplete="off" required >
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <input type="password" name="password" class="form-control" placeholder="Password"   minlength="6" required  autocomplete="off" list="none">
+                                   
+                                </div>
+
+                                <div class="mb-3">
+                                    <input type="text" name="role" class="form-control" placeholder="Role" required>
+                                </div>
+                                
+                                 <button class="btn btn-primary w-100 py-2 fw-bold" style="font-size: 1rem;">
+                                    Sign Up
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    <div th:fragment="footer">
+  <footer style="
+    position: fixed;
+    bottom: 0;
+    left: 12px;
+     color: rgba(80, 80, 80, 0.95);
+    font-size: 0.9rem;
+    font-weight: 300;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-style: italic;
+    letter-spacing: 0.4px;
+    user-select: none;
+    line-height: 1;
+  ">
+    By Aisha Al-Salihi
+  </footer>
+</div>
+  
+    </section>
+ 
+</body>
+</html>

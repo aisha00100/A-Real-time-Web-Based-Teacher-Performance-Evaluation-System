@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base :: layout(~{::section})">
+<head>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+ rel="stylesheet" 
+integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-..." crossorigin="anonymous">
+
+  <!-- Optional: Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  
+</head>
+<body>
+   
+  
+
+<body>
+  <div main class="container my-4">
+    <section> <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-bg: #f8f9fa;
+            --border-color: #ffffff;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            direction: rtl;
+        }
+        .table-wrapper {
+   background-color: white;
+}
+        
+        .form-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background: rgb(255, 255, 255);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(206, 204, 204, 0.08);
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .form-header h1 {
+            color: var(--secondary-color);
+            font-weight: 700;
+        }
+      
+        
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+        
+        .form-control {
+            border-radius: 6px;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+        
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+        
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: rgba(255, 255, 255, 0);
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 6px;
+            transition: all 0.3s;
+            display: block;
+            margin: 30px auto 10px;
+            width: 200px;
+        }
+        
+        .btn-submit:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0);
+        }
+        
+        .date-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .date-field {
+            flex: 1;
+        }
+        
+        .required::after {
+            content: " *";
+            color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 15px;
+                margin: 15px;
+            }
+            
+            .date-group {
+                flex-direction: column;
+            }
+
+        }
+        
+        table {
+  direction: rtl;            /* تحديد اتجاه الجدول من اليمين لليسار */
+  border-collapse: collapse; /* دمج الحدود المشتركة بين الخلايا */
+}
+th, td {
+  border: 2px solid black;   /* حدود سميكة سوداء لكل خلية */
+  text-align: center;        /* محاذاة أفقيّة مركزية للنص */
+  vertical-align: middle;    /* محاذاة عمودية مركزية للنص */
+}
+.resume-table {
+  direction: rtl;
+  border-collapse: collapse;
+  width: 100%;
+
+ 
+}
+
+.resume-table th,
+.resume-table td {
+  border: 2px solid black;
+  text-align: center;
+  vertical-align: middle;
+  padding: 8px;
+ 
+ 
+}
+
+.resume-table th {
+  background-color:#fcffb9 !important;
+
+ 
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+     
+}
+
+    </style>
+    </section>
+   
+    
+      
+
+  <section id="teacher-profile-section" class="profile-card" th:object="${teacherProfile}">
+
+    
+    <div class="form-container">
+         
+     
+
+
+      
+
+  <h5 class="section-title"><u>البيانات الرئيسية :</u></h5>
+
+  <div class="d-flex justify-content-between text-end" style="gap: 25px; margin-top: 10px;margin-right: 10px;
+                    text-align: center;
+                    font-weight: 500;">
+    <div >
+      <strong>الجامعة:</strong>
+      <span style="display:inline-block; border-bottom:2px solid #000; min-width:200px; padding-bottom:5px;margin-right: 10px;
+                    text-align: center;
+                    font-weight: 500;">
+        <span th:text="${teacherProfile.university != null ? teacherProfile.university: '-'}"></span>
+      </span>
+    </div>
+
+    <div >
+      <strong>الكلية:</strong>
+      <span style="display:inline-block; border-bottom:2px solid #000; min-width:200px;
+                   padding-bottom:5px;
+                   margin-right: 10px;
+                    text-align: center;
+                    font-weight: 500; ">
+        <span th:text="${teacherProfile.college != null ? teacherProfile.college: '-'}"></span>
+      </span>
+    </div>
+
+    <div >
+      <strong>القسم/الفرع:</strong>
+      <span style="display:inline-block; border-bottom:2px solid #000; min-width:200px; padding-bottom:5px;margin-right: 10px;
+                    text-align: center;
+                    font-weight: 500;">
+        <span th:text="${teacherProfile.department != null ? teacherProfile.department: '-'}"></span>
+      </span>
+    </div>
+  </div>
+  <br>
+  <br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div class="table-wrapper">
+    <table class="table table-striped">
+        <thead class="resume-table">
+            <tr>
+               
+              <th>الاسم</th>
+                <th>اسم الاب</th>
+                <th>الجد</th>
+                <th>جد الاب</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td th:text="${teacherProfile.firstName != null ? teacherProfile.firstName : '-'}">-</td>
+                <td th:text="${teacherProfile.fatherName != null ? teacherProfile.fatherName : '-'}">-</td>
+                <td th:text="${teacherProfile.grandfatherName != null ? teacherProfile.grandfatherName : '-'}">-</td>
+                 <td th:text="${teacherProfile.greatGrandfatherName != null ? teacherProfile.greatGrandfatherName : '-'}">-</td>
+               
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+   <div class="table-wrapper">
+    <table class="table table-striped">
+        <thead class="resume-table">
+            <tr>
+        
+                 <th>اسم االام</th>
+                <th> اسم والد الام </th>
+                <th>اسم جد الاسم</th>
+                
+            </tr>
+           
+        </thead>
+        <tbody>
+            <tr>
+                 <td th:text="${teacherProfile.motherName != null ? teacherProfile.motherName: '-'}">-</td>
+                 <td th:text="${teacherProfile.motherFatherName != null ? teacherProfile.motherFatherName: '-'}">-</td>
+                 <td th:text="${teacherProfile.motherGrandfatherName != null ? teacherProfile.motherGrandfatherName: '-'}">-</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+
+
+        <!-- General card -->
+    
+      <div class="table-wrapper">
+    <table class="table table-striped">
+        <thead class="resume-table">
+            <tr>
+                <th>الجامعه</th>
+               <th>الكلية</th>
+             <th>القسم\الفرع</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td th:text="${teacherProfile.university != null ? teacherProfile.university : '-'}">-</td>
+                <td th:text="${teacherProfile.college != null ? teacherProfile.college: '-'}">-</td>
+                <td th:text="${teacherProfile.department != null ? teacherProfile.department: '-'}">-</td>
+                 
+                
+            </tr>
+        </tbody>
+    </table>
+</div>
+           
+
+      
+
+     
+       
+      <div class="table-wrapper">
+    <table class="table table-striped">
+        <thead class="resume-table">
+            <tr>
+                <th>رقم الجنسية/البطاقة الموحدة</th>
+                <th>السجل المدني</th>
+                <th>الصحيفة</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td th:text="${teacherProfile.nationalIdNumber != null ? teacherProfile.nationalIdNumber: '-'}">-</td>
+                <td th:text="${teacherProfile.civilRecord != null ? teacherProfile.civilRecord: '-'}">-</td>
+                <td th:text="${teacherProfile.pageNumber!= null ? teacherProfile.pageNumber: '-'}">-</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+     <div class="table-wrapper">
+    <table class="table table-striped">
+        <thead class="resume-table">
+            <tr>
+        
+                 <th>سنة الاصدار</th>
+                <th>شهر الاصدار</th>
+                <th>يوم الاصدار</th>
+                
+            </tr>
+           
+        </thead>
+        <tbody>
+            <tr>
+                 <td th:text="${teacherProfile.issueYear != null ? teacherProfile.issueYear: '-'}">-</td>
+                 <td th:text="${teacherProfile.issueMonth != null ? teacherProfile.issueMonth: '-'}">-</td>
+                 <td th:text="${teacherProfile.issueDay != null ? teacherProfile.issueDay: '-'}">-</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-wrapper">
+    <table class="table table-striped">
+        <thead class="resume-table">
+            <tr>
+        
+                 <th>القسم</th>
+                
+                
+            </tr>
+           
+        </thead>
+        <tbody>
+            <tr>
+                 <td th:text="${teacherProfile.departmentName != null ? teacherProfile.departmentName: '-'}">-</td>
+              
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<div class="table-wrapper">
+    <table class="table table-striped">
+        <thead class="resume-table">
+            <tr>
+                <th> الشهادة</th>
+                <th>رقم وتاريخ الامر الوزاري او الجامعي</th>
+                <th>شهر منح الشهادة</th>
+                <th>يوم منح الشهادة</th>
+             
+           
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td th:text="${teacherProfile.certificateType != null ? teacherProfile.certificateType : '-'}">-</td>
+                <td th:text="${teacherProfile.ministerialOrderNumber != null ? teacherProfile.ministerialOrderNumber : '-'}">-</td>
+                 <td th:text="${teacherProfile.certificateGrantMonth != null ? teacherProfile.certificateGrantMonth: '-'}">-</td>
+                  <td th:text="${teacherProfile.certificateGrantDay != null ? teacherProfile.certificateGrantDay: '-'}">-</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div class="table-wrapper">
+    <table class="table table-striped" >
+        <thead class="resume-table">
+            <tr>
+              
+                <th>البلد المانح</th>
+                <th>الجامعه</th>
+                <th>الكليه</th>
+                <th>القسم</th>
+           
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+             
+              
+                <td th:text="${teacherProfile.issuingCountry != null ? teacherProfile.issuingCountry : '-'}">-</td>
+                <td th:text="${teacherProfile.certificateCollege != null ? teacherProfile.certificateCollege : '-'}">-</td>
+                <td th:text="${teacherProfile.certificateDepartment != null ? teacherProfile.certificateDepartment : '-'}">-</td>
+                <td th:text="${teacherProfile.departmentName != null ? teacherProfile.departmentName: '-'}">-</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<div class="table-wrapper">
+    <table class="table table-striped">
+        <thead class="resume-table">
+            <tr>
+                <th>الاختصاص العام</th>
+                <th>الاختصاص الدقيق</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td th:text="${teacherProfile.generalSpecialization != null ? teacherProfile.generalSpecialization : '-'}">-</td>
+                <td th:text="${teacherProfile.detailedSpecialization != null ? teacherProfile.detailedSpecialization : '-'}">-</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div class="table-wrapper">
+    <table class="table table-striped" >
+        <thead class="resume-table">
+            <tr>
+                <th>اللقب العلمي</th>
+                <th>الجهة المانحة</th>
+                <th>السنة</th>
+                <th>الشهر</th>
+                <th>اليوم</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td th:text="${teacherProfile.academicTitle != null ? teacherProfile.academicTitle : '-'}">-</td>
+                <td th:text="${teacherProfile.titleGrantingInstitution != null ? teacherProfile.titleGrantingInstitution : '-'}">-</td>
+                <td th:text="${teacherProfile.titleYear != null ? teacherProfile.titleYear: '-'}">-</td>
+                <td th:text="${teacherProfile.titleMonth != null ? teacherProfile.titleMonth: '-'}">-</td>
+                <td th:text="${teacherProfile.titleDay != null ? teacherProfile.titleDay : '-'}">-</td>
+                
+                             
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div class="table-wrapper">
+    <table class="table table-striped">
+        <thead class="resume-table">
+            <tr>
+                <th>رقم الموديل</th>
+                <th>البريد الإلكتروني</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td th:text="${teacherProfile.modelNumber != null ? teacherProfile.modelNumber : '-'}">-</td>
+                <td th:text="${teacherProfile.email != null ? teacherProfile.email : '-'}">-</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+        <!-- System info 
+       
+          <div class="section-title"></div>
+          <div class="details">
+            <div class="label">تم الإنشاء</div>
+            <div class="val" th:text="${teacherProfile.createdAt != null ? #dates.format(teacherProfile.createdAt,'yyyy-MM-dd HH:mm') : '-'}">-</div>
+
+            <div class="label">آخر تحديث</div>
+            <div class="val" th:text="${teacherProfile.updatedAt != null ? #dates.format(teacherProfile.updatedAt,'yyyy-MM-dd HH:mm') : '-'}">-</div>
+
+          </div>-->
+       
+</div>
+      </main>
+
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+    crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-..." crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base :: layout(~{::section})">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+</head>
+<body>
+    <section>
+       
+          <div class="container p-4">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body p-4">
+                          
+                            <!-- عنوان Login -->
+                              <div class="text-center mb-3">
+                                <h2 class="fw-bold text-primary">TPES</h2>
+                            </div>
+                            <div class="text-center mb-4">
+                                <h4 class="fw-bold">Welcome Back</h4>
+                                <p class="text-muted">Login to your account</p>
+                            </div>
+<!-- رسالة الخطأ محسنة -->
+<div th:if="${param.error}" class="text-center py-2 mb-3" 
+     style="background-color: #ffebe8; border: 1px solid #dd3c10; color: #dd3c10; border-radius: 6px; padding: 12px;">
+    <div style="font-size: 14px; font-weight: 600;">Invalid Credentials</div>
+    <div style="font-size: 13px; margin-top: 2px;">Wrong username or password</div>
+</div>
+                            <form action="/perform-login" method="post" target="_blank">
+                                <div class="mb-3">
+                                    <input type="text" name="username" class="form-control py-1" 
+                                           placeholder="User Name" style="font-size: 1.1rem;">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <input type="password" name="password" class="form-control py-1" 
+                                           placeholder="Password" style="font-size: 1.1rem;">
+                                </div>
+                                
+<button type="submit" class="btn btn-primary w-100 py-2 fw-bold ">
+    Login
+</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                </div>    <div th:fragment="footer">
+  <footer style="
+    position: fixed;
+    bottom: 0;
+    left: 12px;
+     color: rgba(80, 80, 80, 0.95);
+    font-size: 0.9rem;
+    font-weight: 300;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-style: italic;
+    letter-spacing: 0.4px;
+    user-select: none;
+    line-height: 1;
+  ">
+    By Aisha Al-Salihi
+  </footer>
+</div>
+
+    </section>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

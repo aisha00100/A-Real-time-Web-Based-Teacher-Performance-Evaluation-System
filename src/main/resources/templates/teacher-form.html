@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base :: layout(~{::section})">
+<head>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+ rel="stylesheet" 
+integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+crossorigin="anonymous">
+
+ 
+</head>
+<body>
+   
+<section>
+  <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-bg: #f8f9fa;
+            --border-color: #dee2e6;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            direction: rtl;
+        }
+        
+        .form-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .form-header h1 {
+            color: var(--secondary-color);
+            font-weight: 700;
+        }
+        
+        .form-section {
+            background: var(--light-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--primary-color);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+        
+        .form-control {
+            border-radius: 6px;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+        
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+        
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 6px;
+            transition: all 0.3s;
+            display: block;
+            margin: 30px auto 10px;
+            width: 200px;
+        }
+        
+        .btn-submit:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .date-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .date-field {
+            flex: 1;
+        }
+        
+        .required::after {
+            content: " *";
+            color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 15px;
+                margin: 15px;
+            }
+            
+            .date-group {
+                flex-direction: column;
+            }
+
+        }
+    </style>
+
+
+    <div class="form-container">
+        <div class="form-header">
+            <h1>استمارة بيانات أعضاء هيئة التدريس</h1>
+            <p class="text-muted">يرجى تعبئة جميع الحقول المطلوبة</p>
+        </div>
+        
+        <form th:action="@{/teacher/form}" th:object="${teacherProfile}" method="post">
+            
+            <!-- البيانات الأساسية -->
+            <div class="form-section">
+                <div class="section-title">البيانات الأساسية</div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">الجامعة</label>
+                        <input type="text" th:field="*{university}" class="form-control" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">الكلية</label>
+                        <input type="text" th:field="*{college}" class="form-control" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">القسم/الفرع</label>
+                        <input type="text" th:field="*{department}" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- المعلومات الشخصية -->
+            <div class="form-section">
+                <div class="section-title">المعلومات الشخصية</div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">الاسم</label>
+                        <input type="text" th:field="*{firstName}" class="form-control" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">اسم الاب</label>
+                        <input type="text" th:field="*{fatherName}" class="form-control" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">اسم الجد</label>
+                        <input type="text" th:field="*{grandfatherName}" class="form-control" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">اسم جد الاب</label>
+                        <input type="text" th:field="*{greatGrandfatherName}" class="form-control" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">اللقب</label>
+                        <input type="text" th:field="*{familyName}" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- معلومات الأم -->
+            <div class="form-section">
+                <div class="section-title">معلومات الأم</div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">اسم الام</label>
+                        <input type="text" th:field="*{motherName}" class="form-control" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">اسم والد الام</label>
+                        <input type="text" th:field="*{motherFatherName}" class="form-control">
+                    </div>
+                     <div class="col-md-4 mb-3">
+                   <label class="form-label required">اسم جد الام</label>
+                        <input type="text" th:field="*{motherGrandfatherName}" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- معلومات الهوية -->
+            <div class="form-section">
+                <div class="section-title">معلومات الهوية</div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">رقم الجنسية او البطاقة الموحدة</label>
+                        <input type="text" th:field="*{nationalIdNumber}" class="form-control" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">السجل</label>
+                        <input type="text" th:field="*{civilRecord}" class="form-control">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">الصحيفة</label>
+                        <input type="text" th:field="*{pageNumber}" class="form-control">
+                    </div>
+                </div>
+                <div class="section-title">تاريخ الإصدار</div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">سنة الإصدار</label>
+                    
+                         <select th:field="*{issueYear}" class="form-control" required>
+                <option value=""style="display:none"></option>
+                <option th:each="year : ${#numbers.sequence(1980, T(java.time.Year).now().value)}" 
+                        th:value="${year}" 
+                        th:text="${year}">
+                </option>
+                </select>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required" >شهر الإصدار</label>
+                        <input type="number" th:field="*{issueMonth}" min="1" max="12"class="form-control"  >
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required" >يوم الإصدار</label>
+                        <input type="number" th:field="*{issueDay}" min="1" max="31"class="form-control" >
+                    </div>
+                </div>
+            </div>
+
+            <!-- القسم -->
+            <div class="form-section">
+                <div class="section-title">القسم</div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required">القسم</label>
+                        <input type="text" th:field="*{departmentName}" class="form-control" required>
+                    </div>
+                
+                </div>
+            </div>
+
+            <!-- الشهادة -->
+            <div class="form-section">
+                <div class="section-title">الشهادة</div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required">الشهادة</label>
+                        <input type="text" th:field="*{certificateType}" class="form-control" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required">رقم وتاريخ الامر الوزاري او الجامعي</label>
+                        <input type="text" th:field="*{ministerialOrderNumber}" class="form-control" required>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label required" >شهر منح الشهادة</label>
+                        <input type="number" th:field="*{certificateGrantMonth}" min="1" max="12" class="form-control" required>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label required ">يوم منح الشهادة</label>
+                        <input type="number" th:field="*{certificateGrantDay}" min="1" max="31" class="form-control"  required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- البلد المانح -->
+            <div class="form-section">
+                <div class="section-title">البلد المانح</div>
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label required">البلد المانح</label>
+                        <input type="text" th:field="*{issuingCountry}" class="form-control" required>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label required">الجامعة</label>
+                        <input type="text" th:field="*{certificateUniversity}" class="form-control" required>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label required">الكلية</label>
+                        <input type="text" th:field="*{certificateCollege}" class="form-control" required>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label required">القسم</label>
+                        <input type="text" th:field="*{certificateDepartment}" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- التخصص -->
+            <div class="form-section">
+                <div class="section-title">التخصص</div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required">الاختصاص العام</label>
+                        <input type="text" th:field="*{generalSpecialization}" class="form-control" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required">الاختصاص الدقيق</label>
+                        <input type="text" th:field="*{detailedSpecialization}" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- اللقب العلمي -->
+            <div class="form-section">
+                <div class="section-title">اللقب العلمي</div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">اللقب العلمي</label>
+                        <input type="text" th:field="*{academicTitle}" class="form-control" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">الجهة المانحة</label>
+                        <input type="text" th:field="*{titleGrantingInstitution}" class="form-control" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">السنة</label>
+                   
+                    <select th:field="*{issueYear}" class="form-control" required>
+                <option value=""style="display:none"></option>
+                <option th:each="year : ${#numbers.sequence(1980, T(java.time.Year).now().value)}" 
+                        th:value="${year}" 
+                        th:text="${year}">
+                </option>
+            </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">شهر</label>
+                        <input type="number" th:field="*{titleMonth}" min="1" max="12" class="form-control" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">اليوم</label>
+                        <input type="number" th:field="*{titleDay}" min="1" max="31"class="form-control" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- معلومات الاتصال -->
+            <div class="form-section">
+                <div class="section-title">معلومات الاتصال</div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required" >رقم الموديل</label>
+                        <input type="tel" th:field="*{modelNumber}" class="form-control" 
+           pattern="07[0-9]{8}" 
+           placeholder="07XXXXXXXX"
+           title="يجب أن يبدأ الرقم بـ 07 ويتكون من 10 أرقام"
+           required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required">البريد الالكتروني</label>
+                        <input type="email" th:field="*{email}" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">حفظ البيانات</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // JavaScript للتحقق من صحة النموذج
+        document.getElementById('teacherForm').addEventListener('submit', function(e) {
+            const requiredFields = this.querySelectorAll('input[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.classList.add('is-invalid');
+                } else {
+                    field.classList.remove('is-invalid');
+                }
+            });
+            
+            if (!isValid) {
+                e.preventDefault();
+                alert('⚠️ يرجى تعبئة جميع الحقول الإجبارية قبل إرسال النموذج');
+            }
+        });
+    </script>
+    <script>
+document.querySelector('input[type="tel"]').addEventListener('input', function(e) {
+    // إزالة أي مسافات أو أحرف غير رقمية
+    this.value = this.value.replace(/[^0-9]/g, '');
+});
+</script>
+</section>
+           
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+    crossorigin="anonymous"></script>
+</body>
+</html>
