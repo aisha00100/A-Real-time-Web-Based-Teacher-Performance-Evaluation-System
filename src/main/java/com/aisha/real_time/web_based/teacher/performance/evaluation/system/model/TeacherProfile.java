@@ -157,6 +157,11 @@ public class TeacherProfile {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt; // تاريخ التحديث
     
+
+
+
+
+
     // المنشئات
     public TeacherProfile() {
         this.createdAt = new Date();

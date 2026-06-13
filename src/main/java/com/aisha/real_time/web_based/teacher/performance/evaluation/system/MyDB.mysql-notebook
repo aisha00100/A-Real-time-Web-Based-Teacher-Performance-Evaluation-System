@@ -2,7 +2,7 @@
     "type": "MySQLNotebook",
     "version": "1.0",
     "caption": "DB Notebook",
-    "content": "SHOW DATABASES\nUSE mydb\nSHOW TABLES\nGRANT ALL PRIVILEGES ON MyDB.* TO 'root'@'localhost' IDENTIFIED BY 'Agh&%1423';\nFLUSH PRIVILEGES;\n\n\nSHOW GRANTS FOR 'root'@'localhost';\n\n\nUSE mydb\n\nSHOW TABLES\nSELECT * FROM users\nUSE mydb\nSELECT * FROM users\nUSE mydb\nSELECT * FROM users\n\nUSE mydb;\nSHOW TABLES;\nSELECT * FROM axis_first\n\nUSE mydb;\nSELECT * FROM axis_first\n\n",
+    "content": "USE mydb;\nshow TABLES\nSELECT * from users\n\nDELETE FROM axis_first WHERE id = 15;\n    \n\n\nDELETE FROM users WHERE id = 15;\nDELETE FROM axis_first WHERE id = 17;\nDELETE FROM axis_first WHERE id = 19;\nDELETE FROM axis_first WHERE id = 20;\nDELETE FROM axis_first WHERE id = 23;\nDELETE FROM axis_first WHERE id = 25;\nselect * from users\nselect * from axis_first\nDELETE FROM users WHERE id = 33;\nSELECT *from users\nDELETE FROM users WHERE id = 33;\n",
     "options": {
         "tabSize": 4,
         "indentSize": 4,
@@ -15,11 +15,11 @@
             {
                 "inSelectionMode": false,
                 "selectionStart": {
-                    "lineNumber": 26,
+                    "lineNumber": 20,
                     "column": 1
                 },
                 "position": {
-                    "lineNumber": 26,
+                    "lineNumber": 20,
                     "column": 1
                 }
             }
@@ -27,10 +27,10 @@
         "viewState": {
             "scrollLeft": 0,
             "firstPosition": {
-                "lineNumber": 19,
+                "lineNumber": 17,
                 "column": 1
             },
-            "firstPositionDeltaTop": 101
+            "firstPositionDeltaTop": 74
         },
         "contributionsState": {
             "editor.contrib.folding": {},
@@ -44,115 +44,13 @@
                 "end": 1,
                 "language": "mysql",
                 "result": {
-                    "type": "resultIds",
-                    "list": [
-                        "5a4915fb-4442-42d6-a474-ffdbb2db05bc"
-                    ]
-                },
-                "currentHeight": 352,
-                "currentSet": 1,
-                "statements": [
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 0,
-                            "length": 14
-                        },
-                        "contentStart": 0,
-                        "state": 3
-                    }
-                ]
-            },
-            "data": [
-                {
-                    "tabId": "2af38ad0-ff02-4866-b0a1-ff4ae2a8b139",
-                    "resultId": "5a4915fb-4442-42d6-a474-ffdbb2db05bc",
-                    "rows": [
-                        {
-                            "0": "hw-1"
-                        },
-                        {
-                            "0": "hw2"
-                        },
-                        {
-                            "0": "information_schema"
-                        },
-                        {
-                            "0": "mydb"
-                        },
-                        {
-                            "0": "mysql"
-                        },
-                        {
-                            "0": "performance_schema"
-                        },
-                        {
-                            "0": "phpmyadmin"
-                        },
-                        {
-                            "0": "springdb"
-                        },
-                        {
-                            "0": "std1"
-                        },
-                        {
-                            "0": "student"
-                        },
-                        {
-                            "0": "studentdata"
-                        },
-                        {
-                            "0": "test"
-                        },
-                        {
-                            "0": "test1"
-                        }
-                    ],
-                    "columns": [
-                        {
-                            "title": "Database",
-                            "field": "0",
-                            "dataType": {
-                                "type": 17,
-                                "characterMaximumLength": 65535,
-                                "flags": [
-                                    "BINARY",
-                                    "ASCII",
-                                    "UNICODE"
-                                ],
-                                "needsQuotes": true,
-                                "parameterFormatType": "OneOrZero"
-                            },
-                            "inPK": false,
-                            "nullable": false,
-                            "autoIncrement": false
-                        }
-                    ],
-                    "executionInfo": {
-                        "text": "OK, 13 records retrieved in 1.263ms"
-                    },
-                    "totalRowCount": 13,
-                    "hasMoreRows": false,
-                    "currentPage": 0,
-                    "index": 0,
-                    "sql": "SHOW DATABASES",
-                    "updatable": false
-                }
-            ]
-        },
-        {
-            "state": {
-                "start": 2,
-                "end": 2,
-                "language": "mysql",
-                "result": {
                     "type": "text",
                     "text": [
                         {
                             "type": 2,
                             "index": 0,
-                            "resultId": "69eb343b-4636-4595-a27c-84dcc11f1391",
-                            "content": "OK, 0 records retrieved in 0.57ms"
+                            "resultId": "d8ac2332-608d-4648-abc5-5bfafcb230be",
+                            "content": "OK, 0 records retrieved in 1.103ms"
                         }
                     ]
                 },
@@ -163,10 +61,10 @@
                         "delimiter": ";",
                         "span": {
                             "start": 0,
-                            "length": 8
+                            "length": 9
                         },
                         "contentStart": 0,
-                        "state": 3
+                        "state": 0
                     }
                 ]
             },
@@ -174,16 +72,16 @@
         },
         {
             "state": {
-                "start": 3,
-                "end": 3,
+                "start": 2,
+                "end": 2,
                 "language": "mysql",
                 "result": {
                     "type": "resultIds",
                     "list": [
-                        "ad6aecc0-3051-4eb1-ce41-37eb7aba76fc"
+                        "8f9079ca-ccf9-4ea3-9c8b-8ccd45550a8c"
                     ]
                 },
-                "currentHeight": 100.8125,
+                "currentHeight": 36,
                 "currentSet": 1,
                 "statements": [
                     {
@@ -199,9 +97,33 @@
             },
             "data": [
                 {
-                    "tabId": "2af38ad0-ff02-4866-b0a1-ff4ae2a8b139",
-                    "resultId": "ad6aecc0-3051-4eb1-ce41-37eb7aba76fc",
+                    "tabId": "c9d278f1-4e81-4907-e158-4b1243e3ada4",
+                    "resultId": "8f9079ca-ccf9-4ea3-9c8b-8ccd45550a8c",
                     "rows": [
+                        {
+                            "0": "axis_first"
+                        },
+                        {
+                            "0": "educational_activity"
+                        },
+                        {
+                            "0": "evaluation_files"
+                        },
+                        {
+                            "0": "penalty"
+                        },
+                        {
+                            "0": "scientific_activity"
+                        },
+                        {
+                            "0": "scientific_strength"
+                        },
+                        {
+                            "0": "teacher_profile"
+                        },
+                        {
+                            "0": "teacher_quality"
+                        },
                         {
                             "0": "users"
                         }
@@ -227,14 +149,299 @@
                         }
                     ],
                     "executionInfo": {
-                        "text": "OK, 1 record retrieved in 1.1ms"
+                        "text": "OK, 9 records retrieved in 5.384ms"
                     },
-                    "totalRowCount": 1,
+                    "totalRowCount": 9,
                     "hasMoreRows": false,
                     "currentPage": 0,
                     "index": 0,
-                    "sql": "SHOW TABLES",
+                    "sql": "show TABLES",
                     "updatable": false
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 3,
+                "end": 3,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "1967ae90-9353-4a9b-a52b-b969a952879d"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 19
+                        },
+                        "contentStart": 0,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "c9d278f1-4e81-4907-e158-4b1243e3ada4",
+                    "resultId": "1967ae90-9353-4a9b-a52b-b969a952879d",
+                    "rows": [
+                        {
+                            "0": 1,
+                            "1": "Admin@gmail.com",
+                            "2": "$2a$10$dwOtY29fquNuPdnyznusiuj9l4L8eSUvhrzGKjT5dujJus978wpUC",
+                            "3": "ROLE_ADMIN",
+                            "4": "Admin"
+                        },
+                        {
+                            "0": 2,
+                            "1": "Noor@gmail.com",
+                            "2": "$2a$10$EAxNqFljFfhoL0K3rIvMz.liArLZBUKvZx86ayfoME7yPlJk1KKES",
+                            "3": "ROLE_TEACHER",
+                            "4": "Noor"
+                        },
+                        {
+                            "0": 3,
+                            "1": "aisha@gmail.con",
+                            "2": "$2a$10$iZvXySPihiFFcvE4NrW7du8KQOMCAqxrR15uNU.PiHEmleiOGNtuK",
+                            "3": "ROLE_TEACHER",
+                            "4": "Aisha"
+                        },
+                        {
+                            "0": 7,
+                            "1": "aishaammar@gmail.com",
+                            "2": "$2a$10$8i4TK8rijCoN7iQ/KIACFOi9UIT.H2KJKcLl90DYBuRFhcLM5LB3C",
+                            "3": "ROLE_TEACHER",
+                            "4": "AishaAmmar"
+                        },
+                        {
+                            "0": 9,
+                            "1": "noorammar@gmail.com",
+                            "2": "$2a$10$y.txYdEEuWbKr.3hC/9UdeT2JSq4vr4Z0EcOztwBQVcukcyARfe2C",
+                            "3": "ROLE_TEACHER",
+                            "4": "NoorAmmar"
+                        },
+                        {
+                            "0": 10,
+                            "1": "maria101@gmail.com",
+                            "2": "$2a$10$GrgjBClJfouTSe.GqUD5XOXUShKMlfMl5FjPPW4aqV/9lcNScQjdG",
+                            "3": "ROLE_TEACHER",
+                            "4": "maria"
+                        },
+                        {
+                            "0": 15,
+                            "1": "eng.shaima1183@gmail.com",
+                            "2": "$2a$10$C1rVTR38bwT.Rc79sqpGbeLZ1G8tfUuCLdtyJrPAarmX5eEqCpRQy",
+                            "3": "ROLE_TEACHER",
+                            "4": "shaima"
+                        },
+                        {
+                            "0": 16,
+                            "1": "mina@gmail.com",
+                            "2": "$2a$10$qb.ZRooNui2UY3L3A0n6.eBGjW97ZAlio59bpt3QFt5vZ4XaHnGia",
+                            "3": "ROLE_TEACHER",
+                            "4": "Mina"
+                        },
+                        {
+                            "0": 17,
+                            "1": "ali@gmail.com",
+                            "2": "$2a$10$ZrN8VHEcwuD6XoT3lnpY1ODeNU16ALBhwmlKkymOsEdFj4w/4EjdS",
+                            "3": "ROLE_TEACHER",
+                            "4": "Ali Ahmed"
+                        },
+                        {
+                            "0": 19,
+                            "1": "jumana@gmil.com",
+                            "2": "$2a$10$ZnLCR51NIRpld4qjTpDbAuLaVb9yMZaTNvBbFRYgdp.HCNkUdDMFm",
+                            "3": "ROLE_TEACHER",
+                            "4": "jumana"
+                        },
+                        {
+                            "0": 20,
+                            "1": "howraa@gmail.com",
+                            "2": "$2a$10$ZiBkkvoxxC46UvC48j2Fq.VKKlgyhISeyzG8Jf1aQVl722qU8mYkO",
+                            "3": "ROLE_TEACHER",
+                            "4": "howraa"
+                        },
+                        {
+                            "0": 23,
+                            "1": "hjfsks@gmail.com",
+                            "2": "$2a$10$v1Au7GRv29JwQCDErBXJl./1JI70BOFh7TIUdmA4znfNQU6xiawP6",
+                            "3": "ROLE_TEACHER",
+                            "4": "gjhgj"
+                        },
+                        {
+                            "0": 25,
+                            "1": "zainab@gmail.com",
+                            "2": "$2a$10$BllIRmAqnkOGr9w39wwi6.TghYcexvcHKoI9LeerBmxgDYTAXZikq",
+                            "3": "ROLE_TEACHER",
+                            "4": "Zainab "
+                        },
+                        {
+                            "0": 26,
+                            "1": "zainabahmed@gmail.com",
+                            "2": "$2a$10$ypKL5WHC1WA/.LmLwJBqZ.Vtf5qlQ4T6JrIm59mD8L0irg8K.xfxO",
+                            "3": "ROLE_TEACHER",
+                            "4": "Zainab Ahmed"
+                        },
+                        {
+                            "0": 27,
+                            "1": "hjfskshjkhkjhk@gmail.com",
+                            "2": "$2a$10$Sx.X/Fk6qkj0YmbJJpjwSurvHHXlUTFpzN09BuzYtn1Q58ORwHaEe",
+                            "3": "ROLE_TEACHER",
+                            "4": "hjkjhkj"
+                        },
+                        {
+                            "0": 28,
+                            "1": "jjjjjj@gmail.com",
+                            "2": "$2a$10$2ACZi0bwTH.FdbjlNmdwKOYNpfi4xCGz6ef8ajfuO.niuvRNm3b3C",
+                            "3": "ROLE_TEACHER",
+                            "4": "jjjjjj"
+                        },
+                        {
+                            "0": 30,
+                            "1": "kkkk@gmail.com",
+                            "2": "$2a$10$GxzbKAgQluRZjH3PXmOT2eE48lwR6QsVuI0lzKlhZcV8KLluO03wy",
+                            "3": "ROLE_TEACHER",
+                            "4": "kkkk"
+                        },
+                        {
+                            "0": 32,
+                            "1": "noor25@gmail.com",
+                            "2": "$2a$10$dDf6f2I/oDyjH3Oc42zCxeMSq9lmByO.gdgdDfSVvByKtPiquGXNu",
+                            "3": "ROLE_TEACHER",
+                            "4": "noor26"
+                        },
+                        {
+                            "0": 33,
+                            "1": "AishaAmmarAbdalrhman@gmail.com",
+                            "2": "$2a$10$czbKirsv3m8P6insqCXKTu32RgYJBZqGWevajfOrVyC1i9ZoSqMhm",
+                            "3": "ROLE_TEACHER",
+                            "4": "Aisha Ammar Abdalrhman"
+                        },
+                        {
+                            "0": 36,
+                            "1": "AliHassan@gmail.com",
+                            "2": "$2a$10$pznBAAZe0u.5eEDUwNcKnOCT9VLeTgJBAOsYInYemIkTNhL85lh0y",
+                            "3": "ROLE_TEACHER",
+                            "4": "Ali  Hassan"
+                        },
+                        {
+                            "0": 37,
+                            "1": "AishaAishaAisah@gmail.com",
+                            "2": "$2a$10$we1W./uGf4C9GpS4SRc.5e.2NZpOvdCK7N6kg7X.xkkzuo3Y83po6",
+                            "3": "ROLE_TEACHER",
+                            "4": "AishaAishaAisha"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "id",
+                            "field": "0",
+                            "dataType": {
+                                "type": 5,
+                                "flags": [
+                                    "UNSIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 20,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INT8",
+                                    "SERIAL"
+                                ]
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": true
+                        },
+                        {
+                            "title": "email",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "password",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "role",
+                            "field": "3",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "username",
+                            "field": "4",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 21 records retrieved in 2.534ms"
+                    },
+                    "totalRowCount": 21,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT * from users",
+                    "updatable": true,
+                    "fullTableName": "users"
                 }
             ]
         },
@@ -247,15 +454,12 @@
                     "type": "text",
                     "text": [
                         {
-                            "type": 0,
+                            "type": 2,
                             "index": 0,
-                            "content": "MySQL Error (1034): Index for table 'db' is corrupt; try to repair it",
-                            "language": "ansi"
+                            "resultId": "80b0b1df-08de-4174-c523-279f03ad8858",
+                            "content": "OK, 0 records retrieved in 1.612ms"
                         }
-                    ],
-                    "executionInfo": {
-                        "text": ""
-                    }
+                    ]
                 },
                 "currentHeight": 28,
                 "currentSet": 1,
@@ -264,27 +468,18 @@
                         "delimiter": ";",
                         "span": {
                             "start": 0,
-                            "length": 79
+                            "length": 38
                         },
-                        "contentStart": 0,
+                        "contentStart": 2,
                         "state": 0
                     },
                     {
                         "delimiter": ";",
                         "span": {
-                            "start": 79,
-                            "length": 18
+                            "start": 38,
+                            "length": 6
                         },
-                        "contentStart": 80,
-                        "state": 0
-                    },
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 97,
-                            "length": 2
-                        },
-                        "contentStart": 96,
+                        "contentStart": 37,
                         "state": 3
                     }
                 ]
@@ -294,53 +489,231 @@
         {
             "state": {
                 "start": 8,
-                "end": 9,
+                "end": 8,
                 "language": "mysql",
                 "result": {
                     "type": "resultIds",
                     "list": [
-                        "ef48e197-9c92-4248-bd02-d9400a143763"
+                        "de1808cd-6bfa-4e47-a9cd-81815438b59e"
                     ]
                 },
-                "currentHeight": 171.015625,
+                "currentHeight": 36,
                 "currentSet": 1,
                 "statements": [
                     {
                         "delimiter": ";",
                         "span": {
                             "start": 0,
-                            "length": 35
+                            "length": 0
                         },
                         "contentStart": 0,
-                        "state": 0
-                    },
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 35,
-                            "length": 1
-                        },
-                        "contentStart": 34,
                         "state": 3
                     }
                 ]
             },
             "data": [
                 {
-                    "tabId": "2af38ad0-ff02-4866-b0a1-ff4ae2a8b139",
-                    "resultId": "ef48e197-9c92-4248-bd02-d9400a143763",
+                    "tabId": "c9d278f1-4e81-4907-e158-4b1243e3ada4",
+                    "resultId": "de1808cd-6bfa-4e47-a9cd-81815438b59e",
                     "rows": [
                         {
-                            "0": "GRANT ALL PRIVILEGES ON *.* TO `root`@`localhost` IDENTIFIED BY PASSWORD '*9B387EC78CBE5F390787523D3B49E97796D3DEC3' WITH GRANT OPTION"
+                            "0": 1,
+                            "1": "Admin@gmail.com",
+                            "2": "$2a$10$dwOtY29fquNuPdnyznusiuj9l4L8eSUvhrzGKjT5dujJus978wpUC",
+                            "3": "ROLE_ADMIN",
+                            "4": "Admin"
                         },
                         {
-                            "0": "GRANT ALL PRIVILEGES ON `mydb`.* TO `root`@`localhost`"
+                            "0": 10,
+                            "1": "maria101@gmail.com",
+                            "2": "$2a$10$GrgjBClJfouTSe.GqUD5XOXUShKMlfMl5FjPPW4aqV/9lcNScQjdG",
+                            "3": "ROLE_TEACHER",
+                            "4": "maria"
+                        },
+                        {
+                            "0": 15,
+                            "1": "eng.shaima1183@gmail.com",
+                            "2": "$2a$10$C1rVTR38bwT.Rc79sqpGbeLZ1G8tfUuCLdtyJrPAarmX5eEqCpRQy",
+                            "3": "ROLE_TEACHER",
+                            "4": "shaima"
+                        },
+                        {
+                            "0": 16,
+                            "1": "mina@gmail.com",
+                            "2": "$2a$10$qb.ZRooNui2UY3L3A0n6.eBGjW97ZAlio59bpt3QFt5vZ4XaHnGia",
+                            "3": "ROLE_TEACHER",
+                            "4": "Mina"
+                        },
+                        {
+                            "0": 17,
+                            "1": "ali@gmail.com",
+                            "2": "$2a$10$ZrN8VHEcwuD6XoT3lnpY1ODeNU16ALBhwmlKkymOsEdFj4w/4EjdS",
+                            "3": "ROLE_TEACHER",
+                            "4": "Ali Ahmed"
+                        },
+                        {
+                            "0": 19,
+                            "1": "jumana@gmil.com",
+                            "2": "$2a$10$ZnLCR51NIRpld4qjTpDbAuLaVb9yMZaTNvBbFRYgdp.HCNkUdDMFm",
+                            "3": "ROLE_TEACHER",
+                            "4": "jumana"
+                        },
+                        {
+                            "0": 20,
+                            "1": "howraa@gmail.com",
+                            "2": "$2a$10$ZiBkkvoxxC46UvC48j2Fq.VKKlgyhISeyzG8Jf1aQVl722qU8mYkO",
+                            "3": "ROLE_TEACHER",
+                            "4": "howraa"
+                        },
+                        {
+                            "0": 23,
+                            "1": "hjfsks@gmail.com",
+                            "2": "$2a$10$v1Au7GRv29JwQCDErBXJl./1JI70BOFh7TIUdmA4znfNQU6xiawP6",
+                            "3": "ROLE_TEACHER",
+                            "4": "gjhgj"
+                        },
+                        {
+                            "0": 25,
+                            "1": "zainab@gmail.com",
+                            "2": "$2a$10$BllIRmAqnkOGr9w39wwi6.TghYcexvcHKoI9LeerBmxgDYTAXZikq",
+                            "3": "ROLE_TEACHER",
+                            "4": "Zainab "
+                        },
+                        {
+                            "0": 26,
+                            "1": "zainabahmed@gmail.com",
+                            "2": "$2a$10$ypKL5WHC1WA/.LmLwJBqZ.Vtf5qlQ4T6JrIm59mD8L0irg8K.xfxO",
+                            "3": "ROLE_TEACHER",
+                            "4": "Zainab Ahmed"
+                        },
+                        {
+                            "0": 27,
+                            "1": "hjfskshjkhkjhk@gmail.com",
+                            "2": "$2a$10$Sx.X/Fk6qkj0YmbJJpjwSurvHHXlUTFpzN09BuzYtn1Q58ORwHaEe",
+                            "3": "ROLE_TEACHER",
+                            "4": "hjkjhkj"
+                        },
+                        {
+                            "0": 28,
+                            "1": "jjjjjj@gmail.com",
+                            "2": "$2a$10$2ACZi0bwTH.FdbjlNmdwKOYNpfi4xCGz6ef8ajfuO.niuvRNm3b3C",
+                            "3": "ROLE_TEACHER",
+                            "4": "jjjjjj"
+                        },
+                        {
+                            "0": 30,
+                            "1": "kkkk@gmail.com",
+                            "2": "$2a$10$GxzbKAgQluRZjH3PXmOT2eE48lwR6QsVuI0lzKlhZcV8KLluO03wy",
+                            "3": "ROLE_TEACHER",
+                            "4": "kkkk"
+                        },
+                        {
+                            "0": 32,
+                            "1": "noor25@gmail.com",
+                            "2": "$2a$10$dDf6f2I/oDyjH3Oc42zCxeMSq9lmByO.gdgdDfSVvByKtPiquGXNu",
+                            "3": "ROLE_TEACHER",
+                            "4": "noor26"
+                        },
+                        {
+                            "0": 33,
+                            "1": "AishaAmmarAbdalrhman@gmail.com",
+                            "2": "$2a$10$czbKirsv3m8P6insqCXKTu32RgYJBZqGWevajfOrVyC1i9ZoSqMhm",
+                            "3": "ROLE_TEACHER",
+                            "4": "Aisha Ammar Abdalrhman"
+                        },
+                        {
+                            "0": 36,
+                            "1": "AliHassan@gmail.com",
+                            "2": "$2a$10$pznBAAZe0u.5eEDUwNcKnOCT9VLeTgJBAOsYInYemIkTNhL85lh0y",
+                            "3": "ROLE_TEACHER",
+                            "4": "Ali  Hassan"
+                        },
+                        {
+                            "0": 37,
+                            "1": "AishaAishaAisah@gmail.com",
+                            "2": "$2a$10$we1W./uGf4C9GpS4SRc.5e.2NZpOvdCK7N6kg7X.xkkzuo3Y83po6",
+                            "3": "ROLE_TEACHER",
+                            "4": "AishaAishaAisha"
                         }
                     ],
                     "columns": [
                         {
-                            "title": "Grants for root@localhost",
+                            "title": "id",
                             "field": "0",
+                            "dataType": {
+                                "type": 5,
+                                "flags": [
+                                    "UNSIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 20,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INT8",
+                                    "SERIAL"
+                                ]
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": true
+                        },
+                        {
+                            "title": "email",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "password",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "role",
+                            "field": "3",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "username",
+                            "field": "4",
                             "dataType": {
                                 "type": 17,
                                 "characterMaximumLength": 65535,
@@ -358,41 +731,22 @@
                         }
                     ],
                     "executionInfo": {
-                        "text": "OK, 2 records retrieved in 0.45ms"
+                        "text": "OK, 17 records retrieved in 2.279ms"
                     },
-                    "totalRowCount": 2,
+                    "totalRowCount": 17,
                     "hasMoreRows": false,
                     "currentPage": 0,
                     "index": 0,
-                    "sql": "SHOW GRANTS FOR 'root'@'localhost'",
-                    "updatable": false
+                    "sql": "SELECT * from users",
+                    "updatable": true,
+                    "fullTableName": "users"
                 }
             ]
         },
         {
             "state": {
-                "start": 10,
-                "end": 10,
-                "language": "mysql",
-                "currentSet": 1,
-                "statements": [
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 0,
-                            "length": 0
-                        },
-                        "contentStart": 0,
-                        "state": 3
-                    }
-                ]
-            },
-            "data": []
-        },
-        {
-            "state": {
-                "start": 11,
-                "end": 12,
+                "start": 9,
+                "end": 9,
                 "language": "mysql",
                 "result": {
                     "type": "text",
@@ -400,8 +754,8 @@
                         {
                             "type": 2,
                             "index": 0,
-                            "resultId": "95cad9c2-80cd-454e-e60b-17d68aefb60a",
-                            "content": "OK, 0 records retrieved in 0.602ms"
+                            "resultId": "abede8b0-a323-4775-ab30-e7e714861567",
+                            "content": "OK, 1 row affected in 5.207ms"
                         }
                     ]
                 },
@@ -412,10 +766,106 @@
                         "delimiter": ";",
                         "span": {
                             "start": 0,
-                            "length": 9
+                            "length": 32
                         },
-                        "contentStart": 0,
-                        "state": 3
+                        "contentStart": 1,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 10,
+                "end": 10,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "421f0028-61f6-4e4b-c63c-efca93cd9fc2",
+                            "content": "OK, 0 records retrieved in 1.156ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 37
+                        },
+                        "contentStart": 1,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 11,
+                "end": 11,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "eeab3f15-ddb4-46e9-f181-8008887c2f3f",
+                            "content": "OK, 0 records retrieved in 9.497ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 37
+                        },
+                        "contentStart": 1,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 12,
+                "end": 12,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "d84b2c52-4f1a-4f56-cb5b-042ea7ad9300",
+                            "content": "OK, 0 records retrieved in 12.919ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 37
+                        },
+                        "contentStart": 1,
+                        "state": 0
                     }
                 ]
             },
@@ -427,65 +877,31 @@
                 "end": 13,
                 "language": "mysql",
                 "result": {
-                    "type": "resultIds",
-                    "list": [
-                        "89cba379-bfc2-4eb0-b2f4-6b6b3662c30b"
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "3086e0cf-c33e-442e-ede5-805760f8d770",
+                            "content": "OK, 0 records retrieved in 1.081ms"
+                        }
                     ]
                 },
-                "currentHeight": 100.8125,
+                "currentHeight": 28,
                 "currentSet": 1,
                 "statements": [
                     {
                         "delimiter": ";",
                         "span": {
                             "start": 0,
-                            "length": 11
+                            "length": 37
                         },
-                        "contentStart": 0,
-                        "state": 3
+                        "contentStart": 1,
+                        "state": 0
                     }
                 ]
             },
-            "data": [
-                {
-                    "tabId": "2af38ad0-ff02-4866-b0a1-ff4ae2a8b139",
-                    "resultId": "89cba379-bfc2-4eb0-b2f4-6b6b3662c30b",
-                    "rows": [
-                        {
-                            "0": "users"
-                        }
-                    ],
-                    "columns": [
-                        {
-                            "title": "Tables_in_mydb",
-                            "field": "0",
-                            "dataType": {
-                                "type": 17,
-                                "characterMaximumLength": 65535,
-                                "flags": [
-                                    "BINARY",
-                                    "ASCII",
-                                    "UNICODE"
-                                ],
-                                "needsQuotes": true,
-                                "parameterFormatType": "OneOrZero"
-                            },
-                            "inPK": false,
-                            "nullable": false,
-                            "autoIncrement": false
-                        }
-                    ],
-                    "executionInfo": {
-                        "text": "OK, 1 record retrieved in 0.598ms"
-                    },
-                    "totalRowCount": 1,
-                    "hasMoreRows": false,
-                    "currentPage": 0,
-                    "index": 0,
-                    "sql": "SHOW TABLES",
-                    "updatable": false
-                }
-            ]
+            "data": []
         },
         {
             "state": {
@@ -493,12 +909,44 @@
                 "end": 14,
                 "language": "mysql",
                 "result": {
-                    "type": "resultIds",
-                    "list": [
-                        "4e3c253b-ae82-47fd-bc18-165e3de83465"
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "36059c97-077a-43e3-caa4-3e746cf6bf6d",
+                            "content": "OK, 0 records retrieved in 1.151ms"
+                        }
                     ]
                 },
-                "currentHeight": 158.46875,
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 37
+                        },
+                        "contentStart": 1,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 15,
+                "end": 15,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "bd081d31-3422-45d7-f65e-c8580dd62d5e"
+                    ]
+                },
+                "currentHeight": 36,
                 "currentSet": 1,
                 "statements": [
                     {
@@ -514,29 +962,120 @@
             },
             "data": [
                 {
-                    "tabId": "2af38ad0-ff02-4866-b0a1-ff4ae2a8b139",
-                    "resultId": "4e3c253b-ae82-47fd-bc18-165e3de83465",
+                    "tabId": "c9d278f1-4e81-4907-e158-4b1243e3ada4",
+                    "resultId": "bd081d31-3422-45d7-f65e-c8580dd62d5e",
                     "rows": [
                         {
                             "0": 1,
-                            "1": "aishajust@gmail.com",
-                            "2": "1234",
-                            "3": "aisha",
-                            "4": ""
+                            "1": "Admin@gmail.com",
+                            "2": "$2a$10$dwOtY29fquNuPdnyznusiuj9l4L8eSUvhrzGKjT5dujJus978wpUC",
+                            "3": "ROLE_ADMIN",
+                            "4": "Admin"
                         },
                         {
-                            "0": 13,
-                            "1": "admin@gmail.com",
-                            "2": "123456789",
-                            "3": "admin",
-                            "4": ""
+                            "0": 10,
+                            "1": "maria101@gmail.com",
+                            "2": "$2a$10$GrgjBClJfouTSe.GqUD5XOXUShKMlfMl5FjPPW4aqV/9lcNScQjdG",
+                            "3": "ROLE_TEACHER",
+                            "4": "maria"
                         },
                         {
-                            "0": 14,
-                            "1": "",
-                            "2": "",
-                            "3": "",
-                            "4": ""
+                            "0": 16,
+                            "1": "mina@gmail.com",
+                            "2": "$2a$10$qb.ZRooNui2UY3L3A0n6.eBGjW97ZAlio59bpt3QFt5vZ4XaHnGia",
+                            "3": "ROLE_TEACHER",
+                            "4": "Mina"
+                        },
+                        {
+                            "0": 17,
+                            "1": "ali@gmail.com",
+                            "2": "$2a$10$ZrN8VHEcwuD6XoT3lnpY1ODeNU16ALBhwmlKkymOsEdFj4w/4EjdS",
+                            "3": "ROLE_TEACHER",
+                            "4": "Ali Ahmed"
+                        },
+                        {
+                            "0": 19,
+                            "1": "jumana@gmil.com",
+                            "2": "$2a$10$ZnLCR51NIRpld4qjTpDbAuLaVb9yMZaTNvBbFRYgdp.HCNkUdDMFm",
+                            "3": "ROLE_TEACHER",
+                            "4": "jumana"
+                        },
+                        {
+                            "0": 20,
+                            "1": "howraa@gmail.com",
+                            "2": "$2a$10$ZiBkkvoxxC46UvC48j2Fq.VKKlgyhISeyzG8Jf1aQVl722qU8mYkO",
+                            "3": "ROLE_TEACHER",
+                            "4": "howraa"
+                        },
+                        {
+                            "0": 23,
+                            "1": "hjfsks@gmail.com",
+                            "2": "$2a$10$v1Au7GRv29JwQCDErBXJl./1JI70BOFh7TIUdmA4znfNQU6xiawP6",
+                            "3": "ROLE_TEACHER",
+                            "4": "gjhgj"
+                        },
+                        {
+                            "0": 25,
+                            "1": "zainab@gmail.com",
+                            "2": "$2a$10$BllIRmAqnkOGr9w39wwi6.TghYcexvcHKoI9LeerBmxgDYTAXZikq",
+                            "3": "ROLE_TEACHER",
+                            "4": "Zainab "
+                        },
+                        {
+                            "0": 26,
+                            "1": "zainabahmed@gmail.com",
+                            "2": "$2a$10$ypKL5WHC1WA/.LmLwJBqZ.Vtf5qlQ4T6JrIm59mD8L0irg8K.xfxO",
+                            "3": "ROLE_TEACHER",
+                            "4": "Zainab Ahmed"
+                        },
+                        {
+                            "0": 27,
+                            "1": "hjfskshjkhkjhk@gmail.com",
+                            "2": "$2a$10$Sx.X/Fk6qkj0YmbJJpjwSurvHHXlUTFpzN09BuzYtn1Q58ORwHaEe",
+                            "3": "ROLE_TEACHER",
+                            "4": "hjkjhkj"
+                        },
+                        {
+                            "0": 28,
+                            "1": "jjjjjj@gmail.com",
+                            "2": "$2a$10$2ACZi0bwTH.FdbjlNmdwKOYNpfi4xCGz6ef8ajfuO.niuvRNm3b3C",
+                            "3": "ROLE_TEACHER",
+                            "4": "jjjjjj"
+                        },
+                        {
+                            "0": 30,
+                            "1": "kkkk@gmail.com",
+                            "2": "$2a$10$GxzbKAgQluRZjH3PXmOT2eE48lwR6QsVuI0lzKlhZcV8KLluO03wy",
+                            "3": "ROLE_TEACHER",
+                            "4": "kkkk"
+                        },
+                        {
+                            "0": 32,
+                            "1": "noor25@gmail.com",
+                            "2": "$2a$10$dDf6f2I/oDyjH3Oc42zCxeMSq9lmByO.gdgdDfSVvByKtPiquGXNu",
+                            "3": "ROLE_TEACHER",
+                            "4": "noor26"
+                        },
+                        {
+                            "0": 33,
+                            "1": "AishaAmmarAbdalrhman@gmail.com",
+                            "2": "$2a$10$czbKirsv3m8P6insqCXKTu32RgYJBZqGWevajfOrVyC1i9ZoSqMhm",
+                            "3": "ROLE_TEACHER",
+                            "4": "Aisha Ammar Abdalrhman"
+                        },
+                        {
+                            "0": 36,
+                            "1": "AliHassan@gmail.com",
+                            "2": "$2a$10$pznBAAZe0u.5eEDUwNcKnOCT9VLeTgJBAOsYInYemIkTNhL85lh0y",
+                            "3": "ROLE_TEACHER",
+                            "4": "Ali  Hassan"
+                        },
+                        {
+                            "0": 37,
+                            "1": "AishaAishaAisah@gmail.com",
+                            "2": "$2a$10$we1W./uGf4C9GpS4SRc.5e.2NZpOvdCK7N6kg7X.xkkzuo3Y83po6",
+                            "3": "ROLE_TEACHER",
+                            "4": "AishaAishaAisha"
                         }
                     ],
                     "columns": [
@@ -597,7 +1136,7 @@
                             "autoIncrement": false
                         },
                         {
-                            "title": "username",
+                            "title": "role",
                             "field": "3",
                             "dataType": {
                                 "type": 17,
@@ -615,7 +1154,7 @@
                             "autoIncrement": false
                         },
                         {
-                            "title": "role",
+                            "title": "username",
                             "field": "4",
                             "dataType": {
                                 "type": 17,
@@ -634,49 +1173,17 @@
                         }
                     ],
                     "executionInfo": {
-                        "text": "OK, 3 records retrieved in 0.499ms"
+                        "text": "OK, 16 records retrieved in 1.314ms"
                     },
-                    "totalRowCount": 3,
+                    "totalRowCount": 16,
                     "hasMoreRows": false,
                     "currentPage": 0,
                     "index": 0,
-                    "sql": "SELECT * FROM users",
+                    "sql": "select * from users",
                     "updatable": true,
                     "fullTableName": "users"
                 }
             ]
-        },
-        {
-            "state": {
-                "start": 15,
-                "end": 15,
-                "language": "mysql",
-                "result": {
-                    "type": "text",
-                    "text": [
-                        {
-                            "type": 2,
-                            "index": 0,
-                            "resultId": "bf29ce05-cc74-4c37-8a48-9f6e0db78590",
-                            "content": "OK, 0 records retrieved in 0.858ms"
-                        }
-                    ]
-                },
-                "currentHeight": 28,
-                "currentSet": 1,
-                "statements": [
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 0,
-                            "length": 8
-                        },
-                        "contentStart": 0,
-                        "state": 3
-                    }
-                ]
-            },
-            "data": []
         },
         {
             "state": {
@@ -686,554 +1193,10 @@
                 "result": {
                     "type": "resultIds",
                     "list": [
-                        "403783ae-f69c-4210-b092-0edb46e79a0d"
+                        "35e1f503-85f7-40ea-f991-7a28fc69e28b"
                     ]
                 },
-                "currentHeight": 216.125,
-                "currentSet": 1,
-                "statements": [
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 0,
-                            "length": 19
-                        },
-                        "contentStart": 0,
-                        "state": 3
-                    }
-                ]
-            },
-            "data": [
-                {
-                    "tabId": "2af38ad0-ff02-4866-b0a1-ff4ae2a8b139",
-                    "resultId": "403783ae-f69c-4210-b092-0edb46e79a0d",
-                    "rows": [
-                        {
-                            "0": 1,
-                            "1": "aishajust@gmail.com",
-                            "2": "1234",
-                            "3": "aisha",
-                            "4": ""
-                        },
-                        {
-                            "0": 13,
-                            "1": "admin@gmail.com",
-                            "2": "123456789",
-                            "3": "admin",
-                            "4": ""
-                        },
-                        {
-                            "0": 14,
-                            "1": "",
-                            "2": "",
-                            "3": "",
-                            "4": ""
-                        },
-                        {
-                            "0": 19,
-                            "1": "root@gmail.com",
-                            "2": "$2a$10$cqo/1LSoQHJ2UCqyOvzRw.Qsx2H7KnHGathIlRZOFyTTLDmktLa/y",
-                            "3": "root",
-                            "4": "ROLE_TEACHER"
-                        },
-                        {
-                            "0": 20,
-                            "1": "noor.gmail.com",
-                            "2": "$2a$10$tXLGvdCH38ks8cc71K.ldO4jXBcL7VRPSDy8jj2GE9PdmSes9NEhe",
-                            "3": "noor",
-                            "4": "ROLE_TEACHER"
-                        }
-                    ],
-                    "columns": [
-                        {
-                            "title": "id",
-                            "field": "0",
-                            "dataType": {
-                                "type": 5,
-                                "flags": [
-                                    "UNSIGNED",
-                                    "ZEROFILL"
-                                ],
-                                "numericPrecision": 20,
-                                "parameterFormatType": "OneOrZero",
-                                "synonyms": [
-                                    "INT8",
-                                    "SERIAL"
-                                ]
-                            },
-                            "inPK": true,
-                            "nullable": false,
-                            "autoIncrement": true
-                        },
-                        {
-                            "title": "email",
-                            "field": "1",
-                            "dataType": {
-                                "type": 17,
-                                "characterMaximumLength": 65535,
-                                "flags": [
-                                    "BINARY",
-                                    "ASCII",
-                                    "UNICODE"
-                                ],
-                                "needsQuotes": true,
-                                "parameterFormatType": "OneOrZero"
-                            },
-                            "inPK": false,
-                            "nullable": false,
-                            "autoIncrement": false
-                        },
-                        {
-                            "title": "password",
-                            "field": "2",
-                            "dataType": {
-                                "type": 17,
-                                "characterMaximumLength": 65535,
-                                "flags": [
-                                    "BINARY",
-                                    "ASCII",
-                                    "UNICODE"
-                                ],
-                                "needsQuotes": true,
-                                "parameterFormatType": "OneOrZero"
-                            },
-                            "inPK": false,
-                            "nullable": false,
-                            "autoIncrement": false
-                        },
-                        {
-                            "title": "username",
-                            "field": "3",
-                            "dataType": {
-                                "type": 17,
-                                "characterMaximumLength": 65535,
-                                "flags": [
-                                    "BINARY",
-                                    "ASCII",
-                                    "UNICODE"
-                                ],
-                                "needsQuotes": true,
-                                "parameterFormatType": "OneOrZero"
-                            },
-                            "inPK": false,
-                            "nullable": false,
-                            "autoIncrement": false
-                        },
-                        {
-                            "title": "role",
-                            "field": "4",
-                            "dataType": {
-                                "type": 17,
-                                "characterMaximumLength": 65535,
-                                "flags": [
-                                    "BINARY",
-                                    "ASCII",
-                                    "UNICODE"
-                                ],
-                                "needsQuotes": true,
-                                "parameterFormatType": "OneOrZero"
-                            },
-                            "inPK": false,
-                            "nullable": false,
-                            "autoIncrement": false
-                        }
-                    ],
-                    "executionInfo": {
-                        "text": "OK, 5 records retrieved in 1.075ms"
-                    },
-                    "totalRowCount": 5,
-                    "hasMoreRows": false,
-                    "currentPage": 0,
-                    "index": 0,
-                    "sql": "SELECT * FROM users",
-                    "updatable": true,
-                    "fullTableName": "users"
-                }
-            ]
-        },
-        {
-            "state": {
-                "start": 17,
-                "end": 17,
-                "language": "mysql",
-                "result": {
-                    "type": "text",
-                    "text": [
-                        {
-                            "type": 2,
-                            "index": 0,
-                            "resultId": "bb6cbe61-16a0-40bf-e242-64150abf9571",
-                            "content": "OK, 0 records retrieved in 0.722ms"
-                        }
-                    ]
-                },
-                "currentHeight": 28,
-                "currentSet": 1,
-                "statements": [
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 0,
-                            "length": 8
-                        },
-                        "contentStart": 0,
-                        "state": 3
-                    }
-                ]
-            },
-            "data": []
-        },
-        {
-            "state": {
-                "start": 18,
-                "end": 18,
-                "language": "mysql",
-                "result": {
-                    "type": "resultIds",
-                    "list": [
-                        "0058c761-fef8-4015-a0dd-305721fa8a62"
-                    ]
-                },
-                "currentHeight": 352,
-                "currentSet": 1,
-                "statements": [
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 0,
-                            "length": 19
-                        },
-                        "contentStart": 0,
-                        "state": 3
-                    }
-                ]
-            },
-            "data": [
-                {
-                    "tabId": "2af38ad0-ff02-4866-b0a1-ff4ae2a8b139",
-                    "resultId": "0058c761-fef8-4015-a0dd-305721fa8a62",
-                    "rows": [
-                        {
-                            "0": 1,
-                            "1": "aishajust@gmail.com",
-                            "2": "1234",
-                            "3": "aisha",
-                            "4": ""
-                        },
-                        {
-                            "0": 13,
-                            "1": "admin@gmail.com",
-                            "2": "123456789",
-                            "3": "admin",
-                            "4": ""
-                        },
-                        {
-                            "0": 14,
-                            "1": "",
-                            "2": "",
-                            "3": "",
-                            "4": ""
-                        },
-                        {
-                            "0": 19,
-                            "1": "root@gmail.com",
-                            "2": "$2a$10$cqo/1LSoQHJ2UCqyOvzRw.Qsx2H7KnHGathIlRZOFyTTLDmktLa/y",
-                            "3": "root",
-                            "4": "ROLE_TEACHER"
-                        },
-                        {
-                            "0": 20,
-                            "1": "noor.gmail.com",
-                            "2": "$2a$10$tXLGvdCH38ks8cc71K.ldO4jXBcL7VRPSDy8jj2GE9PdmSes9NEhe",
-                            "3": "noor",
-                            "4": "ROLE_TEACHER"
-                        },
-                        {
-                            "0": 21,
-                            "1": "yamam@gmail.com",
-                            "2": "$2a$10$.TdZDywblw35EVFL4FznQ.OuTNp.6G.jESnYCa4x6manGy73M.whq",
-                            "3": "Yamam",
-                            "4": "ROLE_TEACHER"
-                        },
-                        {
-                            "0": 23,
-                            "1": "mina@gmail.com",
-                            "2": "$2a$10$gyL7plUej6ljzlQ3wfhi2u9DBSE6.AAlIwGwWz7O9CGST3jggbUWC",
-                            "3": "Mina",
-                            "4": "ROLE_TEACHER"
-                        },
-                        {
-                            "0": 26,
-                            "1": "ma",
-                            "2": "$2a$10$.3latLwlFnhHgiXP4xrvQOUzxJmsCxKpoU5vOhG9H85DW9XIVk.jG",
-                            "3": "maria",
-                            "4": ""
-                        },
-                        {
-                            "0": 29,
-                            "1": "teacher@gmail.com",
-                            "2": "$2a$10$0To4cCaVBSDWUzxcCxES7uhSU0v62qAKrV.2M8jICPEu6fmFJuJHC",
-                            "3": "teacher",
-                            "4": "ROLE_TEACHER"
-                        },
-                        {
-                            "0": 32,
-                            "1": "teacher1@gmail.com",
-                            "2": "$2a$10$OqNclO7NUrfQArFiATlonOnRS5u/kxBs2kjCdq5UoaApueVrWu0o6",
-                            "3": "teacher1",
-                            "4": "ROLE_TEACHER"
-                        },
-                        {
-                            "0": 33,
-                            "1": "coder@gmil.com",
-                            "2": "$2a$10$l8hqC10wFnDo77cCm08Plujz0Xf78OR85EHhtyVNyK0mOjBasb2u.",
-                            "3": "coder",
-                            "4": "ROLE_ADMIN"
-                        }
-                    ],
-                    "columns": [
-                        {
-                            "title": "id",
-                            "field": "0",
-                            "dataType": {
-                                "type": 5,
-                                "flags": [
-                                    "UNSIGNED",
-                                    "ZEROFILL"
-                                ],
-                                "numericPrecision": 20,
-                                "parameterFormatType": "OneOrZero",
-                                "synonyms": [
-                                    "INT8",
-                                    "SERIAL"
-                                ]
-                            },
-                            "inPK": true,
-                            "nullable": false,
-                            "autoIncrement": true
-                        },
-                        {
-                            "title": "email",
-                            "field": "1",
-                            "dataType": {
-                                "type": 17,
-                                "characterMaximumLength": 65535,
-                                "flags": [
-                                    "BINARY",
-                                    "ASCII",
-                                    "UNICODE"
-                                ],
-                                "needsQuotes": true,
-                                "parameterFormatType": "OneOrZero"
-                            },
-                            "inPK": false,
-                            "nullable": false,
-                            "autoIncrement": false
-                        },
-                        {
-                            "title": "password",
-                            "field": "2",
-                            "dataType": {
-                                "type": 17,
-                                "characterMaximumLength": 65535,
-                                "flags": [
-                                    "BINARY",
-                                    "ASCII",
-                                    "UNICODE"
-                                ],
-                                "needsQuotes": true,
-                                "parameterFormatType": "OneOrZero"
-                            },
-                            "inPK": false,
-                            "nullable": false,
-                            "autoIncrement": false
-                        },
-                        {
-                            "title": "username",
-                            "field": "3",
-                            "dataType": {
-                                "type": 17,
-                                "characterMaximumLength": 65535,
-                                "flags": [
-                                    "BINARY",
-                                    "ASCII",
-                                    "UNICODE"
-                                ],
-                                "needsQuotes": true,
-                                "parameterFormatType": "OneOrZero"
-                            },
-                            "inPK": false,
-                            "nullable": false,
-                            "autoIncrement": false
-                        },
-                        {
-                            "title": "role",
-                            "field": "4",
-                            "dataType": {
-                                "type": 17,
-                                "characterMaximumLength": 65535,
-                                "flags": [
-                                    "BINARY",
-                                    "ASCII",
-                                    "UNICODE"
-                                ],
-                                "needsQuotes": true,
-                                "parameterFormatType": "OneOrZero"
-                            },
-                            "inPK": false,
-                            "nullable": false,
-                            "autoIncrement": false
-                        }
-                    ],
-                    "executionInfo": {
-                        "text": "OK, 11 records retrieved in 1.219ms"
-                    },
-                    "totalRowCount": 11,
-                    "hasMoreRows": false,
-                    "currentPage": 0,
-                    "index": 0,
-                    "sql": "SELECT * FROM users",
-                    "updatable": true,
-                    "fullTableName": "users"
-                }
-            ]
-        },
-        {
-            "state": {
-                "start": 19,
-                "end": 19,
-                "language": "mysql",
-                "currentSet": 1,
-                "statements": [
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 0,
-                            "length": 0
-                        },
-                        "contentStart": -1,
-                        "state": 3
-                    }
-                ]
-            },
-            "data": []
-        },
-        {
-            "state": {
-                "start": 20,
-                "end": 20,
-                "language": "mysql",
-                "result": {
-                    "type": "text",
-                    "text": [
-                        {
-                            "type": 2,
-                            "index": 0,
-                            "resultId": "040ef8ac-7702-4260-a64e-82450e518fc2",
-                            "content": "OK, 0 records retrieved in 1.715ms"
-                        }
-                    ]
-                },
-                "currentHeight": 31.1875,
-                "currentSet": 1,
-                "statements": [
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 0,
-                            "length": 9
-                        },
-                        "contentStart": 0,
-                        "state": 0
-                    }
-                ]
-            },
-            "data": []
-        },
-        {
-            "state": {
-                "start": 21,
-                "end": 21,
-                "language": "mysql",
-                "result": {
-                    "type": "resultIds",
-                    "list": [
-                        "08defdc6-cbf8-4eba-c14c-5962067d6030"
-                    ]
-                },
-                "currentHeight": 158.46875,
-                "currentSet": 1,
-                "statements": [
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 0,
-                            "length": 12
-                        },
-                        "contentStart": 0,
-                        "state": 0
-                    }
-                ]
-            },
-            "data": [
-                {
-                    "tabId": "2af38ad0-ff02-4866-b0a1-ff4ae2a8b139",
-                    "resultId": "08defdc6-cbf8-4eba-c14c-5962067d6030",
-                    "rows": [
-                        {
-                            "0": "axis_first"
-                        },
-                        {
-                            "0": "teacher_profile"
-                        },
-                        {
-                            "0": "users"
-                        }
-                    ],
-                    "columns": [
-                        {
-                            "title": "Tables_in_mydb",
-                            "field": "0",
-                            "dataType": {
-                                "type": 17,
-                                "characterMaximumLength": 65535,
-                                "flags": [
-                                    "BINARY",
-                                    "ASCII",
-                                    "UNICODE"
-                                ],
-                                "needsQuotes": true,
-                                "parameterFormatType": "OneOrZero"
-                            },
-                            "inPK": false,
-                            "nullable": false,
-                            "autoIncrement": false
-                        }
-                    ],
-                    "executionInfo": {
-                        "text": "OK, 3 records retrieved in 3.502ms"
-                    },
-                    "totalRowCount": 3,
-                    "hasMoreRows": false,
-                    "currentPage": 0,
-                    "index": 0,
-                    "sql": "SHOW TABLES",
-                    "updatable": false
-                }
-            ]
-        },
-        {
-            "state": {
-                "start": 22,
-                "end": 22,
-                "language": "mysql",
-                "result": {
-                    "type": "resultIds",
-                    "list": [
-                        "11a903bf-e99d-4bf0-e399-b946aee13d63"
-                    ]
-                },
-                "currentHeight": 113.59375,
+                "currentHeight": 145.25,
                 "currentSet": 1,
                 "statements": [
                     {
@@ -1249,9 +1212,32 @@
             },
             "data": [
                 {
-                    "tabId": "2af38ad0-ff02-4866-b0a1-ff4ae2a8b139",
-                    "resultId": "11a903bf-e99d-4bf0-e399-b946aee13d63",
-                    "rows": [],
+                    "tabId": "c9d278f1-4e81-4907-e158-4b1243e3ada4",
+                    "resultId": "35e1f503-85f7-40ea-f991-7a28fc69e28b",
+                    "rows": [
+                        {
+                            "0": 1,
+                            "1": 20,
+                            "2": 17,
+                            "3": 18,
+                            "4": 20,
+                            "5": 95,
+                            "6": 20,
+                            "7": null,
+                            "8": 10
+                        },
+                        {
+                            "0": 3,
+                            "1": 0,
+                            "2": 0,
+                            "3": 0,
+                            "4": 0,
+                            "5": 0,
+                            "6": 0,
+                            "7": null,
+                            "8": 1
+                        }
+                    ],
                     "columns": [
                         {
                             "title": "id",
@@ -1398,16 +1384,58 @@
                             "nullable": true,
                             "autoIncrement": false,
                             "default": null
+                        },
+                        {
+                            "title": "teacher_profile_id",
+                            "field": "7",
+                            "dataType": {
+                                "type": 5,
+                                "flags": [
+                                    "UNSIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 20,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INT8",
+                                    "SERIAL"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "user_id",
+                            "field": "8",
+                            "dataType": {
+                                "type": 5,
+                                "flags": [
+                                    "UNSIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 20,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INT8",
+                                    "SERIAL"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
                         }
                     ],
                     "executionInfo": {
-                        "text": "OK, 0 records retrieved in 0.876ms"
+                        "text": "OK, 2 records retrieved in 3.443ms"
                     },
-                    "totalRowCount": 0,
+                    "totalRowCount": 2,
                     "hasMoreRows": false,
                     "currentPage": 0,
                     "index": 0,
-                    "sql": "SELECT * FROM axis_first",
+                    "sql": "select * from axis_first",
                     "updatable": true,
                     "fullTableName": "axis_first"
                 }
@@ -1415,28 +1443,31 @@
         },
         {
             "state": {
-                "start": 23,
-                "end": 24,
+                "start": 17,
+                "end": 17,
                 "language": "mysql",
                 "result": {
                     "type": "text",
                     "text": [
                         {
-                            "type": 2,
+                            "type": 0,
                             "index": 0,
-                            "resultId": "bf364dc5-3092-4165-f267-2635851fb8f0",
-                            "content": "OK, 0 records retrieved in 1.605ms"
+                            "content": "MySQL Error (1451): Cannot delete or update a parent row: a foreign key constraint fails (`mydb`.`penalty`, CONSTRAINT `FKqg3stjpb11u1ij1qclpi8ol9m` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`))",
+                            "language": "ansi"
                         }
-                    ]
+                    ],
+                    "executionInfo": {
+                        "text": ""
+                    }
                 },
-                "currentHeight": 31.1875,
+                "currentHeight": 101.328125,
                 "currentSet": 1,
                 "statements": [
                     {
                         "delimiter": ";",
                         "span": {
                             "start": 0,
-                            "length": 10
+                            "length": 32
                         },
                         "contentStart": 1,
                         "state": 0
@@ -1447,19 +1478,207 @@
         },
         {
             "state": {
-                "start": 25,
-                "end": 25,
+                "start": 18,
+                "end": 18,
                 "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "4a898228-1826-4126-f256-d49615beb79c"
+                    ]
+                },
+                "currentHeight": 232.125,
                 "currentSet": 1,
                 "statements": [
                     {
                         "delimiter": ";",
                         "span": {
                             "start": 0,
-                            "length": 24
+                            "length": 18
                         },
                         "contentStart": 0,
                         "state": 3
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "c9d278f1-4e81-4907-e158-4b1243e3ada4",
+                    "resultId": "4a898228-1826-4126-f256-d49615beb79c",
+                    "rows": [
+                        {
+                            "0": 1,
+                            "1": "Admin@gmail.com",
+                            "2": "$2a$10$dwOtY29fquNuPdnyznusiuj9l4L8eSUvhrzGKjT5dujJus978wpUC",
+                            "3": "ROLE_ADMIN",
+                            "4": "Admin"
+                        },
+                        {
+                            "0": 10,
+                            "1": "maria101@gmail.com",
+                            "2": "$2a$10$GrgjBClJfouTSe.GqUD5XOXUShKMlfMl5FjPPW4aqV/9lcNScQjdG",
+                            "3": "ROLE_TEACHER",
+                            "4": "maria"
+                        },
+                        {
+                            "0": 16,
+                            "1": "mina@gmail.com",
+                            "2": "$2a$10$qb.ZRooNui2UY3L3A0n6.eBGjW97ZAlio59bpt3QFt5vZ4XaHnGia",
+                            "3": "ROLE_TEACHER",
+                            "4": "Mina"
+                        },
+                        {
+                            "0": 33,
+                            "1": "AishaAmmarAbdalrhman@gmail.com",
+                            "2": "$2a$10$czbKirsv3m8P6insqCXKTu32RgYJBZqGWevajfOrVyC1i9ZoSqMhm",
+                            "3": "ROLE_TEACHER",
+                            "4": "Aisha Ammar Abdalrhman"
+                        },
+                        {
+                            "0": 37,
+                            "1": "AishaAishaAisah@gmail.com",
+                            "2": "$2a$10$we1W./uGf4C9GpS4SRc.5e.2NZpOvdCK7N6kg7X.xkkzuo3Y83po6",
+                            "3": "ROLE_TEACHER",
+                            "4": "AishaAishaAisha"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "id",
+                            "field": "0",
+                            "dataType": {
+                                "type": 5,
+                                "flags": [
+                                    "UNSIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 20,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INT8",
+                                    "SERIAL"
+                                ]
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": true
+                        },
+                        {
+                            "title": "email",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "password",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "role",
+                            "field": "3",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "username",
+                            "field": "4",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 5 records retrieved in 2.71ms"
+                    },
+                    "totalRowCount": 5,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT *from users",
+                    "updatable": true,
+                    "fullTableName": "users"
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 19,
+                "end": 19,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 0,
+                            "index": 0,
+                            "content": "MySQL Error (1451): Cannot delete or update a parent row: a foreign key constraint fails (`mydb`.`teacher_profile`, CONSTRAINT `FKqh8hdpa4h1hsfpwscilntp8yv` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`))",
+                            "language": "ansi"
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": ""
+                    }
+                },
+                "currentHeight": 101.328125,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 32
+                        },
+                        "contentStart": 1,
+                        "state": 0
                     }
                 ]
             },
@@ -1467,28 +1686,8 @@
         },
         {
             "state": {
-                "start": 26,
-                "end": 26,
-                "language": "mysql",
-                "currentSet": 1,
-                "statements": [
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 0,
-                            "length": 0
-                        },
-                        "contentStart": 0,
-                        "state": 3
-                    }
-                ]
-            },
-            "data": []
-        },
-        {
-            "state": {
-                "start": 27,
-                "end": 27,
+                "start": 20,
+                "end": 20,
                 "language": "mysql",
                 "currentSet": 1,
                 "statements": [

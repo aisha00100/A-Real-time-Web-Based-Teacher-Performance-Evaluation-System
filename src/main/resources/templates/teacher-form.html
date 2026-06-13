@@ -138,7 +138,10 @@ crossorigin="anonymous">
             <p class="text-muted">يرجى تعبئة جميع الحقول المطلوبة</p>
         </div>
         
-        <form th:action="@{/teacher/form}" th:object="${teacherProfile}" method="post">
+   <!-- <form th:action="@{/teacher/form}" th:object="${teacherProfile}" method="post">-->
+        <form th:action="${teacherId != null ? '/admin/teacher/' + teacherId + '/edit' : '/teacher/form'}" 
+      th:object="${teacherProfile}" 
+      method="post">
             
             <!-- البيانات الأساسية -->
             <div class="form-section">

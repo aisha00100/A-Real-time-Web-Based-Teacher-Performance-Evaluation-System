@@ -19,6 +19,11 @@ crossorigin="anonymous">
 
 <body>
   <div main class="container my-4">
+
+    <!-- زر الطباعة -->
+    <button class="btn-print-profile" onclick="window.print()">
+        <i class="bi bi-printer-fill"></i> طباعة الملف
+    </button>
     <section> <style>
         :root {
             --primary-color: #3498db;
@@ -130,6 +135,85 @@ crossorigin="anonymous">
                 flex-direction: column;
             }
 
+        }
+
+        /* ── BOTTOM PRINT BUTTON ── */
+        .btn-print-bottom-profile {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 48px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Segoe UI', sans-serif;
+            box-shadow: 0 4px 18px rgba(52,152,219,0.3);
+            transition: transform 0.15s, box-shadow 0.15s;
+            direction: rtl;
+        }
+        .btn-print-bottom-profile:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(52,152,219,0.42);
+        }
+
+        /* ── PRINT BUTTON (fixed top) ── */
+        .btn-print-profile {
+            position: fixed;
+            top: 18px;
+            left: 18px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 9px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            z-index: 999;
+            box-shadow: 0 3px 10px rgba(52,152,219,0.3);
+            font-family: 'Segoe UI', sans-serif;
+            transition: background 0.2s;
+        }
+        .btn-print-profile:hover { background: #2980b9; }
+
+        /* ── PRINT STYLES ── */
+        @media print {
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+            body { background: white !important; font-size: 11px; }
+
+            /* Hide print button */
+            .btn-print-profile,
+            .btn-print-bottom-profile { display: none !important; }
+
+            /* Remove shadows and backgrounds */
+            .form-container {
+                box-shadow: none !important;
+                margin: 0 !important;
+                padding: 10px !important;
+                border-radius: 0 !important;
+            }
+
+            /* Tables */
+            table { width: 100% !important; }
+            th, td { padding: 5px 8px !important; font-size: 11px !important; }
+
+            /* Section titles */
+            .section-title { font-size: 1rem !important; }
+
+            /* Avoid page breaks inside tables */
+            table { page-break-inside: auto; }
+            tr { page-break-inside: avoid; }
+
+            /* Yellow header cells keep color */
+            .resume-table th { background-color: #fcffb9 !important; }
         }
         
         table {
@@ -511,6 +595,14 @@ th, td {
        
 </div>
       </main>
+
+    <!-- ══ زر الطباعة السفلي ══ -->
+    <div style="display:flex; justify-content:center; margin-top:36px; margin-bottom:24px;">
+        <button onclick="window.print()" class="btn-print-bottom-profile">
+            <i class="bi bi-printer-fill"></i>
+            طباعة الملف الشخصي
+        </button>
+    </div>
 
     </section>
 

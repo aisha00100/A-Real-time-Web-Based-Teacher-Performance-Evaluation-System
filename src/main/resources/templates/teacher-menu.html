@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>القائمة الرئيسية - TPES</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+      background: #f0f2f5;
+      min-height: 100vh;
+      direction: rtl;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    /* ===== HEADER ===== */
+    .header-section {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .logo {
+      font-size: 48px;
+      font-weight: 800;
+      color: #1877f2;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+
+    .welcome-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: #1c1e21;
+      margin-bottom: 8px;
+    }
+
+    .welcome-subtitle {
+      font-size: 16px;
+      color: #606770;
+      font-weight: 400;
+    }
+
+    /* ===== MENU CARDS ===== */
+    .menu-container {
+      max-width: 680px;
+      width: 100%;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .menu-card {
+      background: white;
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      border: 2px solid transparent;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 24px rgba(24, 119, 242, 0.2);
+      border-color: #1877f2;
+    }
+
+    .menu-icon {
+      width: 56px;
+      height: 56px;
+      background: #e7f3ff;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      color: #1877f2;
+      transition: all 0.25s ease;
+    }
+
+    .menu-card:hover .menu-icon {
+      background: #1877f2;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .menu-label {
+      font-size: 17px;
+      font-weight: 700;
+      color: #1c1e21;
+      margin: 0;
+    }
+
+    .menu-desc {
+      font-size: 13px;
+      color: #65676b;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* ===== LOGOUT BUTTON ===== */
+    .logout-section {
+      margin-top: 36px;
+      text-align: center;
+    }
+
+    .btn-logout {
+      background: white;
+      color: #1877f2;
+      border: 2px solid #1877f2;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    .btn-logout:hover {
+      background: #1877f2;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      position: fixed;
+      bottom: 16px;
+      left: 16px;
+      color: rgba(80, 80, 80, 0.9);
+      font-size: 14px;
+      font-weight: 400;
+      font-family: 'Cairo', sans-serif;
+      letter-spacing: 0.3px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .logo { font-size: 38px; }
+      .welcome-title { font-size: 22px; }
+      .menu-card { padding: 24px 20px; }
+      .menu-icon { width: 50px; height: 50px; font-size: 24px; }
+      .menu-label { font-size: 16px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <div class="header-section">
+    <div class="logo">TPES</div>
+    <h2 class="welcome-title">
+      مرحباً،
+      <span th:text="${currentUser != null ? currentUser.username : 'الأستاذ'}">الأستاذ</span>
+    </h2>
+    <p class="welcome-subtitle">اختر القسم الذي تريد الوصول إليه</p>
+  </div>
+
+  <!-- ===== MENU CARDS ===== -->
+  <div class="menu-container">
+    <div class="menu-grid">
+
+      <!-- الملف الشخصي -->
+      <a href="/teacher/form" class="menu-card">
+        <div class="menu-icon">
+          <i class="bi bi-person-badge-fill"></i>
+        </div>
+        <div>
+          <h3 class="menu-label">الملف الشخصي</h3>
+          <p class="menu-desc">عرض وتعديل بياناتك الشخصية والأكاديمية</p>
+        </div>
+      </a>
+
+      <!-- نموذج التقييم -->
+      <a href="/evaluation" class="menu-card">
+        <div class="menu-icon">
+          <i class="bi bi-journal-check"></i>
+        </div>
+        <div>
+          <h3 class="menu-label">نموذج التقييم</h3>
+          <p class="menu-desc">رفع الوثائق ومتابعة درجات التقييم الشامل</p>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- ===== LOGOUT ===== -->
+    <div class="logout-section">
+      <a href="/perform-logout" class="btn-logout">
+        <i class="bi bi-box-arrow-right"></i> تسجيل الخروج
+      </a>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <div class="footer">
+    By Aisha Al-Salihi
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+          crossorigin="anonymous"></script>
+</body>
+</html>

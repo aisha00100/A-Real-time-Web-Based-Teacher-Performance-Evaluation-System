@@ -1,846 +1,700 @@
-<!doctype html>
-<html >
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>نظام تقييم جودة المعلم - المحور الأول</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <!-- إضافة مكتبة PDF.js لمعاينة PDF -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>محور جودة التدريس</title>
 
+    <!-- Bootstrap 5 RTL -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css"/>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet"/>
+
+    <style>
+        :root {
+            --primary:       #1a56db;
+            --primary-dark:  #1341a8;
+            --primary-light: #e8f0fe;
+            --accent:        #f0a500;
+            --accent-light:  #fff8e6;
+            --success:       #0ca678;
+            --bg:            #f4f6fb;
+            --card:          #ffffff;
+            --border:        #e2e8f0;
+            --text-main:     #1e2a3b;
+            --text-muted:    #64748b;
+            --shadow:        0 2px 16px rgba(26,86,219,0.08);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        /* ── HEADER ── */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(26,86,219,0.25);
+        }
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 32px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .header-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-icon {
+            width: 40px; height: 40px;
+            background: rgba(255,255,255,0.18);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.15rem;
+        }
+        .role-badge {
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .badge-teacher { background: rgba(255,255,255,0.2); color: #fff; }
+        .badge-admin   { background: var(--accent); color: #1a2035; }
+
+        .header-user {
+            display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+        }
+        .username-label {
+            color: rgba(255,255,255,0.85);
+            font-size: 0.87rem;
+            font-weight: 500;
+        }
+        .btn-back {
+            background: rgba(255,255,255,0.15);
+            border: 1.5px solid rgba(255,255,255,0.35);
+            color: #fff;
+            border-radius: 8px;
+            padding: 6px 16px;
+            font-size: 0.83rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s;
+        }
+        .btn-back:hover { background: rgba(255,255,255,0.28); color: #fff; }
+        .btn-logout {
+            background: rgba(255,255,255,0.15);
+            border: 1.5px solid rgba(255,255,255,0.35);
+            color: #fff;
+            border-radius: 8px;
+            padding: 6px 16px;
+            font-size: 0.83rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s;
+        }
+        .btn-logout:hover { background: rgba(255,255,255,0.28); color: #fff; }
+
+        /* ── TEACHER NAME BANNER (shown when admin views a teacher) ── */
+        .teacher-banner {
+            background: #fff8e6;
+            border-right: 5px solid var(--accent);
+            border-radius: 0 12px 12px 0;
+            padding: 12px 22px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #92600a;
+        }
+
+        /* ── MAIN WRAPPER ── */
+        .content-wrap {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 28px 16px;
+        }
+
+        /* ── AXIS BANNER ── */
+        .axis-banner {
+            background: var(--primary-light);
+            border-right: 5px solid var(--primary);
+            border-radius: 0 12px 12px 0;
+            padding: 16px 22px;
+            margin-bottom: 24px;
+        }
+        .axis-banner h5 {
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        .axis-banner p {
+            color: var(--text-muted);
+            font-size: 0.84rem;
+            margin: 0;
+        }
+
+        /* ── ALERTS ── */
+        .alert-success-custom {
+            background: #d1fae5; color: #065f46;
+            border-radius: 10px; padding: 12px 18px;
+            font-weight: 600; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 18px;
+        }
+        .alert-error-custom {
+            background: #fee2e2; color: #991b1b;
+            border-radius: 10px; padding: 12px 18px;
+            font-weight: 600; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        /* ── CARD / TABLE ── */
+        .main-card {
+            background: var(--card);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .eval-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .eval-table thead th {
+            background: var(--primary);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.88rem;
+            padding: 15px 18px;
+            text-align: center;
+            white-space: nowrap;
+            border: none;
+        }
+
+        .eval-table tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+        .eval-table tbody tr:hover { background: #f8faff; }
+
+        .eval-table td {
+            padding: 15px 18px;
+            vertical-align: middle;
+            font-size: 0.9rem;
+        }
+
+        .td-num { text-align: center; width: 52px; }
+        .num-circle {
+            width: 32px; height: 32px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.88rem;
+            color: var(--primary);
+        }
+
+        .td-name { font-weight: 600; line-height: 1.6; }
+
+        .td-max { text-align: center; width: 90px; }
+        .badge-max {
+            background: var(--accent-light);
+            color: #b45309;
+            border: 1.5px solid var(--accent);
+            border-radius: 8px;
+            padding: 5px 14px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .td-upload { text-align: center; width: 170px; }
+        .upload-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-upload {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 7px 16px;
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s, transform 0.1s;
+            white-space: nowrap;
+        }
+        .btn-upload:hover { background: var(--primary-dark); transform: translateY(-1px); }
+        .upload-input { display: none; }
+
+        .file-chip {
+            background: #dcfce7;
+            color: #166534;
+            border-radius: 6px;
+            padding: 3px 10px;
+            font-size: 0.76rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .no-file { color: var(--text-muted); font-size: 0.78rem; }
+
+        .td-grade { text-align: center; width: 115px; }
+        .grade-display {
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: 8px;
+            padding: 7px 18px;
+            font-weight: 700;
+            font-size: 1rem;
+            display: inline-block;
+        }
+        .grade-empty { color: var(--text-muted); font-size: 0.82rem; }
+
+        .grade-input {
+            width: 78px;
+            text-align: center;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 7px 6px;
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--primary);
+            background: var(--primary-light);
+            outline: none;
+        }
+        .grade-input:focus { box-shadow: 0 0 0 3px rgba(26,86,219,0.18); }
+
+        .td-note { min-width: 190px; }
+        .note-textarea {
+            width: 100%;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            font-size: 0.84rem;
+            resize: vertical;
+            min-height: 66px;
+            outline: none;
+            background: #fafbff;
+            color: var(--text-main);
+        }
+        .note-textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26,86,219,0.10);
+        }
+
+        /* Read-only note display for teacher */
+        .note-display-readonly {
+            background: var(--primary-light);
+            border-right: 3px solid var(--primary);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 40px;
+        }
+
+        .total-row td {
+            background: var(--primary);
+            color: #fff;
+            font-weight: 800;
+            font-size: 1rem;
+            padding: 16px 18px;
+        }
+        .total-val {
+            background: #fff;
+            color: var(--primary);
+            border-radius: 8px;
+            padding: 5px 16px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            display: inline-block;
+        }
+
+        .save-section {
+            padding: 22px 24px;
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .btn-save {
+            background: linear-gradient(135deg, var(--success) 0%, #078a62 100%);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 36px;
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            font-size: 0.97rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(12,166,120,0.3);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .btn-save:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(12,166,120,0.4); }
+        .save-hint { color: var(--text-muted); font-size: 0.82rem; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .header-inner { padding: 14px 16px; }
+            .eval-table thead { display: none; }
+            .eval-table tbody tr {
+                display: block;
+                margin: 10px 0;
+                border-radius: 12px;
+                border: 1px solid var(--border);
+                box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            }
+            .eval-table td {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                padding: 10px 14px;
+                border-bottom: 1px solid var(--border);
+                font-size: 0.85rem;
+                gap: 10px;
+            }
+            .eval-table td::before {
+                content: attr(data-label);
+                font-weight: 700;
+                color: var(--text-muted);
+                font-size: 0.78rem;
+                flex-shrink: 0;
+                min-width: 80px;
+            }
+            .total-row td { display: block; text-align: center; }
+            .save-section { justify-content: center; }
+        }
+    </style>
 </head>
 <body>
-<section>
-  <style>
-    :root{ 
-      --primary-blue: #1e40af;
-      --light-blue: #3b82f6;
-      --lighter-blue: #60a5fa;
-      --lightest-blue: #dbeafe;
-      --success: #10b981;
-      --background: #f0f9ff;
-    }
-    
-    body{
-      background: var(--background);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #1e293b;
-      line-height: 1.6;
-    }
-    
-    .container{ max-width: 900px; }
-    
-    .page-header{
-      background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
-      color: white;
-      border-radius: 16px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 8px 25px rgba(30, 64, 175, 0.2);
-    }
-    
-    .paragraph-card{
-      background: white;
-      border-radius: 16px;
-      padding: 1.75rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 4px 12px rgba(30, 64, 175, 0.1);
-      border: 2px solid var(--lightest-blue);
-      transition: all 0.3s ease;
-    }
-    
-    .paragraph-card:hover{
-      box-shadow: 0 8px 25px rgba(30, 64, 175, 0.15);
-      transform: translateY(-3px);
-    }
-    
-    .paragraph-header{
-      display: flex;
-      align-items: flex-start;
-      margin-bottom: 1.25rem;
-    }
-    
-    .paragraph-number{
-      background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
-      color: white;
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 1.1rem;
-      margin-left: 1rem;
-      flex-shrink: 0;
-      box-shadow: 0 4px 8px rgba(30, 64, 175, 0.3);
-    }
-    
-    .paragraph-title{
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--primary-blue);
-      margin-bottom: 0.5rem;
-    }
-    
-    .paragraph-description{
-      color: #64748b;
-      font-size: 0.95rem;
-    }
-    
-    .upload-section{
-      background: var(--lightest-blue);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin: 1.25rem 0;
-      border: 2px dashed var(--lighter-blue);
-    }
-    
-    .file-preview-area{
-      display: flex;
-      gap: 1.25rem;
-      align-items: center;
-      margin-bottom: 1.25rem;
-    }
-    
-    .file-thumb{
-      width: 90px;
-      height: 90px;
-      border-radius: 12px;
-      border: 2px dashed var(--lighter-blue);
-      background: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
-    
-    .file-thumb:hover{
-      border-color: var(--primary-blue);
-      transform: scale(1.05);
-    }
-    
-    .file-thumb img{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    
-    .file-thumb i{
-      font-size: 2rem;
-      color: var(--lighter-blue);
-      transition: color 0.3s ease;
-    }
-    
-    .file-thumb:hover i{
-      color: var(--primary-blue);
-    }
-    
-    .file-info{
-      flex: 1;
-    }
-    
-    .file-name{
-      font-weight: 600;
-      color: var(--primary-blue);
-      margin-bottom: 0.5rem;
-      font-size: 1.1rem;
-    }
-    
-    .file-size{
-      font-size: 0.85rem;
-      color: var(--light-blue);
-      font-weight: 500;
-    }
-    
-    .score-display{
-      background: linear-gradient(135deg, var(--success), #059669);
-      color: white;
-      padding: 1rem 1.5rem;
-      border-radius: 12px;
-      text-align: center;
-      font-weight: 700;
-      font-size: 1.2rem;
-      margin-top: 1.25rem;
-      display: none;
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-      animation: slideUp 0.5s ease;
-    }
-    
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    .btn-upload{
-      background: linear-gradient(135deg, var(--light-blue), var(--primary-blue));
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 8px rgba(30, 64, 175, 0.2);
-    }
-    
-    .btn-upload:hover{
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(30, 64, 175, 0.3);
-    }
-    
-    .btn-clear{
-      background: transparent;
-      color: #ef4444;
-      border: 2px solid #ef4444;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      font-weight: 600;
-      transition: all 0.3s ease;
-    }
-    
-    .btn-clear:hover{
-      background: #ef4444;
-      color: white;
-      transform: translateY(-2px);
-    }
-    
-    .preview-actions{
-      margin-top: 1.25rem;
-      display: none;
-      animation: fadeIn 0.5s ease;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    .btn-preview{
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      transition: all 0.3s ease;
-    }
-    
-    .btn-preview:hover{
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-    }
-    
-    /* نافذة المعاينة */
-    .preview-modal{
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      z-index: 1000;
-      backdrop-filter: blur(5px);
-    }
-    
-    .preview-content{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: white;
-      border-radius: 20px;
-      padding: 2rem;
-      max-width: 90%;
-      max-height: 90%;
-      overflow: auto;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    }
-    
-    .preview-header{
-      display: flex;
-      justify-content: between;
-      align-items: center;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 2px solid var(--lightest-blue);
-    }
-    
-    .preview-body{
-      text-align: center;
-    }
-    
-    .preview-body img{
-      max-width: 100%;
-      max-height: 60vh;
-      border-radius: 12px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    }
-    
-    .pdf-preview{
-      width: 100%;
-      height: 60vh;
-      border: 2px solid var(--lightest-blue);
-      border-radius: 12px;
-    }
-    
-    .btn-close-preview{
-      background: #ef4444;
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    
-    .btn-close-preview:hover{
-      background: #dc2626;
-      transform: translateY(-2px);
-    }
-    
-    .total-section{
-      background: linear-gradient(135deg, var(--lightest-blue), #e0f2fe);
-      border-radius: 20px;
-      padding: 2rem;
-      text-align: center;
-      margin-top: 2rem;
-      border: 2px solid var(--lighter-blue);
-      box-shadow: 0 8px 25px rgba(30, 64, 175, 0.1);
-    }
-    
-    .total-score{
-      font-size: 3rem;
-      font-weight: 800;
-      color: var(--primary-blue);
-      margin: 1rem 0;
-      text-shadow: 0 4px 8px rgba(30, 64, 175, 0.2);
-    }
-    
-    .percentage-score{
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--success);
-      margin: 0.5rem 0;
-    }
-    
-    .progress-container{
-      background: white;
-      border-radius: 12px;
-      height: 12px;
-      overflow: hidden;
-      margin: 1.5rem 0;
-      border: 2px solid var(--lightest-blue);
-    }
-    
-    .progress-bar{
-      background: linear-gradient(90deg, var(--success), var(--light-blue));
-      height: 100%;
-      transition: width 0.8s ease;
-      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
-    }
-    
-    .calculation-info{
-      background: white;
-      border-radius: 12px;
-      padding: 1rem;
-      margin-top: 1rem;
-      border: 1px solid var(--lightest-blue);
-    }
-  </style>
 
-
-  <main class="container py-4">
-
-
-
-
-    <!-- الهيدر -->
-    <header class="page-header">
-      <div class="text-center">
-        <h1 class="mb-3">
-          <i class="fas fa-chalkboard-teacher me-3"></i>
-          المحور الأول: جودة التدريس والتعليم
-        </h1>
-        <div class="fs-5 opacity-90">
-          اختر ملفاً لكل فقرة وسيتم منح 20 نقطة تلقائياً بعد الرفع الناجح
+<!-- ══ HEADER ══ -->
+<header class="page-header">
+    <div class="header-inner">
+        <div class="header-title">
+            <div class="header-icon"><i class="bi bi-award-fill"></i></div>
+            محور جودة التدريس والتعليم
         </div>
-      </div>
-    </header>
+        <div class="header-user">
+            <span th:if="${role == 'ROLE_TEACHER'}" class="role-badge badge-teacher">
+                <i class="bi bi-person-fill"></i> أستاذ
+            </span>
+            <span th:if="${role == 'ROLE_ADMIN'}" class="role-badge badge-admin">
+                <i class="bi bi-shield-fill"></i> مسؤول
+            </span>
+            <span class="username-label" th:text="${currentUser.username}"></span>
 
+            <!-- Back to admin dashboard button (admin only) -->
+            <a th:if="${role == 'ROLE_ADMIN'}" href="/admin/" class="btn-back">
+                <i class="bi bi-arrow-right"></i> العودة للوحة التحكم
+            </a>
 
-    <div class="paragraph-card" data-paragraph="1">
-      <div class="paragraph-header">
-        <div class="paragraph-number">1</div>
-        <div class="flex-grow-1">
-          <div class="paragraph-title">المقررات والحقيبة التدريسية</div>
-          <div class="paragraph-description">تقييم المقررات المدروسة والحقيبة التدريسية المعدة</div>
+            <a href="/perform-logout" class="btn-logout">
+                <i class="bi bi-box-arrow-right"></i> خروج
+            </a>
         </div>
-      </div>
-      
-      <div class="upload-section">
-        <div class="file-preview-area">
-          <div class="file-thumb" id="thumb1">
-            <i class="fas fa-cloud-upload-alt"></i>
-          </div>
-          <div class="file-info">
-            <div class="file-name" id="fileName1">لم يتم اختيار ملف بعد</div>
-            <div class="file-size" id="fileSize1"></div>
-            <div class="mt-3">
-              <label class="btn-upload" for="fileInput1">
-                <i class="fas fa-upload me-2"></i>اختيار ملف
-              </label>
-              <button class="btn-clear" id="clearBtn1" style="display:none;">
-                <i class="fas fa-times me-2"></i>إزالة الملف
-              </button>
-              <input id="fileInput1" type="file" class="d-none" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+    </div>
+</header>
+
+<!-- ══ CONTENT ══ -->
+<div class="content-wrap">
+
+    <!-- Teacher name banner — shown only when admin is viewing a specific teacher -->
+    <div th:if="${role == 'ROLE_ADMIN' and teacherName != null}" class="teacher-banner">
+        <i class="bi bi-person-badge-fill"></i>
+        تقييم الأستاذ: <span th:text="${teacherName}"></span>
+    </div>
+
+    <!-- Axis description -->
+    <div class="axis-banner">
+        <h5><i class="bi bi-bookmark-star-fill"></i> المحور الأول: جودة التدريس والتعليم والالتزام الوظيفي</h5>
+        <p>يملأ من قبل اللجنة العلمية — الدرجة القصوى لكل فقرة <strong>٢٠</strong> — المجموع الكلي <strong>١٠٠</strong></p>
+    </div>
+
+    <!-- Flash messages -->
+    <div th:if="${successMessage}" class="alert-success-custom">
+        <i class="bi bi-check-circle-fill"></i>
+        <span th:text="${successMessage}"></span>
+    </div>
+    <div th:if="${errorMessage}" class="alert-error-custom">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════
+         ADMIN VIEW
+         ══════════════════════════════════════════════ -->
+    <div th:if="${role == 'ROLE_ADMIN'}">
+        <form th:action="@{/teacher-quality/save}" method="post">
+
+            <!-- CRITICAL: tells the controller WHICH teacher's records to save -->
+            <input type="hidden" name="viewedTeacherId" th:value="${viewedTeacherId}"/>
+
+            <div class="main-card">
+                <div class="table-responsive">
+                    <table class="eval-table">
+                        <thead>
+                            <tr>
+                                <th>ت</th>
+                                <th>الفقرات</th>
+                                <th>الدرجة القصوى</th>
+                                <th>الملف المرفوع</th>
+                                <th>الدرجة المعطاة</th>
+                                <th>الملاحظات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="item, stat : ${items}">
+
+                                <td class="td-num" data-label="ت">
+                                    <span class="num-circle" th:text="${stat.count}"></span>
+                                </td>
+
+                                <td class="td-name" data-label="الفقرة"
+                                    th:text="${arabicNames[item.itemName]}"></td>
+
+                                <td class="td-max" data-label="الدرجة القصوى">
+                                    <span class="badge-max">٢٠</span>
+                                </td>
+
+                                <!-- File info for admin (view only, no upload) -->
+                                <td class="td-upload" data-label="الملف">
+                                    <span th:if="${item.fileName != null}" class="file-chip">
+                                        <i class="bi bi-file-earmark-check-fill"></i>
+                                        <span th:text="${item.fileName}"></span>
+                                    </span>
+                                    <span th:if="${item.fileName == null}" class="no-file">
+                                        <i class="bi bi-hourglass"></i> لم يُرفع بعد
+                                    </span>
+                                </td>
+
+                                <!-- Grade: editable input for admin -->
+                                <td class="td-grade" data-label="الدرجة المعطاة">
+                                    <input type="number"
+                                           class="grade-input"
+                                           th:name="'grade_' + ${item.itemName}"
+                                           th:value="${item.grade != null ? item.grade : 20}"
+                                           min="0" max="20"
+                                           oninput="updateTotal()"/>
+                                </td>
+
+                                <!-- Note textarea: admin only -->
+                                <td class="td-note" data-label="الملاحظات">
+                                    <textarea class="note-textarea"
+                                              th:name="'note_' + ${item.itemName}"
+                                              th:text="${item.note}"
+                                              placeholder="أضف ملاحظة..."></textarea>
+                                </td>
+
+                            </tr>
+
+                            <!-- Total row -->
+                            <tr class="total-row">
+                                <td colspan="4" style="text-align:right; padding-right:28px;">
+                                    <i class="bi bi-calculator-fill"></i> الدرجة النهائية
+                                </td>
+                                <td class="td-grade">
+                                    <span class="total-val" id="totalDisplay"
+                                          th:text="${totalGrade}"></span>
+                                    <span style="font-size:0.8rem; opacity:0.75;"> / 100</span>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Save button -->
+                <div class="save-section">
+                    <button type="submit" class="btn-save">
+                        <i class="bi bi-floppy-fill"></i>
+                        حفظ التغييرات
+                    </button>
+                    <span class="save-hint">
+                        <i class="bi bi-info-circle"></i>
+                        سيتم حفظ جميع الدرجات والملاحظات دفعة واحدة
+                    </span>
+                </div>
             </div>
-          </div>
-        </div>
-        
-        <div class="preview-actions" id="previewActions1">
-          <button class="btn-preview" onclick="showPreview(1)">
-            <i class="fas fa-eye me-2"></i>معاينة الملف
-          </button>
-        </div>
-        
-        <div class="score-display" id="score1">
-          <i class="fas fa-star me-2"></i>
-          الدرجة الممنوحة: <span>20</span> 
-          
-        </div>
-      </div>
+
+        </form>
     </div>
 
 
+    <!-- ══════════════════════════════════════════════
+         TEACHER VIEW
+         ══════════════════════════════════════════════ -->
+    <div th:if="${role == 'ROLE_TEACHER'}">
+        <div class="main-card">
+            <div class="table-responsive">
+                <table class="eval-table">
+                    <thead>
+                        <tr>
+                            <th>ت</th>
+                            <th>الفقرات</th>
+                            <th>الدرجة القصوى</th>
+                            <th>رفع الملف</th>
+                            <th>الدرجة المعطاة</th>
+                            <th>ملاحظات المسؤول</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="item, stat : ${items}">
 
+                            <td class="td-num" data-label="ت">
+                                <span class="num-circle" th:text="${stat.count}"></span>
+                            </td>
 
+                            <td class="td-name" data-label="الفقرة"
+                                th:text="${arabicNames[item.itemName]}"></td>
 
+                            <td class="td-max" data-label="الدرجة القصوى">
+                                <span class="badge-max">٢٠</span>
+                            </td>
 
+                            <!-- Upload form: one per item -->
+                            <td class="td-upload" data-label="رفع الملف">
+                                <form th:action="@{/teacher-quality/upload/{name}(name=${item.itemName})}"
+                                      method="post"
+                                      enctype="multipart/form-data">
 
+                                    <div class="upload-block">
+                                        <span th:if="${item.fileName != null}" class="file-chip">
+                                            <i class="bi bi-file-earmark-check-fill"></i>
+                                            <span th:text="${item.fileName}"></span>
+                                        </span>
+                                        <label class="btn-upload">
+                                            <i class="bi bi-cloud-upload-fill"></i>
+                                            <span th:text="${item.fileName != null ? 'تغيير الملف' : 'رفع ملف'}"></span>
+                                            <input type="file"
+                                                   name="file"
+                                                   class="upload-input"
+                                                   onchange="this.form.submit()"/>
+                                        </label>
+                                    </div>
 
+                                </form>
+                            </td>
 
+                            <!-- Grade: read-only for teacher -->
+                            <td class="td-grade" data-label="الدرجة المعطاة">
+                                <span th:if="${item.grade != null}"
+                                      class="grade-display"
+                                      th:text="${item.grade}"></span>
+                                <span th:if="${item.grade == null}" class="grade-empty">
+                                    <i class="bi bi-dash-circle"></i> —
+                                </span>
+                            </td>
 
+                            <!-- Note: read-only display for teacher -->
+                            <td class="td-note" data-label="ملاحظات المسؤول">
+                                <div th:if="${item.note != null and !#strings.isEmpty(item.note)}"
+                                     class="note-display-readonly">
+                                    <i class="bi bi-chat-left-text-fill"
+                                       style="color: var(--primary); margin-left: 6px;"></i>
+                                    <span th:text="${item.note}"></span>
+                                </div>
+                                <span th:if="${item.note == null or #strings.isEmpty(item.note)}"
+                                      class="no-file">
+                                    <i class="bi bi-dash-circle"></i> لا توجد ملاحظات
+                                </span>
+                            </td>
 
+                        </tr>
 
-
-
-
-
-
-
-
-
-
-
-
-    
-
-    <!-- الفقرة 2 -->
-    <div class="paragraph-card" data-paragraph="2">
-      <div class="paragraph-header">
-        <div class="paragraph-number">2</div>
-        <div class="flex-grow-1">
-          <div class="paragraph-title">إدارة الصف والعلاقة مع الطلبة</div>
-          <div class="paragraph-description">تقييم مهارات إدارة الصف والتفاعل مع الطلاب</div>
-        </div>
-      </div>
-      
-      <div class="upload-section">
-        <div class="file-preview-area">
-          <div class="file-thumb" id="thumb2">
-            <i class="fas fa-cloud-upload-alt"></i>
-          </div>
-          <div class="file-info">
-            <div class="file-name" id="fileName2">لم يتم اختيار ملف بعد</div>
-            <div class="file-size" id="fileSize2"></div>
-            <div class="mt-3">
-              <label class="btn-upload" for="fileInput2">
-                <i class="fas fa-upload me-2"></i>اختيار ملف
-              </label>
-              <button class="btn-clear" id="clearBtn2" style="display:none;">
-                <i class="fas fa-times me-2"></i>إزالة الملف
-              </button>
-              <input id="fileInput2" type="file" class="d-none" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+                        <!-- Total row -->
+                        <tr class="total-row">
+                            <td colspan="5" style="text-align:right; padding-right:28px;">
+                                <i class="bi bi-calculator-fill"></i> الدرجة النهائية
+                            </td>
+                            <td class="td-grade">
+                                <span class="total-val" th:text="${totalGrade}"></span>
+                                <span style="font-size:0.8rem; opacity:0.75;"> / 100</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-          </div>
         </div>
-        
-        <div class="preview-actions" id="previewActions2">
-          <button class="btn-preview" onclick="showPreview(2)">
-            <i class="fas fa-eye me-2"></i>معاينة الملف
-          </button>
-        </div>
-        
-        <div class="score-display" id="score2">
-          <i class="fas fa-star me-2"></i>
-          الدرجة الممنوحة: <span>20</span> نقطة
-        </div>
-      </div>
     </div>
 
-    <!-- الفقرة 3 -->
-    <div class="paragraph-card" data-paragraph="3">
-      <div class="paragraph-header">
-        <div class="paragraph-number">3</div>
-        <div class="flex-grow-1">
-          <div class="paragraph-title">التعليم المدمج</div>
-          <div class="paragraph-description">تقييم استخدام تقنيات التعليم المدمج والالكتروني</div>
-        </div>
-      </div>
-      
-      <div class="upload-section">
-        <div class="file-preview-area">
-          <div class="file-thumb" id="thumb3">
-            <i class="fas fa-cloud-upload-alt"></i>
-          </div>
-          <div class="file-info">
-            <div class="file-name" id="fileName3">لم يتم اختيار ملف بعد</div>
-            <div class="file-size" id="fileSize3"></div>
-            <div class="mt-3">
-              <label class="btn-upload" for="fileInput3">
-                <i class="fas fa-upload me-2"></i>اختيار ملف
-              </label>
-              <button class="btn-clear" id="clearBtn3" style="display:none;">
-                <i class="fas fa-times me-2"></i>إزالة الملف
-              </button>
-              <input id="fileInput3" type="file" class="d-none" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
-            </div>
-          </div>
-        </div>
-        
-        <div class="preview-actions" id="previewActions3">
-          <button class="btn-preview" onclick="showPreview(3)">
-            <i class="fas fa-eye me-2"></i>معاينة الملف
-          </button>
-        </div>
-        
-        <div class="score-display" id="score3">
-          <i class="fas fa-star me-2"></i>
-          الدرجة الممنوحة: <span>20</span> نقطة
-        </div>
-      </div>
-    </div>
+</div>
 
-    <!-- الفقرة 4 -->
-    <div class="paragraph-card" data-paragraph="4">
-      <div class="paragraph-header">
-        <div class="paragraph-number">4</div>
-        <div class="flex-grow-1">
-          <div class="paragraph-title">وصف المقرر وأساليب التقييم</div>
-          <div class="paragraph-description">تقييم وصف المقرر وأساليب التقييم المتبعة</div>
-        </div>
-      </div>
-      
-      <div class="upload-section">
-        <div class="file-preview-area">
-          <div class="file-thumb" id="thumb4">
-            <i class="fas fa-cloud-upload-alt"></i>
-          </div>
-          <div class="file-info">
-            <div class="file-name" id="fileName4">لم يتم اختيار ملف بعد</div>
-            <div class="file-size" id="fileSize4"></div>
-            <div class="mt-3">
-              <label class="btn-upload" for="fileInput4">
-                <i class="fas fa-upload me-2"></i>اختيار ملف
-              </label>
-              <button class="btn-clear" id="clearBtn4" style="display:none;">
-                <i class="fas fa-times me-2"></i>إزالة الملف
-              </button>
-              <input id="fileInput4" type="file" class="d-none" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
-            </div>
-          </div>
-        </div>
-        
-        <div class="preview-actions" id="previewActions4">
-          <button class="btn-preview" onclick="showPreview(4)">
-            <i class="fas fa-eye me-2"></i>معاينة الملف
-          </button>
-        </div>
-        
-        <div class="score-display" id="score4">
-          <i class="fas fa-star me-2"></i>
-          الدرجة الممنوحة: <span>20</span> نقطة
-        </div>
-      </div>
-    </div>
-
-    <!-- الفقرة 5 -->
-    <div class="paragraph-card" data-paragraph="5">
-      <div class="paragraph-header">
-        <div class="paragraph-number">5</div>
-        <div class="flex-grow-1">
-          <div class="paragraph-title">الالتزام الوظيفي</div>
-          <div class="paragraph-description">تقييم الالتزام بالواجبات والمواعيد الوظيفية</div>
-        </div>
-      </div>
-      
-      <div class="upload-section">
-        <div class="file-preview-area">
-          <div class="file-thumb" id="thumb5">
-            <i class="fas fa-cloud-upload-alt"></i>
-          </div>
-          <div class="file-info">
-            <div class="file-name" id="fileName5">لم يتم اختيار ملف بعد</div>
-            <div class="file-size" id="fileSize5"></div>
-            <div class="mt-3">
-              <label class="btn-upload" for="fileInput5">
-                <i class="fas fa-upload me-2"></i>اختيار ملف
-              </label>
-              <button class="btn-clear" id="clearBtn5" style="display:none;">
-                <i class="fas fa-times me-2"></i>إزالة الملف
-              </button>
-              <input id="fileInput5" type="file" class="d-none" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
-            </div>
-          </div>
-        </div>
-        
-        <div class="preview-actions" id="previewActions5">
-          <button class="btn-preview" onclick="showPreview(5)">
-            <i class="fas fa-eye me-2"></i>معاينة الملف
-          </button>
-        </div>
-        
-        <div class="score-display" id="score5">
-          <i class="fas fa-star me-2"></i>
-          الدرجة الممنوحة: <span>20</span> نقطة
-        </div>
-      </div>
-    </div>
-
-    <!-- نافذة المعاينة -->
-    <div id="previewModal" class="preview-modal">
-      <div class="preview-content">
-        <div class="preview-header">
-          <h4 id="previewTitle" class="mb-0">معاينة الملف</h4>
-          <button class="btn-close-preview" onclick="closePreview()">
-            <i class="fas fa-times me-2"></i>إغلاق
-          </button>
-        </div>
-        <div class="preview-body" id="previewBody">
-          <!-- محتوى المعاينة سيتم إضافته هنا -->
-        </div>
-      </div>
-    </div>
-
-    <!-- المجموع الكلي -->
-    <div class="total-section">
-      <div class="fw-bold fs-4 text-primary">المجموع الكلي</div>
-      <div class="total-score" id="totalScore">0</div>
-      <div class="progress-container">
-        <div class="progress-bar" id="totalProgress" style="width: 0%"></div>
-      </div>
-      
-      <div class="percentage-score" id="percentageScore">0%</div>
-      <div class="text-primary fs-5 fw-semibold">من أصل 100 نقطة</div>
-      
-      <div class="calculation-info">
-        <div class="row text-center">
-          <div class="col-md-6">
-            <div class="fw-semibold text-primary">المجموع الكلي</div>
-            <div class="fs-4 fw-bold" id="displayTotal">0</div>
-            <small class="text-muted">من 100 نقطة</small>
-          </div>
-          <div class="col-md-6">
-            <div class="fw-semibold text-success">النسبة المئوية 40%</div>
-            <div class="fs-4 fw-bold" id="finalPercentage">0%</div>
-            <small class="text-muted">من التقييم النهائي</small>
-          </div>
-        </div>
-        <div class="mt-3 p-3 bg-light rounded">
-          <small class="text-muted">
-            <i class="fas fa-info-circle me-1"></i>
-            هذا المحور يمثل 40% من التقييم النهائي.
-          </small>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <script>
-    // تهيئة PDF.js
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
-
-    const selectedFiles = {};
-    const previewModal = document.getElementById('previewModal');
-    const previewBody = document.getElementById('previewBody');
-    const previewTitle = document.getElementById('previewTitle');
-
-    // تهيئة جميع الفقرات
-    for(let i = 1; i <= 5; i++) {
-      initializeParagraph(i);
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function updateTotal() {
+        const inputs = document.querySelectorAll('.grade-input');
+        let total = 0;
+        inputs.forEach(function(inp) {
+            const val = parseInt(inp.value, 10);
+            if (!isNaN(val)) total += val;
+        });
+        const display = document.getElementById('totalDisplay');
+        if (display) display.textContent = total;
     }
 
-  function initializeParagraph(paragraphNum) {
-      const fileInput = document.getElementById('fileInput' + paragraphNum);
-      const fileName = document.getElementById('fileName' + paragraphNum);
-      const fileSize = document.getElementById('fileSize' + paragraphNum);
-      const thumb = document.getElementById('thumb' + paragraphNum);
-      const clearBtn = document.getElementById('clearBtn' + paragraphNum);
-      const previewActions = document.getElementById('previewActions' + paragraphNum);
-      const scoreDisplay = document.getElementById('score' + paragraphNum);
-
-      fileInput.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if(!file) return;
-
-        if(file.size > 10 * 1024 * 1024) {
-          alert('❌ حجم الملف أكبر من 10 ميغابايت');
-          fileInput.value = '';
-          return;
-        }
-
-        selectedFiles[paragraphNum] = file;
-
-        fileName.textContent = file.name;
-        fileSize.textContent = formatFileSize(file.size);
-        clearBtn.style.display = 'inline-block';
-        previewActions.style.display = 'block';
-        scoreDisplay.style.display = 'block';
-
-        updateThumbnail(thumb, file);
-        updateTotalScore();
-      });
-
-      clearBtn.addEventListener('click', function() {
-        fileInput.value = '';
-        fileName.textContent = 'لم يتم اختيار ملف بعد';
-        fileSize.textContent = '';
-        clearBtn.style.display = 'none';
-        previewActions.style.display = 'none';
-        scoreDisplay.style.display = 'none';
-        thumb.innerHTML = '<i class="fas fa-cloud-upload-alt"></i>';
-        delete selectedFiles[paragraphNum];
-        updateTotalScore();
-      });
-    }
-
-    function updateThumbnail(thumbElement, file) {
-      thumbElement.innerHTML = '';
-      
-      if(file.type.startsWith('image/')) {
-        const img = document.createElement('img');
-        img.src = URL.createObjectURL(file);
-        img.alt = 'معاينة الصورة';
-        thumbElement.appendChild(img);
-      } else {
-        const icon = document.createElement('i');
-        if(file.type === 'application/pdf') {
-          icon.className = 'fas fa-file-pdf text-danger';
-        } else if(file.type.includes('word') || file.name.includes('.doc')) {
-          icon.className = 'fas fa-file-word text-primary';
-        } else {
-          icon.className = 'fas fa-file text-secondary';
-        }
-        icon.style.fontSize = '2.5rem';
-        thumbElement.appendChild(icon);
-      }
-    }
-
-    function showPreview(paragraphNum) {
-      const file = selectedFiles[paragraphNum];
-      if(!file) return;
-
-      previewTitle.textContent = `معاينة الملف - ${file.name}`;
-      previewBody.innerHTML = '';
-
-      if(file.type.startsWith('image/')) {
-        // معاينة الصور
-        const img = document.createElement('img');
-        img.src = URL.createObjectURL(file);
-        img.alt = file.name;
-        previewBody.appendChild(img);
-      } else if(file.type === 'application/pdf') {
-        // معاينة PDF داخل الصفحة
-        const embed = document.createElement('embed');
-        embed.src = URL.createObjectURL(file);
-        embed.type = 'application/pdf';
-        embed.className = 'pdf-preview';
-        previewBody.appendChild(embed);
-      } else {
-        // للملفات الأخرى عرض رسالة
-        const message = document.createElement('div');
-        message.className = 'alert alert-info';
-        message.innerHTML = `
-          <i class="fas fa-info-circle me-2"></i>
-          يمكنك تحميل الملف لمشاهدته على جهازك
-          <br><br>
-          <button class="btn btn-primary" onclick="downloadFile(${paragraphNum})">
-            <i class="fas fa-download me-2"></i>تحميل الملف
-          </button>
-        `;
-        previewBody.appendChild(message);
-      }
-
-      previewModal.style.display = 'block';
-    }
-
-    function closePreview() {
-      previewModal.style.display = 'none';
-      // تحرير الذاكرة
-      previewBody.innerHTML = '';
-    }
-
-    function downloadFile(paragraphNum) {
-      const file = selectedFiles[paragraphNum];
-      if(file) {
-        const url = URL.createObjectURL(file);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = file.name;
-        a.click();
-        URL.revokeObjectURL(url);
-      }
-    }
-
-    function formatFileSize(bytes) {
-      if(bytes === 0) return '0 Bytes';
-      const k = 1024;
-      const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-      const i = Math.floor(Math.log(bytes) / Math.log(k));
-      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-    }
-
-   function updateTotalScore() {
-      const totalScore = Object.keys(selectedFiles).length * 20;
-      const percentage = (totalScore / 100) * 100;
-      const finalPercentage = (totalScore / 100) * 40;
-      
-      document.getElementById('totalScore').textContent = totalScore;
-      document.getElementById('displayTotal').textContent = totalScore;
-      document.getElementById('percentageScore').textContent = percentage.toFixed(1) + '%';
-      document.getElementById('finalPercentage').textContent = finalPercentage.toFixed(1) + '%';
-      
-      document.getElementById('totalProgress').style.width = percentage + '%';
-    }
-
-    // إغلاق النافذة عند الضغط خارجها
-    previewModal.addEventListener('click', function(e) {
-      if(e.target === previewModal) {
-        closePreview();
-      }
-    });
-
-    // التهيئة الأولية
-    updateTotalScore();
-
-
-
-  </script>
-  </section>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    setTimeout(function () {
+        document.querySelectorAll('.alert-success-custom, .alert-error-custom').forEach(function (el) {
+            el.style.transition = 'opacity 0.5s';
+            el.style.opacity = '0';
+            setTimeout(function () { el.remove(); }, 500);
+        });
+    }, 4000);
+</script>
 </body>
 </html>

@@ -1,52 +1,319 @@
-
-
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base :: layout(~{::section})">
+<html lang="ar" dir="rtl" xmlns:th="http://www.thymeleaf.org">
 <head>
-<base target="_blank"
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
- rel="stylesheet" 
-integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
-crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم - TPES</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Cairo', sans-serif; background: #f0f2f5; direction: rtl; color: #1c1e21; min-height: 100vh; }
+
+    /* HEADER */
+    .top-header { background: white; padding: 16px 28px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 100; }
+    .logo-section { display: flex; align-items: center; gap: 12px; }
+    .logo { font-size: 26px; font-weight: 800; color: #1877f2; letter-spacing: 1px; }
+    .divider { width: 1px; height: 24px; background: #e4e6eb; }
+    .page-name { font-size: 15px; font-weight: 600; color: #1c1e21; }
+    .header-actions { display: flex; gap: 10px; align-items: center; }
+    .btn-header { padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; font-family: 'Cairo', sans-serif; border: 2px solid; cursor: pointer; }
+    .btn-menu   { background: white;   color: #1877f2; border-color: #1877f2; }
+    .btn-menu:hover   { background: #1877f2; color: white; transform: translateY(-2px); }
+    .btn-logout { background: #ffebe9; color: #c92a2a; border-color: #ff6b6b; }
+    .btn-logout:hover { background: #c92a2a; color: white; border-color: #c92a2a; transform: translateY(-2px); }
+
+    /* CONTENT */
+    .content { max-width: 1300px; margin: 0 auto; padding: 28px 24px; }
+    .alert { border-radius: 10px; font-size: 14px; margin-bottom: 20px; font-weight: 600; }
+
+    /* STATS */
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+    .stat-card { background: white; border-radius: 12px; padding: 22px 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-top: 4px solid; transition: transform 0.2s; }
+    .stat-card:hover { transform: translateY(-3px); }
+    .stat-card.blue   { border-top-color: #1877f2; }
+    .stat-card.green  { border-top-color: #2ea043; }
+    .stat-card.orange { border-top-color: #f0a500; }
+    .stat-num { font-size: 2rem; font-weight: 800; line-height: 1; margin-bottom: 6px; }
+    .stat-card.blue   .stat-num { color: #1877f2; }
+    .stat-card.green  .stat-num { color: #2ea043; }
+    .stat-card.orange .stat-num { color: #f0a500; }
+    .stat-lbl { font-size: 13px; color: #65676b; font-weight: 600; }
+
+    /* TITLE ROW */
+    .page-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 14px; }
+    .page-title-block h2 { font-size: 22px; font-weight: 800; color: #1c1e21; margin-bottom: 4px; }
+    .page-title-block p  { font-size: 13px; color: #65676b; font-weight: 500; }
+    .search-box { display: flex; align-items: center; gap: 10px; background: white; border: 2px solid #e4e6eb; border-radius: 10px; padding: 9px 16px; transition: all 0.2s; }
+    .search-box:focus-within { border-color: #1877f2; box-shadow: 0 0 0 4px rgba(24,119,242,0.1); }
+    .search-box input { border: none; outline: none; font-size: 14px; width: 220px; font-family: 'Cairo', sans-serif; color: #1c1e21; background: transparent; }
+    .search-box input::placeholder { color: #bcc0c4; }
+
+    /* TABLE */
+    .table-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    table { width: 100%; border-collapse: collapse; }
+    thead th { background: #f7f8fa; color: #1c1e21; font-size: 12px; font-weight: 700; padding: 14px 14px; white-space: nowrap; text-align: center; border-bottom: 2px solid #e4e6eb; line-height: 1.5; }
+    thead th.name-col { text-align: right; }
+    tbody tr { border-bottom: 1px solid #f0f2f5; transition: background 0.15s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #f7f8fa; }
+    tbody td { padding: 14px 14px; font-size: 13px; color: #1c1e21; vertical-align: middle; text-align: center; }
+    tbody td.name-td { text-align: right; }
+
+    /* AVATAR */
+    .teacher-profile { display: flex; align-items: center; gap: 10px; }
+    .profile-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #1877f2, #4fa3ff); color: white; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex-shrink: 0; }
+
+    /* GRADE PILLS */
+    .grade-pill { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; min-width: 58px; }
+    .g1 { color: #1877f2; background: #e7f3ff; }
+    .g2 { color: #2ea043; background: #e8f5e9; }
+    .g3 { color: #7a4db3; background: #f3e8ff; }
+    .g4 { color: #c07800; background: #fff8e1; }
+    .g5 { color: #c92a2a; background: #ffebe9; }
+    .gf-great { color: #155724; background: #d4edda; }
+    .gf-good  { color: #856404; background: #fff3cd; }
+    .gf-ok    { color: #7d4e00; background: #ffe5b4; }
+    .gf-weak  { color: #721c24; background: #f8d7da; }
+
+    /* STATUS */
+    .badge-evaluated { background: #e8f5e9; color: #2ea043; border: 1px solid #a8d5b5; font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 700; }
+    .badge-pending   { background: #fff8e1; color: #c07800; border: 1px solid #ffe082; font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 700; }
+
+    /* ACTION BUTTONS */
+    .actions-wrap { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; }
+    .btn-action { padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; border: none; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; transition: all 0.18s; font-family: 'Cairo', sans-serif; }
+    .btn-view     { background: #e7f3ff; color: #1877f2; }
+    .btn-edit     { background: #e8f5e9; color: #2ea043; }
+    .btn-evaluate { background: #fff8e1; color: #c07800; }
+    .btn-del      { background: #ffebe9; color: #c92a2a; }
+    .btn-view:hover     { background: #1877f2; color: white; transform: translateY(-2px); }
+    .btn-edit:hover     { background: #2ea043; color: white; transform: translateY(-2px); }
+    .btn-evaluate:hover { background: #f0a500; color: white; transform: translateY(-2px); }
+    .btn-del:hover      { background: #c92a2a; color: white; transform: translateY(-2px); }
+
+    /* EMPTY + FOOTER */
+    .empty-row td { text-align: center; padding: 60px; color: #bcc0c4; font-size: 15px; }
+    .table-footer { background: #f7f8fa; border-top: 1px solid #e4e6eb; padding: 13px 20px; display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: #65676b; }
+    .footer { position: fixed; bottom: 16px; left: 16px; color: rgba(80,80,80,0.9); font-size: 14px; font-family: 'Cairo', sans-serif; }
+
+    @media (max-width: 900px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .stats-row { grid-template-columns: 1fr; }
+      .top-header { flex-direction: column; gap: 12px; }
+      .page-title-row { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
 </head>
 <body>
-   
-    <section>
 
- <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">TPES</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-    
-        <li class="nav-item">
-          <a class="nav-link" href="/register">Register</a>
-       
-        <li class="nav-item">
-          <a class="nav-link" href="/signin">Login</a>
-        </li>
-       
-        <li class="nav-item">
-          <a class="nav-link" href="/teacher/">teacher</a>
-      
-     
-             <li class="nav-item">
-          <a class="nav-link" href="/teacher/form">teacher form</a>
-        
-      </ul>
-    
+  <!-- HEADER -->
+  <div class="top-header">
+    <div class="logo-section">
+      <div class="logo">TPES</div>
+      <div class="divider"></div>
+      <div class="page-name">لوحة التحكم</div>
+    </div>
+    <div class="header-actions">
+      <a href="/admin/startmenu" class="btn-header btn-menu">
+        <i class="bi bi-grid-fill"></i> القائمة الرئيسية
+      </a>
+      <a href="/perform-logout" class="btn-header btn-logout">
+        <i class="bi bi-box-arrow-right"></i> خروج
+      </a>
     </div>
   </div>
-</nav>
-     <h1>admin page</h1>
-</section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
-    crossorigin="anonymous"></script>
+  <!-- CONTENT -->
+  <div class="content">
+
+    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}"   class="alert alert-danger"  th:text="${errorMessage}"></div>
+
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-card blue">
+        <div class="stat-num" th:text="${totalTeachers}">0</div>
+        <div class="stat-lbl">إجمالي المعلمين</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-num" th:text="${evaluatedTeachers}">0</div>
+        <div class="stat-lbl">تم تقييمهم</div>
+      </div>
+      <div class="stat-card orange">
+        <div class="stat-num" th:text="${pendingTeachers}">0</div>
+        <div class="stat-lbl">بانتظار التقييم</div>
+      </div>
+    </div>
+
+    <!-- TITLE ROW -->
+    <div class="page-title-row">
+      <div class="page-title-block">
+        <h2>تقارير التقييم</h2>
+        <p>درجات المحاور الخمسة والنتيجة النهائية لكل معلم</p>
+      </div>
+      <div class="search-box">
+        <i class="bi bi-search" style="color:#bcc0c4;font-size:15px;"></i>
+        <input type="text" id="searchInput" placeholder="ابحث عن معلم..." onkeyup="filterTable()">
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-card">
+      <table id="teachersTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th class="name-col">عضو هيئة التدريس</th>
+            <th style="color:#1877f2;">المحور الأول<br><small>جودة التدريس</small></th>
+            <th style="color:#2ea043;">المحور الثاني<br><small>النشاط العلمي</small></th>
+            <th style="color:#7a4db3;">المحور الثالث<br><small>الجانب التربوي</small></th>
+            <th style="color:#c07800;">المحور الرابع<br><small>مواطن القوة</small></th>
+            <th style="color:#c92a2a;">المحور الخامس<br><small>العقوبات</small></th>
+            <th>الدرجة النهائية</th>
+            <th>الحالة</th>
+            <th>الإجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr th:if="${#lists.isEmpty(teachers)}" class="empty-row">
+            <td colspan="10">لا توجد بيانات مسجلة حتى الآن</td>
+          </tr>
+
+          <tr th:each="teacher, stat : ${teachers}">
+            <td style="font-weight:700;color:#65676b;" th:text="${stat.count}">1</td>
+
+            <!-- NAME -->
+            <td class="name-td">
+              <div class="teacher-profile">
+                <div class="profile-avatar">
+                  <span th:text="${teacher.firstName != null ? teacher.firstName.substring(0,1) : 'م'}">م</span>
+                </div>
+                <span style="font-weight:700;">
+                  <span th:text="${teacher.firstName}"></span>
+                  <span th:text="${' ' + teacher.fatherName}"></span>
+                  <span th:text="${' ' + (teacher.familyName ?: '')}"></span>
+                </span>
+              </div>
+            </td>
+
+            <!-- AXIS 1 -->
+            <td>
+              <span th:if="${gradesMap != null and gradesMap[teacher.id] != null}"
+                    class="grade-pill g1"
+                    th:text="${#numbers.formatDecimal(gradesMap[teacher.id][0],1,1) + ' / 100'}"></span>
+              <span th:if="${gradesMap == null or gradesMap[teacher.id] == null}" style="color:#ccc;">—</span>
+            </td>
+
+            <!-- AXIS 2 -->
+            <td>
+              <span th:if="${gradesMap != null and gradesMap[teacher.id] != null}"
+                    class="grade-pill g2"
+                    th:text="${#numbers.formatDecimal(gradesMap[teacher.id][1],1,1) + ' / 100'}"></span>
+              <span th:if="${gradesMap == null or gradesMap[teacher.id] == null}" style="color:#ccc;">—</span>
+            </td>
+
+            <!-- AXIS 3 -->
+            <td>
+              <span th:if="${gradesMap != null and gradesMap[teacher.id] != null}"
+                    class="grade-pill g3"
+                    th:text="${#numbers.formatDecimal(gradesMap[teacher.id][2],1,1) + ' / 100'}"></span>
+              <span th:if="${gradesMap == null or gradesMap[teacher.id] == null}" style="color:#ccc;">—</span>
+            </td>
+
+            <!-- AXIS 4 -->
+            <td>
+              <span th:if="${gradesMap != null and gradesMap[teacher.id] != null}"
+                    class="grade-pill g4"
+                    th:text="${#numbers.formatDecimal(gradesMap[teacher.id][3],1,1) + ' / 9'}"></span>
+              <span th:if="${gradesMap == null or gradesMap[teacher.id] == null}" style="color:#ccc;">—</span>
+            </td>
+
+            <!-- AXIS 5 -->
+            <td>
+              <span th:if="${gradesMap != null and gradesMap[teacher.id] != null}"
+                    class="grade-pill g5"
+                    th:text="${#numbers.formatDecimal(gradesMap[teacher.id][4],1,1)}"></span>
+              <span th:if="${gradesMap == null or gradesMap[teacher.id] == null}" style="color:#ccc;">—</span>
+            </td>
+
+            <!-- FINAL GRADE -->
+            <td>
+              <span th:if="${gradesMap != null and gradesMap[teacher.id] != null}"
+                    th:with="fg=${gradesMap[teacher.id][5]}"
+                    th:class="${fg >= 75 ? 'grade-pill gf-great' : fg >= 50 ? 'grade-pill gf-good' : fg >= 25 ? 'grade-pill gf-ok' : 'grade-pill gf-weak'}"
+                    th:text="${#numbers.formatDecimal(gradesMap[teacher.id][5],1,1)}"></span>
+              <span th:if="${gradesMap == null or gradesMap[teacher.id] == null}" style="color:#ccc;">—</span>
+            </td>
+
+            <!-- STATUS -->
+            <td>
+              <span th:if="${not #lists.isEmpty(teacher.teacherQualities)}" class="badge-evaluated">مُقيَّم</span>
+              <span th:if="${#lists.isEmpty(teacher.teacherQualities)}"     class="badge-pending">بانتظار</span>
+            </td>
+
+            <!-- ACTIONS -->
+            <td>
+              <div class="actions-wrap">
+                <a th:href="@{/admin/teacher/{id}(id=${teacher.id})}"          class="btn-action btn-view">
+                  <i class="bi bi-eye-fill"></i> عرض
+                </a>
+                <a th:href="@{/admin/teacher/{id}/edit(id=${teacher.id})}"     class="btn-action btn-edit">
+                  <i class="bi bi-pencil-fill"></i> تعديل
+                </a>
+                <a th:href="@{/evaluation/view/{uid}(uid=${teacher.user.id})}" class="btn-action btn-evaluate">
+                  <i class="bi bi-clipboard2-check-fill"></i> تقييم
+                </a>
+                <form th:action="@{/admin/teacher/{id}/delete(id=${teacher.id})}"
+                      method="post" style="margin:0"
+                      onsubmit="return confirm('هل أنت متأكد من حذف هذا الملف؟')">
+                  <button type="submit" class="btn-action btn-del">
+                    <i class="bi bi-trash-fill"></i> حذف
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <div class="table-footer">
+        <span id="tableFooter"></span>
+        <span>نظام تقييم أداء المعلمين — TPES</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">By Aisha Al-Salihi</div>
+
+  <script>
+    function filterTable() {
+      const val  = document.getElementById('searchInput').value.toLowerCase();
+      const rows = document.querySelectorAll('#teachersTable tbody tr:not(.empty-row)');
+      let count  = 0;
+      rows.forEach(r => {
+        const show = r.textContent.toLowerCase().includes(val);
+        r.style.display = show ? '' : 'none';
+        if (show) count++;
+      });
+      document.getElementById('tableFooter').textContent =
+        val ? 'نتائج البحث: ' + count + ' سجل' : 'إجمالي السجلات: ' + rows.length;
+    }
+    window.onload = function() {
+      const rows = document.querySelectorAll('#teachersTable tbody tr:not(.empty-row)');
+      document.getElementById('tableFooter').textContent = 'إجمالي السجلات: ' + rows.length;
+    };
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+          crossorigin="anonymous"></script>
 </body>
 </html>
-

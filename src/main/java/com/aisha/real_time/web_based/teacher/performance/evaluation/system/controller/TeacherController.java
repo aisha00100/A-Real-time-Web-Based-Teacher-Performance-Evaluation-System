@@ -3,6 +3,7 @@ package com.aisha.real_time.web_based.teacher.performance.evaluation.system.cont
 import java.security.Principal;
 import java.util.Optional;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,6 +36,34 @@ public class TeacherController {
 public String teacher() {
     return  "teacher";
 }
+
+    // ─────────────────────────────────────────────────────────────────
+    // GET /teacher/menu
+    // صفحة القائمة الرئيسية للأستاذ بعد تسجيل الدخول
+    // ─────────────────────────────────────────────────────────────────
+    @GetMapping("/teacher/menu")
+    public String teacherMenu(Model model, Authentication authentication) {
+
+        // غير مسجّل → إعادة توجيه لصفحة الدخول
+        if (authentication == null || !authentication.isAuthenticated()
+                || "anonymousUser".equals(authentication.getName())) {
+            return "redirect:/signin";
+        }
+
+        MyUser currentUser = userRepository.findByUsername(authentication.getName()).orElse(null);
+
+        if (currentUser == null) {
+            return "redirect:/signin";
+        }
+
+        // الأدمن لا يدخل هذه الصفحة
+        if ("ROLE_ADMIN".equals(currentUser.getRole())) {
+            return "redirect:/admin/";
+        }
+
+        model.addAttribute("currentUser", currentUser);
+        return "teacher-menu"; // → templates/teacher-menu.html
+    }
 
    @GetMapping("/teacher/form")
    public String teacherForm(Model model, Principal principal) {

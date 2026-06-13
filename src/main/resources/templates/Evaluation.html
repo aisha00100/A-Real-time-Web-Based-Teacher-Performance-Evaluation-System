@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>نموذج التقييم الشامل</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css"/>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet"/>
+
+    <style>
+        :root {
+            --primary:       #5B9BD5;
+            --primary-dark:  #3D7BB8;
+            --primary-light: #E7F1FA;
+            --axis1:         #5B9BD5;
+            --axis2:         #70AD47;
+            --axis2-light:   #E8F5E0;
+            --axis3:         #9966CC;
+            --axis3-light:   #F0E8F8;
+            --axis4:         #FFC000;
+            --axis4-light:   #FFF8E1;
+            --axis5:         #E64A4A;
+            --axis5-light:   #FDEAEA;
+            --accent:        #5B9BD5;
+            --accent-light:  #E7F1FA;
+            --success:       #70AD47;
+            --bg:            #FAFAFA;
+            --card:          #FFFFFF;
+            --border:        #E0E0E0;
+            --text-main:     #333333;
+            --text-muted:    #757575;
+            --shadow:        0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Cairo', 'Noto Kufi Arabic', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        /* ── HEADER ── */
+        .page-header {
+            background: white;
+            color: var(--text-main);
+            box-shadow: 0 2px 4px rgba(74,144,226,0.1);
+            border-bottom: 2px solid var(--primary-light);
+        }
+        .header-inner {
+            display: flex; align-items: center;
+            justify-content: space-between;
+            padding: 18px 32px;
+            flex-wrap: wrap; gap: 12px;
+        }
+        .header-title {
+            font-size: 1.3rem; font-weight: 800;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .header-icon {
+            width: 40px; height: 40px;
+            background: rgba(255,255,255,0.18);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.15rem;
+        }
+        .role-badge {
+            font-size: 0.78rem; font-weight: 700;
+            padding: 5px 14px; border-radius: 20px;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .badge-teacher { background: rgba(255,255,255,0.2); color: #fff; }
+        .badge-admin   { background: var(--accent); color: #1a2035; }
+        .header-user { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+        .username-label { color: rgba(255,255,255,0.85); font-size: 0.87rem; }
+        .btn-back, .btn-logout {
+            background: rgba(255,255,255,0.15);
+            border: 1.5px solid rgba(255,255,255,0.35);
+            color: #fff; border-radius: 8px;
+            padding: 6px 16px; font-size: 0.83rem; font-weight: 600;
+            text-decoration: none;
+            display: inline-flex; align-items: center; gap: 6px;
+            transition: background 0.2s;
+        }
+        .btn-back:hover, .btn-logout:hover { background: rgba(255,255,255,0.28); color: #fff; }
+
+        /* ── TEACHER NAME BANNER ── */
+        .teacher-banner {
+            background: var(--accent-light);
+            border-right: 5px solid var(--accent);
+            border-radius: 0 12px 12px 0;
+            padding: 12px 22px; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 10px;
+            font-size: 0.95rem; font-weight: 700; color: #92600a;
+        }
+
+        /* ── CONTENT WRAP ── */
+        .content-wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 28px 16px;
+        }
+
+        /* ── ALERTS ── */
+        .alert-success-custom {
+            background: #d1fae5; color: #065f46;
+            border-radius: 10px; padding: 12px 18px;
+            font-weight: 600; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 18px;
+        }
+        .alert-error-custom {
+            background: #fee2e2; color: #991b1b;
+            border-radius: 10px; padding: 12px 18px;
+            font-weight: 600; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        /* ── AXIS SECTION ── */
+        .axis-section { margin-bottom: 36px; }
+
+        .axis-banner {
+            border-radius: 0 12px 12px 0;
+            padding: 16px 22px;
+            margin-bottom: 0;
+            border-right: 5px solid;
+        }
+        .axis-banner.axis1 { background: var(--primary-light); border-color: var(--axis1); }
+        .axis-banner.axis2 { background: var(--axis2-light);   border-color: var(--axis2); }
+        .axis-banner.axis3 { background: var(--axis3-light);   border-color: var(--axis3); }
+        .axis-banner.axis4 { background: var(--axis4-light);   border-color: var(--axis4); }
+        .axis-banner.axis5 { background: var(--axis5-light);   border-color: var(--axis5); }
+
+        .axis-banner h5 {
+            font-weight: 800; font-size: 1rem; margin-bottom: 4px;
+        }
+        .axis-banner.axis1 h5 { color: var(--axis1); }
+        .axis-banner.axis2 h5 { color: var(--axis2); }
+        .axis-banner.axis3 h5 { color: var(--axis3); }
+        .axis-banner.axis4 h5 { color: var(--axis4); }
+        .axis-banner.axis5 h5 { color: var(--axis5); }
+        .axis-banner p { color: var(--text-muted); font-size: 0.84rem; margin: 0; }
+
+        /* ── MAIN CARD ── */
+        .main-card {
+            background: var(--card);
+            border-radius: 0 0 16px 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            border-top: none;
+            overflow: hidden;
+        }
+
+        /* ── TABLE ── */
+        .eval-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+
+        .eval-table.axis1 thead th { background: var(--axis1); }
+        .eval-table.axis2 thead th { background: var(--axis2); }
+        .eval-table.axis3 thead th { background: var(--axis3); }
+        .eval-table.axis4 thead th { background: var(--axis4); }
+        .eval-table.axis5 thead th { background: var(--axis5); }
+
+        .eval-table thead th {
+            color: #fff; font-weight: 700; font-size: 0.88rem;
+            padding: 14px 18px; text-align: center;
+            white-space: nowrap; border: none;
+        }
+        .eval-table tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+        .eval-table tbody tr:hover { background: #f8faff; }
+        .eval-table td { padding: 14px 18px; vertical-align: middle; font-size: 0.9rem; }
+
+        .td-num { text-align: center; width: 52px; }
+        .num-circle {
+            width: 30px; height: 30px; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.85rem;
+        }
+        .axis1 .num-circle { background: var(--primary-light); color: var(--axis1); }
+        .axis2 .num-circle { background: var(--axis2-light);   color: var(--axis2); }
+        .axis3 .num-circle { background: var(--axis3-light);   color: var(--axis3); }
+        .axis4 .num-circle { background: var(--axis4-light);   color: var(--axis4); }
+        .axis5 .num-circle { background: var(--axis5-light);   color: var(--axis5); }
+
+        .td-name { font-weight: 600; line-height: 1.6; }
+        .td-max  { text-align: center; width: 90px; }
+        .eval-table.axis5 .td-max { width: 130px; }
+
+        .badge-max {
+            border-radius: 8px; padding: 5px 14px;
+            font-weight: 700; font-size: 0.88rem;
+            border: 1.5px solid;
+        }
+        .axis1 .badge-max { background: var(--axis4-light); color: #CC8800; border-color: var(--axis4); }
+        .axis2 .badge-max { background: var(--axis2-light);  color: var(--axis2); border-color: var(--axis2); }
+        .axis3 .badge-max { background: var(--axis3-light);  color: var(--axis3); border-color: var(--axis3); }
+        .axis4 .badge-max { background: var(--axis4-light);  color: #CC8800; border-color: var(--axis4); }
+        .axis5 .badge-max { background: var(--axis5-light); color: var(--axis5); border-color: var(--axis5);
+            white-space: nowrap; min-width: 110px; display: inline-block; }
+
+        .td-upload { text-align: center; width: 170px; }
+        .upload-block { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+
+        .btn-upload {
+            color: #fff; border: none; border-radius: 8px;
+            padding: 7px 14px;
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            font-size: 0.82rem; font-weight: 600; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 6px;
+            transition: opacity 0.2s, transform 0.1s;
+            white-space: nowrap;
+        }
+        .btn-upload:hover { opacity: 0.88; transform: translateY(-1px); }
+        .axis1 .btn-upload { background: var(--axis1); }
+        .axis2 .btn-upload { background: var(--axis2); }
+        .axis3 .btn-upload { background: var(--axis3); }
+        .axis4 .btn-upload { background: var(--axis4); }
+        .axis5 .btn-upload { background: var(--axis5); }
+        .upload-input { display: none; }
+
+        .file-chip {
+            background: #dcfce7; color: #166534;
+            border-radius: 6px; padding: 3px 10px;
+            font-size: 0.76rem; font-weight: 600;
+            display: inline-flex; align-items: center; gap: 4px;
+            max-width: 150px; overflow: hidden;
+            text-overflow: ellipsis; white-space: nowrap;
+        }
+        .no-file { color: var(--text-muted); font-size: 0.78rem; }
+
+        .td-grade { text-align: center; width: 115px; }
+        .grade-display {
+            border-radius: 8px; padding: 6px 16px;
+            font-weight: 700; font-size: 1rem; display: inline-block;
+        }
+        .axis1 .grade-display { background: var(--primary-light); color: var(--axis1); }
+        .axis2 .grade-display { background: var(--axis2-light);   color: var(--axis2); }
+        .axis3 .grade-display { background: var(--axis3-light);   color: var(--axis3); }
+        .axis4 .grade-display { background: var(--axis4-light);   color: var(--axis4); }
+        .axis5 .grade-display { background: var(--axis5-light);   color: var(--axis5); }
+        .grade-empty { color: var(--text-muted); font-size: 0.82rem; }
+
+        .grade-input {
+            width: 78px; text-align: center;
+            border: 2px solid; border-radius: 8px;
+            padding: 7px 6px;
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            font-weight: 700; font-size: 1rem; outline: none;
+        }
+        .axis1 .grade-input { border-color: var(--axis1); color: var(--axis1); background: var(--primary-light); }
+        .axis2 .grade-input { border-color: var(--axis2); color: var(--axis2); background: var(--axis2-light); }
+        .axis3 .grade-input { border-color: var(--axis3); color: var(--axis3); background: var(--axis3-light); }
+        .axis4 .grade-input { border-color: var(--axis4); color: var(--axis4); background: var(--axis4-light); }
+        .axis5 .grade-input { border-color: var(--axis5); color: var(--axis5); background: var(--axis5-light); }
+
+        .td-note { min-width: 190px; }
+        .note-textarea {
+            width: 100%; border: 1.5px solid var(--border);
+            border-radius: 8px; padding: 8px 12px;
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            font-size: 0.84rem; resize: vertical;
+            min-height: 60px; outline: none;
+            background: #fafbff; color: var(--text-main);
+        }
+        .note-textarea:focus { border-color: var(--primary); }
+
+        .note-display-readonly {
+            background: var(--primary-light);
+            border-right: 3px solid var(--primary);
+            border-radius: 8px; padding: 8px 12px;
+            font-size: 0.85rem; color: var(--text-main);
+            line-height: 1.6; min-height: 38px;
+        }
+
+        /* ── TOTAL ROW ── */
+        .total-row td {
+            color: #fff; font-weight: 800;
+            font-size: 1rem; padding: 14px 18px;
+        }
+        .axis1 .total-row td { background: var(--axis1); }
+        .axis2 .total-row td { background: var(--axis2); }
+        .axis3 .total-row td { background: var(--axis3); }
+        .axis4 .total-row td { background: var(--axis4); }
+        .axis5 .total-row td { background: var(--axis5); }
+
+        .total-val {
+            background: #fff; border-radius: 8px;
+            padding: 4px 16px; font-weight: 800; font-size: 1.05rem;
+            display: inline-block;
+        }
+        .axis1 .total-val { color: var(--axis1); }
+        .axis2 .total-val { color: var(--axis2); }
+        .axis3 .total-val { color: var(--axis3); }
+        .axis4 .total-val { color: var(--axis4); }
+        .axis5 .total-val { color: var(--axis5); }
+
+        /* ── SAVE SECTION ── */
+        .save-section {
+            padding: 20px 24px; background: var(--card);
+            border-top: 1px solid var(--border);
+            display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+        }
+        .btn-save {
+            color: #fff; border: none; border-radius: 10px;
+            padding: 11px 32px;
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            font-size: 0.95rem; font-weight: 700; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 8px;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .btn-save:hover { transform: translateY(-2px); }
+        .btn-save.axis1 { background: linear-gradient(135deg, #5B9BD5, #3D7BB8); box-shadow: 0 4px 14px rgba(91,155,213,0.4); }
+        .btn-save.axis2 { background: linear-gradient(135deg, #70AD47, #5A8C38); box-shadow: 0 4px 14px rgba(112,173,71,0.4); }
+        .btn-save.axis3 { background: linear-gradient(135deg, #9966CC, #7B4DB3); box-shadow: 0 4px 14px rgba(153,102,204,0.4); }
+        .btn-save.axis4 { background: linear-gradient(135deg, #FFC000, #CC9900); box-shadow: 0 4px 14px rgba(255,192,0,0.4); }
+        .btn-save.axis5 { background: linear-gradient(135deg, #E64A4A, #C73838); box-shadow: 0 4px 14px rgba(230,74,74,0.4); }
+        .save-hint { color: var(--text-muted); font-size: 0.82rem; }
+
+        /* ── FINAL RESULT CARD ── */
+        .final-result-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px 40px;
+            margin: 24px 0;
+            box-shadow: 0 4px 16px rgba(74,144,226,0.15);
+            border: 2px solid var(--border);
+        }
+        .final-result-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .result-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+        .result-score-box {
+            text-align: center;
+        }
+        .result-score-main {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .result-score-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+        .result-percentage {
+            font-size: 2.5rem;
+            font-weight: 800;
+            padding: 16px 32px;
+            border-radius: 12px;
+            border: 3px solid;
+        }
+        .result-details {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-top: 20px;
+        }
+        .result-details-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 16px;
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .result-item-label {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+        .result-item-value {
+            font-weight: 700;
+        }
+        /* Performance colors */
+        .performance-excellent {
+            color: #70AD47;
+            border-color: #70AD47;
+            background: #E8F5E0;
+        }
+        .performance-good {
+            color: #FFC000;
+            border-color: #FFC000;
+            background: #FFF8E1;
+        }
+        .performance-fair {
+            color: #FF9933;
+            border-color: #FF9933;
+            background: #FFF3E0;
+        }
+        .performance-poor {
+            color: #E64A4A;
+            border-color: #E64A4A;
+            background: #FDEAEA;
+        }
+
+        /* ── GRAND TOTAL CARD ── */
+        .grand-total-card {
+            background: white;
+            color: var(--text-main);
+            border-radius: 12px;
+            padding: 24px 32px; margin-top: 12px;
+            display: flex; align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap; gap: 16px;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--border);
+        }
+        .grand-total-label {
+            font-size: 1.1rem; font-weight: 800;
+            display: flex; align-items: center; gap: 10px;
+            color: var(--text-main);
+        }
+        .grand-total-scores {
+            display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+        }
+        .score-chip {
+            background: var(--bg);
+            border-radius: 10px; padding: 8px 18px;
+            text-align: center;
+            border: 2px solid var(--border);
+        }
+        .score-chip .val {
+            font-size: 1.5rem; font-weight: 800; display: block;
+            color: var(--text-main);
+        }
+        .score-chip .lbl {
+            font-size: 0.75rem; color: var(--text-muted); display: block;
+        }
+        .grand-score {
+            background: var(--primary); color: white;
+            border-radius: 12px; padding: 10px 28px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(91,155,213,0.3);
+        }
+        .grand-score .val { font-size: 2rem; font-weight: 800; display: block; }
+        .grand-score .lbl { font-size: 0.8rem; font-weight: 600; display: block; }
+
+        /* ── FILE PREVIEW MODAL ── */
+        .file-preview-modal .modal-dialog {
+            max-width: 860px;
+        }
+        .file-preview-modal .modal-header {
+            background: var(--primary);
+            color: white;
+            border-radius: 12px 12px 0 0;
+            padding: 14px 20px;
+            direction: rtl;
+        }
+        .file-preview-modal .modal-title {
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .file-preview-modal .modal-body {
+            padding: 0;
+            background: #f0f0f0;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .file-preview-modal .btn-close {
+            filter: invert(1);
+        }
+        /* PDF / iframe preview */
+        .preview-iframe {
+            width: 100%;
+            height: 580px;
+            border: none;
+            display: block;
+        }
+        /* Image preview */
+        .preview-image {
+            max-width: 100%;
+            max-height: 580px;
+            display: block;
+            margin: auto;
+            object-fit: contain;
+        }
+        /* Unsupported file type message */
+        .preview-unsupported {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--text-muted);
+            font-family: 'Cairo', sans-serif;
+        }
+        .preview-unsupported i {
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+            display: block;
+            color: var(--primary);
+        }
+        .preview-unsupported p {
+            font-size: 0.95rem;
+            margin-bottom: 18px;
+        }
+        /* Eye icon button next to file chip */
+        .btn-preview-file {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--primary);
+            font-size: 1rem;
+            padding: 2px 5px;
+            border-radius: 5px;
+            transition: background 0.15s;
+            display: inline-flex;
+            align-items: center;
+        }
+        .btn-preview-file:hover {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+        .modal-footer-custom {
+            padding: 12px 20px;
+            background: white;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            direction: rtl;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn-download-file {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 20px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .btn-download-file:hover { background: var(--primary-dark); color: white; }
+
+        /* ── BOTTOM PRINT BUTTON ── */
+        .btn-print-bottom {
+            background: linear-gradient(135deg, #1a2a4a, #1a56db);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 48px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Cairo', sans-serif;
+            box-shadow: 0 4px 18px rgba(26,86,219,0.28);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .btn-print-bottom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(26,86,219,0.38);
+        }
+
+        .btn-print {
+            background: rgba(255,255,255,0.15);
+            border: 1.5px solid rgba(255,255,255,0.35);
+            color: #fff; border-radius: 8px;
+            padding: 6px 16px; font-size: 0.83rem; font-weight: 600;
+            cursor: pointer;
+            display: inline-flex; align-items: center; gap: 6px;
+            transition: background 0.2s;
+            font-family: 'Cairo', sans-serif;
+        }
+        .btn-print:hover { background: rgba(255,255,255,0.28); }
+
+        /* ── PRINT STYLES ── */
+        @media print {
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+            body { background: white !important; font-size: 12px; }
+
+            /* Hide all interactive elements */
+            .page-header .btn-back,
+            .page-header .btn-logout,
+            .page-header .btn-print,
+            .btn-print-bottom,
+            .btn-upload, .btn-save, .save-section,
+            .upload-input, .upload-block label,
+            .btn-preview-file,
+            .note-textarea,
+            .grade-input,
+            .alert-success-custom,
+            .alert-error-custom,
+            #filePreviewModal { display: none !important; }
+
+            /* Header: keep visible but simplified */
+            .page-header {
+                background: #1a2a4a !important;
+                color: white !important;
+                padding: 10px 20px;
+                -webkit-print-color-adjust: exact;
+            }
+            .header-title { color: white !important; font-size: 1rem; }
+            .username-label { color: rgba(255,255,255,0.8) !important; }
+            .role-badge { display: inline-flex !important; }
+
+            /* Content */
+            .content-wrap { padding: 10px; max-width: 100%; }
+            .axis-section { margin-bottom: 20px; page-break-inside: avoid; }
+            .axis-banner { border-radius: 0 8px 8px 0; padding: 10px 16px; }
+            .main-card { box-shadow: none; border: 1px solid #ddd; }
+            .table-responsive { overflow: visible; }
+
+            /* Tables */
+            .eval-table thead th { padding: 8px 10px; font-size: 0.8rem; }
+            .eval-table td { padding: 8px 10px; font-size: 0.82rem; }
+
+            /* Show grade as text instead of input */
+            .grade-input { border: 1px solid #ccc !important; background: white !important; }
+
+            /* Show note text instead of textarea */
+            .note-textarea { border: 1px solid #ccc !important; background: white !important; min-height: 30px; }
+
+            /* File chip stays visible */
+            .file-chip { display: inline-flex !important; }
+
+            /* Cards */
+            .final-result-card,
+            .grand-total-card { page-break-inside: avoid; }
+
+            /* Page breaks between axes */
+            .axis-section:nth-child(4) { page-break-before: always; }
+
+            /* Teacher banner */
+            .teacher-banner { background: #fff8e6 !important; border-right: 4px solid #f0a500 !important; }
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 480px) {
+            .header-inner { padding: 14px 16px; }
+            .eval-table thead { display: none; }
+            .eval-table tbody tr {
+                display: block; margin: 10px 0;
+                border-radius: 12px; border: 1px solid var(--border);
+            }
+            .eval-table td {
+                display: flex; justify-content: space-between;
+                align-items: flex-start;
+                padding: 10px 14px; border-bottom: 1px solid var(--border);
+                font-size: 0.85rem; gap: 10px;
+            }
+            .eval-table td::before {
+                content: attr(data-label);
+                font-weight: 700; color: var(--text-muted);
+                font-size: 0.78rem; flex-shrink: 0; min-width: 80px;
+            }
+            .total-row td { display: block; text-align: center; }
+            .grand-total-card { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="page-header">
+    <div class="header-inner">
+        <div class="header-title">
+            <div class="header-icon"><i class="bi bi-journal-text"></i></div>
+            نموذج التقييم الشامل
+        </div>
+        <div class="header-user">
+            <span th:if="${role == 'ROLE_TEACHER'}" class="role-badge badge-teacher">
+                <i class="bi bi-person-fill"></i> أستاذ
+            </span>
+            <span th:if="${role == 'ROLE_ADMIN'}" class="role-badge badge-admin">
+                <i class="bi bi-shield-fill"></i> مسؤول
+            </span>
+            <span class="username-label" th:text="${currentUser.username}"></span>
+            <a th:if="${role == 'ROLE_ADMIN'}" href="/admin/" class="btn-back">
+                <i class="bi bi-arrow-right"></i> لوحة التحكم
+            </a>
+            <button onclick="window.print()" class="btn-print">
+                <i class="bi bi-printer-fill"></i> طباعة
+            </button>
+            <a href="/perform-logout" class="btn-logout">
+                <i class="bi bi-box-arrow-right"></i> خروج
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- ══ CONTENT ══ -->
+<div class="content-wrap">
+
+    <!-- Teacher name banner (admin view only) -->
+    <div th:if="${role == 'ROLE_ADMIN' and teacherName != null}" class="teacher-banner">
+        <i class="bi bi-person-badge-fill"></i>
+        تقييم الأستاذ: <span th:text="${teacherName}"></span>
+    </div>
+
+    <!-- Flash messages -->
+    <div th:if="${successMessage}" class="alert-success-custom">
+        <i class="bi bi-check-circle-fill"></i>
+        <span th:text="${successMessage}"></span>
+    </div>
+    <div th:if="${errorMessage}" class="alert-error-custom">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         AXIS 1 — المحور الأول: جودة التدريس (40%)
+         ══════════════════════════════════════════════════════ -->
+    <div class="axis-section">
+        <div class="axis-banner axis1">
+            <h5><i class="bi bi-bookmark-star-fill"></i> المحور الأول: جودة التدريس والتعليم والالتزام الوظيفي — ٤٠٪</h5>
+            <p>الدرجة القصوى لكل فقرة <strong>٢٠</strong> — المجموع الكلي <strong>١٠٠</strong></p>
+        </div>
+
+        <!-- ADMIN form for axis 1 -->
+        <div th:if="${role == 'ROLE_ADMIN'}">
+            <form th:action="@{/evaluation/save/axis1}" method="post">
+                <input type="hidden" name="viewedTeacherId" th:value="${viewedTeacherId}"/>
+                <div class="main-card">
+                    <div class="table-responsive">
+                        <table class="eval-table axis1">
+                            <thead><tr>
+                                <th>ت</th><th>الفقرات</th><th>الدرجة القصوى</th>
+                                <th>الملف المرفوع</th><th>الدرجة المعطاة</th><th>الملاحظات</th>
+                            </tr></thead>
+                            <tbody>
+                                <tr th:each="item, stat : ${axis1Items}">
+                                    <td class="td-num" data-label="ت">
+                                        <span class="num-circle" th:text="${stat.count}"></span></td>
+                                    <td class="td-name" data-label="الفقرة"
+                                        th:text="${arabicNames1[item.itemName]}"></td>
+                                    <td class="td-max" data-label="الدرجة القصوى">
+                                        <span class="badge-max">٢٠</span></td>
+                                    <td class="td-upload" data-label="الملف">
+                                        <div th:if="${item.fileName != null}" style="display:inline-flex;align-items:center;gap:4px;">
+                                            <span class="file-chip">
+                                                <i class="bi bi-file-earmark-check-fill"></i>
+                                                <span th:text="${item.fileName}"></span>
+                                            </span>
+                                            <button type="button" class="btn-preview-file"
+                                                    th:attr="onclick='openFilePreview(\'/uploads/teacher-quality/' + ${item.fileName} + '\', \'' + ${item.fileName} + '\')'">
+                                                <i class="bi bi-eye-fill"></i>
+                                            </button>
+                                        </div>
+                                        <span th:if="${item.fileName == null}" class="no-file">
+                                            <i class="bi bi-hourglass"></i> لم يُرفع بعد</span>
+                                    </td>
+                                    <td class="td-grade" data-label="الدرجة المعطاة">
+                                        <input type="number" class="grade-input"
+                                               th:name="'grade_' + ${item.itemName}"
+                                               th:value="${item.grade != null ? item.grade : 20}"
+                                               min="0" max="20"
+                                               oninput="updateTotal('total1Display', '.axis1-grade-input')"/>
+                                    </td>
+                                    <td class="td-note" data-label="الملاحظات">
+                                        <textarea class="note-textarea"
+                                                  th:name="'note_' + ${item.itemName}"
+                                                  th:text="${item.note}"
+                                                  placeholder="أضف ملاحظة..."></textarea>
+                                    </td>
+                                </tr>
+                                <tr class="total-row">
+                                    <td colspan="4" style="text-align:right;padding-right:24px;">
+                                        <i class="bi bi-calculator-fill"></i> مجموع المحور الأول</td>
+                                    <td class="td-grade">
+                                        <span class="total-val" id="total1Display"
+                                              th:text="${total1}"></span>
+                                        <span style="font-size:0.8rem;opacity:0.75;"> / 100</span>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="save-section">
+                        <button type="submit" class="btn-save axis1">
+                            <i class="bi bi-floppy-fill"></i> حفظ المحور الأول</button>
+                        <span class="save-hint"><i class="bi bi-info-circle"></i> حفظ درجات وملاحظات المحور الأول</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- TEACHER view for axis 1 -->
+        <div th:if="${role == 'ROLE_TEACHER'}">
+            <div class="main-card">
+                <div class="table-responsive">
+                    <table class="eval-table axis1">
+                        <thead><tr>
+                            <th>ت</th><th>الفقرات</th><th>الدرجة القصوى</th>
+                            <th>رفع الملف</th><th>الدرجة المعطاة</th><th>ملاحظات المسؤول</th>
+                        </tr></thead>
+                        <tbody>
+                            <tr th:each="item, stat : ${axis1Items}">
+                                <td class="td-num" data-label="ت">
+                                    <span class="num-circle" th:text="${stat.count}"></span></td>
+                                <td class="td-name" data-label="الفقرة"
+                                    th:text="${arabicNames1[item.itemName]}"></td>
+                                <td class="td-max" data-label="الدرجة القصوى">
+                                    <span class="badge-max">٢٠</span></td>
+                                <td class="td-upload" data-label="رفع الملف">
+                                    <form th:action="@{/evaluation/upload/axis1/{n}(n=${item.itemName})}"
+                                          method="post" enctype="multipart/form-data">
+                                        <div class="upload-block">
+                                            <div th:if="${item.fileName != null}" style="display:inline-flex;align-items:center;gap:4px;">
+                                                <span class="file-chip">
+                                                    <i class="bi bi-file-earmark-check-fill"></i>
+                                                    <span th:text="${item.fileName}"></span>
+                                                </span>
+                                                <button type="button" class="btn-preview-file"
+                                                        th:attr="onclick='openFilePreview(\'/uploads/teacher-quality/' + ${item.fileName} + '\', \'' + ${item.fileName} + '\')'">
+                                                    <i class="bi bi-eye-fill"></i>
+                                                </button>
+                                            </div>
+                                            <label class="btn-upload">
+                                                <i class="bi bi-cloud-upload-fill"></i>
+                                                <span th:text="${item.fileName != null ? 'تغيير' : 'رفع ملف'}"></span>
+                                                <input type="file" name="file" class="upload-input"
+                                                       onchange="this.form.submit()"/>
+                                            </label>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td class="td-grade" data-label="الدرجة المعطاة">
+                                    <span th:if="${item.grade != null}" class="grade-display"
+                                          th:text="${item.grade}"></span>
+                                    <span th:if="${item.grade == null}" class="grade-empty">—</span>
+                                </td>
+                                <td class="td-note" data-label="ملاحظات المسؤول">
+                                    <div th:if="${item.note != null and !#strings.isEmpty(item.note)}"
+                                         class="note-display-readonly">
+                                        <i class="bi bi-chat-left-text-fill"
+                                           style="color:var(--axis1);margin-left:6px;"></i>
+                                        <span th:text="${item.note}"></span>
+                                    </div>
+                                    <span th:if="${item.note == null or #strings.isEmpty(item.note)}"
+                                          class="no-file">لا توجد ملاحظات</span>
+                                </td>
+                            </tr>
+                            <tr class="total-row">
+                                <td colspan="5" style="text-align:right;padding-right:24px;">
+                                    <i class="bi bi-calculator-fill"></i> مجموع المحور الأول</td>
+                                <td class="td-grade">
+                                    <span class="total-val" id="total1Display" th:text="${total1}"></span>
+                                    <span style="font-size:0.8rem;opacity:0.75;"> / 100</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END AXIS 1 -->
+
+
+    <!-- ══════════════════════════════════════════════════════
+         AXIS 2 — المحور الثاني: النشاط العلمي والبحثي (40%)
+         ══════════════════════════════════════════════════════ -->
+    <div class="axis-section">
+        <div class="axis-banner axis2">
+            <h5><i class="bi bi-journal-richtext"></i> المحور الثاني: النشاط العلمي والبحثي — ٤٠٪</h5>
+            <p>يملأ من قبل اللجنة العلمية بعد أن تقدم الوثائق — المجموع الكلي <strong>١٠٠</strong></p>
+        </div>
+
+        <!-- ADMIN form for axis 2 -->
+        <div th:if="${role == 'ROLE_ADMIN'}">
+            <form th:action="@{/evaluation/save/axis2}" method="post">
+                <input type="hidden" name="viewedTeacherId" th:value="${viewedTeacherId}"/>
+                <div class="main-card">
+                    <div class="table-responsive">
+                        <table class="eval-table axis2">
+                            <thead><tr>
+                                <th>ت</th><th>الفقرات</th><th>الدرجة القصوى</th>
+                                <th>الملف المرفوع</th><th>الدرجة المعطاة</th><th>الملاحظات</th>
+                            </tr></thead>
+                            <tbody>
+                                <tr th:each="item, stat : ${axis2Items}">
+                                    <td class="td-num" data-label="ت">
+                                        <span class="num-circle" th:text="${stat.count}"></span></td>
+                                    <td class="td-name" data-label="الفقرة"
+                                        th:text="${arabicNames2[item.itemName]}"></td>
+                                    <td class="td-max" data-label="الدرجة القصوى">
+                                        <span class="badge-max" th:text="${item.maxGrade}"></span></td>
+                                    <td class="td-upload" data-label="الملف">
+                                        <div th:if="${item.fileName != null}" style="display:inline-flex;align-items:center;gap:4px;">
+                                            <span class="file-chip">
+                                                <i class="bi bi-file-earmark-check-fill"></i>
+                                                <span th:text="${item.fileName}"></span>
+                                            </span>
+                                            <button type="button" class="btn-preview-file"
+                                                    th:attr="onclick='openFilePreview(\'/uploads/scientific-activity/' + ${item.fileName} + '\', \'' + ${item.fileName} + '\')'">
+                                                <i class="bi bi-eye-fill"></i>
+                                            </button>
+                                        </div>
+                                        <span th:if="${item.fileName == null}" class="no-file">
+                                            <i class="bi bi-hourglass"></i> لم يُرفع بعد</span>
+                                    </td>
+                                    <td class="td-grade" data-label="الدرجة المعطاة">
+                                        <input type="number" class="grade-input"
+                                               th:name="'grade_' + ${item.itemName}"
+                                               th:value="${item.grade != null ? item.grade : item.maxGrade}"
+                                               th:min="0" th:max="${item.maxGrade}"
+                                               oninput="updateTotal('total2Display', '.axis2-grade-input')"/>
+                                    </td>
+                                    <td class="td-note" data-label="الملاحظات">
+                                        <textarea class="note-textarea"
+                                                  th:name="'note_' + ${item.itemName}"
+                                                  th:text="${item.note}"
+                                                  placeholder="أضف ملاحظة..."></textarea>
+                                    </td>
+                                </tr>
+                                <tr class="total-row">
+                                    <td colspan="4" style="text-align:right;padding-right:24px;">
+                                        <i class="bi bi-calculator-fill"></i> مجموع المحور الثاني</td>
+                                    <td class="td-grade">
+                                        <span class="total-val" id="total2Display"
+                                              th:text="${total2}"></span>
+                                        <span style="font-size:0.8rem;opacity:0.75;"> / 100</span>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="save-section">
+                        <button type="submit" class="btn-save axis2">
+                            <i class="bi bi-floppy-fill"></i> حفظ المحور الثاني</button>
+                        <span class="save-hint"><i class="bi bi-info-circle"></i> حفظ درجات وملاحظات المحور الثاني</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- TEACHER view for axis 2 -->
+        <div th:if="${role == 'ROLE_TEACHER'}">
+            <div class="main-card">
+                <div class="table-responsive">
+                    <table class="eval-table axis2">
+                        <thead><tr>
+                            <th>ت</th><th>الفقرات</th><th>الدرجة القصوى</th>
+                            <th>رفع الملف</th><th>الدرجة المعطاة</th><th>ملاحظات المسؤول</th>
+                        </tr></thead>
+                        <tbody>
+                            <tr th:each="item, stat : ${axis2Items}">
+                                <td class="td-num" data-label="ت">
+                                    <span class="num-circle" th:text="${stat.count}"></span></td>
+                                <td class="td-name" data-label="الفقرة"
+                                    th:text="${arabicNames2[item.itemName]}"></td>
+                                <td class="td-max" data-label="الدرجة القصوى">
+                                    <span class="badge-max" th:text="${item.maxGrade}"></span></td>
+                                <td class="td-upload" data-label="رفع الملف">
+                                    <form th:action="@{/evaluation/upload/axis2/{n}(n=${item.itemName})}"
+                                          method="post" enctype="multipart/form-data">
+                                        <div class="upload-block">
+                                            <div th:if="${item.fileName != null}" style="display:inline-flex;align-items:center;gap:4px;">
+                                                <span class="file-chip">
+                                                    <i class="bi bi-file-earmark-check-fill"></i>
+                                                    <span th:text="${item.fileName}"></span>
+                                                </span>
+                                                <button type="button" class="btn-preview-file"
+                                                        th:attr="onclick='openFilePreview(\'/uploads/scientific-activity/' + ${item.fileName} + '\', \'' + ${item.fileName} + '\')'">
+                                                    <i class="bi bi-eye-fill"></i>
+                                                </button>
+                                            </div>
+                                            <label class="btn-upload">
+                                                <i class="bi bi-cloud-upload-fill"></i>
+                                                <span th:text="${item.fileName != null ? 'تغيير' : 'رفع ملف'}"></span>
+                                                <input type="file" name="file" class="upload-input"
+                                                       onchange="this.form.submit()"/>
+                                            </label>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td class="td-grade" data-label="الدرجة المعطاة">
+                                    <span th:if="${item.grade != null}" class="grade-display"
+                                          th:text="${item.grade}"></span>
+                                    <span th:if="${item.grade == null}" class="grade-empty">—</span>
+                                </td>
+                                <td class="td-note" data-label="ملاحظات المسؤول">
+                                    <div th:if="${item.note != null and !#strings.isEmpty(item.note)}"
+                                         class="note-display-readonly">
+                                        <i class="bi bi-chat-left-text-fill"
+                                           style="color:var(--axis2);margin-left:6px;"></i>
+                                        <span th:text="${item.note}"></span>
+                                    </div>
+                                    <span th:if="${item.note == null or #strings.isEmpty(item.note)}"
+                                          class="no-file">لا توجد ملاحظات</span>
+                                </td>
+                            </tr>
+                            <tr class="total-row">
+                                <td colspan="5" style="text-align:right;padding-right:24px;">
+                                    <i class="bi bi-calculator-fill"></i> مجموع المحور الثاني</td>
+                                <td class="td-grade">
+                                    <span class="total-val" id="total2Display" th:text="${total2}"></span>
+                                    <span style="font-size:0.8rem;opacity:0.75;"> / 100</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END AXIS 2 -->
+
+
+    <!-- ══════════════════════════════════════════════════════
+         AXIS 3 — المحور الثالث: الجانب التربوي (20%)
+         ══════════════════════════════════════════════════════ -->
+    <div class="axis-section">
+        <div class="axis-banner axis3">
+            <h5><i class="bi bi-people-fill"></i> المحور الثالث: الجانب التربوي والارشادي والتعليم المستمر — ٢٠٪</h5>
+            <p>المجموع الكلي <strong>١٠٠</strong></p>
+        </div>
+
+        <!-- ADMIN form for axis 3 -->
+        <div th:if="${role == 'ROLE_ADMIN'}">
+            <form th:action="@{/evaluation/save/axis3}" method="post">
+                <input type="hidden" name="viewedTeacherId" th:value="${viewedTeacherId}"/>
+                <div class="main-card">
+                    <div class="table-responsive">
+                        <table class="eval-table axis3">
+                            <thead><tr>
+                                <th>ت</th><th>الفقرات</th><th>الدرجة القصوى</th>
+                                <th>الملف المرفوع</th><th>الدرجة المعطاة</th><th>الملاحظات</th>
+                            </tr></thead>
+                            <tbody>
+                                <tr th:each="item, stat : ${axis3Items}">
+                                    <td class="td-num" data-label="ت">
+                                        <span class="num-circle" th:text="${stat.count}"></span></td>
+                                    <td class="td-name" data-label="الفقرة"
+                                        th:text="${arabicNames3[item.itemName]}"></td>
+                                    <td class="td-max" data-label="الدرجة القصوى">
+                                        <span class="badge-max" th:text="${item.maxGrade}"></span></td>
+                                    <td class="td-upload" data-label="الملف">
+                                        <div th:if="${item.fileName != null}" style="display:inline-flex;align-items:center;gap:4px;">
+                                            <span class="file-chip">
+                                                <i class="bi bi-file-earmark-check-fill"></i>
+                                                <span th:text="${item.fileName}"></span>
+                                            </span>
+                                            <button type="button" class="btn-preview-file"
+                                                    th:attr="onclick='openFilePreview(\'/uploads/educational-activity/' + ${item.fileName} + '\', \'' + ${item.fileName} + '\')'">
+                                                <i class="bi bi-eye-fill"></i>
+                                            </button>
+                                        </div>
+                                        <span th:if="${item.fileName == null}" class="no-file">
+                                            <i class="bi bi-hourglass"></i> لم يُرفع بعد</span>
+                                    </td>
+                                    <td class="td-grade" data-label="الدرجة المعطاة">
+                                        <input type="number" class="grade-input"
+                                               th:name="'grade_' + ${item.itemName}"
+                                               th:value="${item.grade != null ? item.grade : item.maxGrade}"
+                                               th:min="0" th:max="${item.maxGrade}"
+                                               oninput="updateTotal('total3Display', '.axis3-grade-input')"/>
+                                    </td>
+                                    <td class="td-note" data-label="الملاحظات">
+                                        <textarea class="note-textarea"
+                                                  th:name="'note_' + ${item.itemName}"
+                                                  th:text="${item.note}"
+                                                  placeholder="أضف ملاحظة..."></textarea>
+                                    </td>
+                                </tr>
+                                <tr class="total-row">
+                                    <td colspan="4" style="text-align:right;padding-right:24px;">
+                                        <i class="bi bi-calculator-fill"></i> مجموع المحور الثالث</td>
+                                    <td class="td-grade">
+                                        <span class="total-val" id="total3Display"
+                                              th:text="${total3}"></span>
+                                        <span style="font-size:0.8rem;opacity:0.75;"> / 100</span>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="save-section">
+                        <button type="submit" class="btn-save axis3">
+                            <i class="bi bi-floppy-fill"></i> حفظ المحور الثالث</button>
+                        <span class="save-hint"><i class="bi bi-info-circle"></i> حفظ درجات وملاحظات المحور الثالث</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- TEACHER view for axis 3 -->
+        <div th:if="${role == 'ROLE_TEACHER'}">
+            <div class="main-card">
+                <div class="table-responsive">
+                    <table class="eval-table axis3">
+                        <thead><tr>
+                            <th>ت</th><th>الفقرات</th><th>الدرجة القصوى</th>
+                            <th>رفع الملف</th><th>الدرجة المعطاة</th><th>ملاحظات المسؤول</th>
+                        </tr></thead>
+                        <tbody>
+                            <tr th:each="item, stat : ${axis3Items}">
+                                <td class="td-num" data-label="ت">
+                                    <span class="num-circle" th:text="${stat.count}"></span></td>
+                                <td class="td-name" data-label="الفقرة"
+                                    th:text="${arabicNames3[item.itemName]}"></td>
+                                <td class="td-max" data-label="الدرجة القصوى">
+                                    <span class="badge-max" th:text="${item.maxGrade}"></span></td>
+                                <td class="td-upload" data-label="رفع الملف">
+                                    <form th:action="@{/evaluation/upload/axis3/{n}(n=${item.itemName})}"
+                                          method="post" enctype="multipart/form-data">
+                                        <div class="upload-block">
+                                            <div th:if="${item.fileName != null}" style="display:inline-flex;align-items:center;gap:4px;">
+                                                <span class="file-chip">
+                                                    <i class="bi bi-file-earmark-check-fill"></i>
+                                                    <span th:text="${item.fileName}"></span>
+                                                </span>
+                                                <button type="button" class="btn-preview-file"
+                                                        th:attr="onclick='openFilePreview(\'/uploads/educational-activity/' + ${item.fileName} + '\', \'' + ${item.fileName} + '\')'">
+                                                    <i class="bi bi-eye-fill"></i>
+                                                </button>
+                                            </div>
+                                            <label class="btn-upload">
+                                                <i class="bi bi-cloud-upload-fill"></i>
+                                                <span th:text="${item.fileName != null ? 'تغيير' : 'رفع ملف'}"></span>
+                                                <input type="file" name="file" class="upload-input"
+                                                       onchange="this.form.submit()"/>
+                                            </label>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td class="td-grade" data-label="الدرجة المعطاة">
+                                    <span th:if="${item.grade != null}" class="grade-display"
+                                          th:text="${item.grade}"></span>
+                                    <span th:if="${item.grade == null}" class="grade-empty">—</span>
+                                </td>
+                                <td class="td-note" data-label="ملاحظات المسؤول">
+                                    <div th:if="${item.note != null and !#strings.isEmpty(item.note)}"
+                                         class="note-display-readonly">
+                                        <i class="bi bi-chat-left-text-fill"
+                                           style="color:var(--axis3);margin-left:6px;"></i>
+                                        <span th:text="${item.note}"></span>
+                                    </div>
+                                    <span th:if="${item.note == null or #strings.isEmpty(item.note)}"
+                                          class="no-file">لا توجد ملاحظات</span>
+                                </td>
+                            </tr>
+                            <tr class="total-row">
+                                <td colspan="5" style="text-align:right;padding-right:24px;">
+                                    <i class="bi bi-calculator-fill"></i> مجموع المحور الثالث</td>
+                                <td class="td-grade">
+                                    <span class="total-val" id="total3Display" th:text="${total3}"></span>
+                                    <span style="font-size:0.8rem;opacity:0.75;"> / 100</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END AXIS 3 -->
+
+    <!-- ══════════════════════════════════════════════════════
+         AXIS 4 — المحور الرابع: مواطن القوة العلمية
+         ══════════════════════════════════════════════════════ -->
+    <div class="axis-section">
+        <div class="axis-banner axis4">
+            <h5><i class="bi bi-star-fill"></i> المحور الرابع: مواطن القوة العلمية</h5>
+            <p>الدرجة القصوى لكل فقرة متغيرة — <strong>على ألا تتجاوز الدرجة القصوى (٩) درجات</strong></p>
+        </div>
+
+        <!-- ADMIN form for axis 4 -->
+        <div th:if="${role == 'ROLE_ADMIN'}">
+            <form th:action="@{/evaluation/save/axis4}" method="post">
+                <input type="hidden" name="viewedTeacherId" th:value="${viewedTeacherId}"/>
+                <div class="main-card">
+                    <div class="table-responsive">
+                        <table class="eval-table axis4">
+                            <thead><tr>
+                                <th>ت</th><th>الفقرات</th><th>الدرجة القصوى</th>
+                                <th>الملف المرفوع</th><th>الدرجة المعطاة</th><th>الملاحظات</th>
+                            </tr></thead>
+                            <tbody>
+                                <tr th:each="item, stat : ${axis4Items}">
+                                    <td class="td-num" data-label="ت">
+                                        <span class="num-circle" th:text="${stat.count}"></span></td>
+                                    <td class="td-name" data-label="الفقرة"
+                                        th:text="${arabicNames4[item.itemName]}"></td>
+                                    <td class="td-max" data-label="الدرجة القصوى">
+                                        <span class="badge-max" th:text="${item.maxGrade}"></span></td>
+                                    <td class="td-upload" data-label="الملف">
+                                        <div th:if="${item.fileName != null}" style="display:inline-flex;align-items:center;gap:4px;">
+                                            <span class="file-chip">
+                                                <i class="bi bi-file-earmark-check-fill"></i>
+                                                <span th:text="${item.fileName}"></span>
+                                            </span>
+                                            <button type="button" class="btn-preview-file"
+                                                    th:attr="onclick='openFilePreview(\'/uploads/scientific-strength/' + ${item.fileName} + '\', \'' + ${item.fileName} + '\')'">
+                                                <i class="bi bi-eye-fill"></i>
+                                            </button>
+                                        </div>
+                                        <span th:if="${item.fileName == null}" class="no-file">
+                                            <i class="bi bi-hourglass"></i> لم يُرفع بعد</span>
+                                    </td>
+                                    <td class="td-grade" data-label="الدرجة المعطاة">
+                                        <input type="number" class="grade-input axis4-grade-input"
+                                               th:name="'grade_' + ${item.itemName}"
+                                               th:value="${item.grade != null ? item.grade : 0}"
+                                               th:min="0" th:max="${item.maxGrade}"
+                                               oninput="updateTotal4()"/>
+                                    </td>
+                                    <td class="td-note" data-label="الملاحظات">
+                                        <textarea class="note-textarea"
+                                                  th:name="'note_' + ${item.itemName}"
+                                                  th:text="${item.note}"
+                                                  placeholder="أضف ملاحظة..."></textarea>
+                                    </td>
+                                </tr>
+                                <tr class="total-row">
+                                    <td colspan="4" style="text-align:right;padding-right:24px;">
+                                        <i class="bi bi-calculator-fill"></i> مجموع المحور الرابع (محدد بـ ٩ درجات كحد أقصى)</td>
+                                    <td class="td-grade">
+                                        <span class="total-val" id="total4Display"
+                                              th:text="${total4}"></span>
+                                        <span style="font-size:0.8rem;opacity:0.75;"> / 9</span>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="save-section">
+                        <button type="submit" class="btn-save axis4">
+                            <i class="bi bi-floppy-fill"></i> حفظ المحور الرابع</button>
+                        <span class="save-hint"><i class="bi bi-info-circle"></i> حفظ درجات وملاحظات المحور الرابع</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- TEACHER view for axis 4 -->
+        <div th:if="${role == 'ROLE_TEACHER'}">
+            <div class="main-card">
+                <div class="table-responsive">
+                    <table class="eval-table axis4">
+                        <thead><tr>
+                            <th>ت</th><th>الفقرات</th><th>الدرجة القصوى</th>
+                            <th>رفع الملف</th><th>الدرجة المعطاة</th><th>ملاحظات المسؤول</th>
+                        </tr></thead>
+                        <tbody>
+                            <tr th:each="item, stat : ${axis4Items}">
+                                <td class="td-num" data-label="ت">
+                                    <span class="num-circle" th:text="${stat.count}"></span></td>
+                                <td class="td-name" data-label="الفقرة"
+                                    th:text="${arabicNames4[item.itemName]}"></td>
+                                <td class="td-max" data-label="الدرجة القصوى">
+                                    <span class="badge-max" th:text="${item.maxGrade}"></span></td>
+                                <td class="td-upload" data-label="رفع الملف">
+                                    <form th:action="@{/evaluation/upload/axis4/{n}(n=${item.itemName})}"
+                                          method="post" enctype="multipart/form-data">
+                                        <div class="upload-block">
+                                            <div th:if="${item.fileName != null}" style="display:inline-flex;align-items:center;gap:4px;">
+                                                <span class="file-chip">
+                                                    <i class="bi bi-file-earmark-check-fill"></i>
+                                                    <span th:text="${item.fileName}"></span>
+                                                </span>
+                                                <button type="button" class="btn-preview-file"
+                                                        th:attr="onclick='openFilePreview(\'/uploads/scientific-strength/' + ${item.fileName} + '\', \'' + ${item.fileName} + '\')'">
+                                                    <i class="bi bi-eye-fill"></i>
+                                                </button>
+                                            </div>
+                                            <label class="btn-upload">
+                                                <i class="bi bi-cloud-upload-fill"></i>
+                                                <span th:text="${item.fileName != null ? 'تغيير' : 'رفع ملف'}"></span>
+                                                <input type="file" name="file" class="upload-input"
+                                                       onchange="this.form.submit()"/>
+                                            </label>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td class="td-grade" data-label="الدرجة المعطاة">
+                                    <span th:if="${item.grade != null}" class="grade-display"
+                                          th:text="${item.grade}"></span>
+                                    <span th:if="${item.grade == null}" class="grade-empty">—</span>
+                                </td>
+                                <td class="td-note" data-label="ملاحظات المسؤول">
+                                    <div th:if="${item.note != null and !#strings.isEmpty(item.note)}"
+                                         class="note-display-readonly">
+                                        <i class="bi bi-chat-left-text-fill"
+                                           style="color:var(--axis4);margin-left:6px;"></i>
+                                        <span th:text="${item.note}"></span>
+                                    </div>
+                                    <span th:if="${item.note == null or #strings.isEmpty(item.note)}"
+                                          class="no-file">لا توجد ملاحظات</span>
+                                </td>
+                            </tr>
+                            <tr class="total-row">
+                                <td colspan="5" style="text-align:right;padding-right:24px;">
+                                    <i class="bi bi-calculator-fill"></i> مجموع المحور الرابع</td>
+                                <td class="td-grade">
+                                    <span class="total-val" id="total4Display" th:text="${total4}"></span>
+                                    <span style="font-size:0.8rem;opacity:0.75;"> / 9</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         AXIS 5 — المحور الخامس: العقوبات (خصم الدرجات)
+         ══════════════════════════════════════════════════════ -->
+    <div class="axis-section">
+        <div class="axis-banner axis5">
+            <h5><i class="bi bi-exclamation-triangle-fill"></i> المحور الخامس: العقوبات (خصم الدرجات)</h5>
+            <p>تُملأ من قبل المسؤول المباشر — تخصم الدرجات حسب الأخفاق</p>
+        </div>
+
+        <!-- ADMIN form for axis 5 -->
+        <div th:if="${role == 'ROLE_ADMIN'}">
+            <form th:action="@{/evaluation/save/axis5}" method="post">
+                <input type="hidden" name="viewedTeacherId" th:value="${viewedTeacherId}"/>
+                <div class="main-card">
+                    <div class="table-responsive">
+                        <table class="eval-table axis5">
+                            <thead><tr>
+                                <th>ت</th><th>الأخفاق (تخصم الدرجة حسب الآتي)</th>
+                                <th>الدرجة التي تُخصم</th>
+                                <th>الملف المرفوع</th><th>الدرجة المخصومة</th><th>الملاحظات</th>
+                            </tr></thead>
+                            <tbody>
+                                <tr th:each="item, stat : ${axis5Items}">
+                                    <td class="td-num" data-label="ت">
+                                        <span class="num-circle" th:text="${stat.count}"></span></td>
+                                    <td class="td-name" data-label="الأخفاق"
+                                        th:text="${arabicNames5[item.itemName]}"></td>
+                                    <td class="td-max" data-label="الدرجة التي تُخصم">
+                                        <span class="badge-max" style="background:#fee2e2;color:#dc2626;border-color:#dc2626;white-space:nowrap;min-width:110px;display:inline-block;"
+                                              th:text="${deductionTexts[item.itemName]}"></span></td>
+                                    <td class="td-upload" data-label="الملف">
+                                        <div th:if="${item.fileName != null}" style="display:inline-flex;align-items:center;gap:4px;">
+                                            <span class="file-chip">
+                                                <i class="bi bi-file-earmark-check-fill"></i>
+                                                <span th:text="${item.fileName}"></span>
+                                            </span>
+                                            <button type="button" class="btn-preview-file"
+                                                    th:attr="onclick='openFilePreview(\'/uploads/penalty/' + ${item.fileName} + '\', \'' + ${item.fileName} + '\')'">
+                                                <i class="bi bi-eye-fill"></i>
+                                            </button>
+                                        </div>
+                                        <span th:if="${item.fileName == null}" class="no-file">
+                                            <i class="bi bi-hourglass"></i> لم يُرفع بعد</span>
+                                    </td>
+                                    <td class="td-grade" data-label="الدرجة المخصومة">
+                                        <input type="number" class="grade-input axis5-grade-input"
+                                               th:name="'deduction_' + ${item.itemName}"
+                                               th:value="${item.deduction != null ? item.deduction : 0}"
+                                               th:min="${-item.maxDeduction}" max="0"
+                                               oninput="updateTotal5()"/>
+                                    </td>
+                                    <td class="td-note" data-label="الملاحظات">
+                                        <textarea class="note-textarea"
+                                                  th:name="'note_' + ${item.itemName}"
+                                                  th:text="${item.note}"
+                                                  placeholder="أضف ملاحظة..."></textarea>
+                                    </td>
+                                </tr>
+                                <tr class="total-row">
+                                    <td colspan="4" style="text-align:right;padding-right:24px;">
+                                        <i class="bi bi-calculator-fill"></i> مجموع الخصومات</td>
+                                    <td class="td-grade">
+                                        <span class="total-val" style="color:#dc2626;" id="total5Display"
+                                              th:text="${total5}"></span>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="save-section">
+                        <button type="submit" class="btn-save axis5">
+                            <i class="bi bi-floppy-fill"></i> حفظ المحور الخامس</button>
+                        <span class="save-hint"><i class="bi bi-info-circle"></i> حفظ خصومات وملاحظات المحور الخامس</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- TEACHER view for axis 5 -->
+        <div th:if="${role == 'ROLE_TEACHER'}">
+            <div class="main-card">
+                <div class="table-responsive">
+                    <table class="eval-table axis5">
+                        <thead><tr>
+                            <th>ت</th><th>الأخفاق</th>
+                            <th>الدرجة التي تُخصم</th>
+                            <th>رفع الملف</th><th>الدرجة المخصومة</th><th>ملاحظات المسؤول</th>
+                        </tr></thead>
+                        <tbody>
+                            <tr th:each="item, stat : ${axis5Items}">
+                                <td class="td-num" data-label="ت">
+                                    <span class="num-circle" th:text="${stat.count}"></span></td>
+                                <td class="td-name" data-label="الأخفاق"
+                                    th:text="${arabicNames5[item.itemName]}"></td>
+                                <td class="td-max" data-label="الدرجة التي تُخصم">
+                                    <span class="badge-max" style="background:#fee2e2;color:#dc2626;border-color:#dc2626;white-space:nowrap;min-width:110px;display:inline-block;"
+                                          th:text="${deductionTexts[item.itemName]}"></span></td>
+                                <td class="td-upload" data-label="رفع الملف">
+                                    <form th:action="@{/evaluation/upload/axis5/{n}(n=${item.itemName})}"
+                                          method="post" enctype="multipart/form-data">
+                                        <div class="upload-block">
+                                            <div th:if="${item.fileName != null}" style="display:inline-flex;align-items:center;gap:4px;">
+                                                <span class="file-chip">
+                                                    <i class="bi bi-file-earmark-check-fill"></i>
+                                                    <span th:text="${item.fileName}"></span>
+                                                </span>
+                                                <button type="button" class="btn-preview-file"
+                                                        th:attr="onclick='openFilePreview(\'/uploads/penalty/' + ${item.fileName} + '\', \'' + ${item.fileName} + '\')'">
+                                                    <i class="bi bi-eye-fill"></i>
+                                                </button>
+                                            </div>
+                                            <label class="btn-upload">
+                                                <i class="bi bi-cloud-upload-fill"></i>
+                                                <span th:text="${item.fileName != null ? 'تغيير' : 'رفع ملف'}"></span>
+                                                <input type="file" name="file" class="upload-input"
+                                                       onchange="this.form.submit()"/>
+                                            </label>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td class="td-grade" data-label="الدرجة المخصومة">
+                                    <span th:if="${item.deduction != null}" class="grade-display"
+                                          style="color:#dc2626;background:#fee2e2;"
+                                          th:text="${item.deduction}"></span>
+                                    <span th:if="${item.deduction == null}" class="grade-empty">—</span>
+                                </td>
+                                <td class="td-note" data-label="ملاحظات المسؤول">
+                                    <div th:if="${item.note != null and !#strings.isEmpty(item.note)}"
+                                         class="note-display-readonly">
+                                        <i class="bi bi-chat-left-text-fill"
+                                           style="color:var(--axis5);margin-left:6px;"></i>
+                                        <span th:text="${item.note}"></span>
+                                    </div>
+                                    <span th:if="${item.note == null or #strings.isEmpty(item.note)}"
+                                          class="no-file">لا توجد ملاحظات</span>
+                                </td>
+                            </tr>
+                            <tr class="total-row">
+                                <td colspan="5" style="text-align:right;padding-right:24px;">
+                                    <i class="bi bi-calculator-fill"></i> مجموع الخصومات</td>
+                                <td class="td-grade">
+                                    <span class="total-val" style="color:#dc2626;" id="total5Display"
+                                          th:text="${total5}"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══ FINAL RESULT CARD ══ -->
+    <div class="final-result-card">
+        <div class="final-result-title">
+            <i class="bi bi-clipboard-check-fill"></i>
+            النتيجة النهائية للتقييم
+        </div>
+        
+        <div class="result-display">
+            <div class="result-score-box">
+                <div class="result-score-main" id="finalScoreDisplay">
+                    <span id="weightedTotal">0</span>
+                </div>
+                <div class="result-score-label">الدرجة النهائية (من 100 + المكافآت - العقوبات)</div>
+            </div>
+            
+            <div class="result-percentage" id="percentageDisplay">
+                0%
+            </div>
+        </div>
+        
+        <div class="result-details">
+            <div class="result-details-title">📋 تفاصيل التقييم:</div>
+            <div class="result-item">
+                <span class="result-item-label">• المحور الأول (وزن 40%)</span>
+                <span class="result-item-value"><span id="axis1Weighted">0</span> / 40</span>
+            </div>
+            <div class="result-item">
+                <span class="result-item-label">• المحور الثاني (وزن 40%)</span>
+                <span class="result-item-value"><span id="axis2Weighted">0</span> / 40</span>
+            </div>
+            <div class="result-item">
+                <span class="result-item-label">• المحور الثالث (وزن 20%)</span>
+                <span class="result-item-value"><span id="axis3Weighted">0</span> / 20</span>
+            </div>
+            <div class="result-item" style="border-top: 2px solid #d6eaf8; padding-top: 12px; margin-top: 8px;">
+                <span class="result-item-label" style="font-weight: 800;">المجموع الأساسي</span>
+                <span class="result-item-value" style="font-weight: 800; color: #4a90e2;">
+                    <span id="baseScoreDisplay">0</span> / 100
+                </span>
+            </div>
+            <div class="result-item">
+                <span class="result-item-label">+ مواطن القوة (مكافأة)</span>
+                <span class="result-item-value" style="color: #f0a500;"><span id="axis4Display">0</span> / 9</span>
+            </div>
+            <div class="result-item">
+                <span class="result-item-label">- العقوبات (خصم)</span>
+                <span class="result-item-value" style="color: #ef4444;"><span id="axis5Display">0</span></span>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══ GRAND TOTAL CARD ══ -->
+    <div class="grand-total-card">
+        <div class="grand-total-label">
+            <i class="bi bi-trophy-fill" style="font-size:1.4rem;"></i>
+            الدرجة الإجمالية للمحاور الخمسة
+        </div>
+        <div class="grand-total-scores">
+            <div class="score-chip">
+                <span class="val" th:text="${total1}">0</span>
+                <span class="lbl">المحور الأول</span>
+            </div>
+            <div style="font-size:1.3rem; opacity:0.5;">+</div>
+            <div class="score-chip">
+                <span class="val" th:text="${total2}">0</span>
+                <span class="lbl">المحور الثاني</span>
+            </div>
+            <div style="font-size:1.3rem; opacity:0.5;">+</div>
+            <div class="score-chip">
+                <span class="val" th:text="${total3}">0</span>
+                <span class="lbl">المحور الثالث</span>
+            </div>
+            <div style="font-size:1.3rem; opacity:0.5;">+</div>
+            <div class="score-chip" style="border-color: #f0a500;">
+                <span class="val" style="color: #f0a500;" th:text="${total4}">0</span>
+                <span class="lbl">المحور الرابع</span>
+            </div>
+            <div style="font-size:1.3rem; opacity:0.5;">+</div>
+            <div class="score-chip" style="border-color: #dc2626;">
+                <span class="val" style="color: #dc2626;" th:text="${total5}">0</span>
+                <span class="lbl">المحور الخامس</span>
+            </div>
+            <div style="font-size:1.3rem; opacity:0.5;">=</div>
+            <div class="grand-score">
+                <span class="val" id="grandTotalDisplay" th:text="${grandTotal}">0</span>
+                <span class="lbl">المجموع الكلي</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ زر الطباعة السفلي ══ -->
+    <div style="display:flex; justify-content:center; margin-top:32px; margin-bottom:16px;">
+        <button onclick="window.print()" class="btn-print-bottom">
+            <i class="bi bi-printer-fill"></i>
+            طباعة نموذج التقييم الشامل
+        </button>
+    </div>
+
+</div>
+<!-- END CONTENT -->
+
+<!-- ══ FILE PREVIEW MODAL ══ -->
+<div class="modal fade file-preview-modal" id="filePreviewModal" tabindex="-1"
+     aria-labelledby="filePreviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" style="border-radius:12px; overflow:hidden;">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="filePreviewModalLabel">
+                    <i class="bi bi-file-earmark-text"></i>
+                    <span id="previewFileName">عرض الملف</span>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal Body — content injected by JS -->
+            <div class="modal-body" id="previewModalBody">
+                <!-- Content rendered here dynamically -->
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer-custom">
+                <span id="previewFileInfo" style="font-size:0.82rem; color: var(--text-muted); font-family:'Cairo',sans-serif;"></span>
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <a id="previewOpenBtn" href="#" target="_blank"
+                       class="btn-download-file" style="background: #555;">
+                        <i class="bi bi-box-arrow-up-right"></i> فتح في تبويب جديد
+                    </a>
+                    <a id="previewDownloadBtn" href="#" download
+                       class="btn-download-file">
+                        <i class="bi bi-download"></i> تحميل الملف
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- END FILE PREVIEW MODAL -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Calculate weighted final score
+    function calculateWeightedScore() {
+        let total1 = parseInt(document.getElementById('total1Display')?.textContent) || 0;
+        let total2 = parseInt(document.getElementById('total2Display')?.textContent) || 0;
+        let total3 = parseInt(document.getElementById('total3Display')?.textContent) || 0;
+        let total4 = parseInt(document.getElementById('total4Display')?.textContent) || 0;
+        let total5 = parseInt(document.getElementById('total5Display')?.textContent) || 0;
+        
+        // Apply weights: Axis1(40%), Axis2(40%), Axis3(20%)
+        let weighted1 = total1 * 0.4;
+        let weighted2 = total2 * 0.4;
+        let weighted3 = total3 * 0.2;
+        
+        // Calculate base score (out of 100)
+        let baseScore = weighted1 + weighted2 + weighted3;
+        
+        // Calculate final score (base + axis4 + axis5)
+        let finalScore = baseScore + total4 + total5;
+        
+        // Update weighted displays
+        document.getElementById('axis1Weighted').textContent = weighted1.toFixed(1);
+        document.getElementById('axis2Weighted').textContent = weighted2.toFixed(1);
+        document.getElementById('axis3Weighted').textContent = weighted3.toFixed(1);
+        document.getElementById('axis4Display').textContent = total4;
+        document.getElementById('axis5Display').textContent = total5;
+        
+        // Update base score display
+        let baseScoreEl = document.getElementById('baseScoreDisplay');
+        if (baseScoreEl) {
+            baseScoreEl.textContent = baseScore.toFixed(1);
+        }
+        
+        // Update final score display
+        document.getElementById('weightedTotal').textContent = finalScore.toFixed(1);
+        
+        // Calculate percentage (base score is out of 100)
+        let percentage = baseScore; // Since base is already a percentage
+        
+        // Update percentage display
+        let percentageEl = document.getElementById('percentageDisplay');
+        percentageEl.textContent = percentage.toFixed(1) + '%';
+        
+        // Apply performance color based on base score
+        percentageEl.className = 'result-percentage';
+        if (percentage >= 75) {
+            percentageEl.classList.add('performance-excellent');
+        } else if (percentage >= 50) {
+            percentageEl.classList.add('performance-good');
+        } else if (percentage >= 25) {
+            percentageEl.classList.add('performance-fair');
+        } else {
+            percentageEl.classList.add('performance-poor');
+        }
+        
+        // Update grand total
+        let grandTotal = total1 + total2 + total3 + total4 + total5;
+        let grandDisplay = document.getElementById('grandTotalDisplay');
+        if (grandDisplay) {
+            grandDisplay.textContent = grandTotal;
+        }
+    }
+
+    // Update total for Axis 4 (with cap at 9)
+    function updateTotal4() {
+        let inputs = document.querySelectorAll('.axis4-grade-input');
+        let sum = 0;
+        inputs.forEach(inp => {
+            let val = parseInt(inp.value) || 0;
+            sum += val;
+        });
+        
+        if (sum > 9) sum = 9;
+        
+        let display = document.getElementById('total4Display');
+        if (display) display.textContent = sum;
+        calculateWeightedScore();
+    }
+
+    // Update total for Axis 5 (deductions)
+    function updateTotal5() {
+        let inputs = document.querySelectorAll('.axis5-grade-input');
+        let sum = 0;
+        inputs.forEach(inp => {
+            let val = parseInt(inp.value) || 0;
+            sum += val;
+        });
+        
+        let display = document.getElementById('total5Display');
+        if (display) display.textContent = sum;
+        calculateWeightedScore();
+    }
+
+    // Update total for a specific axis when admin changes grade inputs
+    function updateTotal(displayId, inputClass) {
+        const t1 = sumInputs('#total1Display', '.eval-table.axis1 .grade-input');
+        const t2 = sumInputs('#total2Display', '.eval-table.axis2 .grade-input');
+        const t3 = sumInputs('#total3Display', '.eval-table.axis3 .grade-input');
+
+        const el = document.getElementById(displayId);
+        if (el) el.textContent = eval(displayId === 'total1Display' ? t1 : displayId === 'total2Display' ? t2 : t3);
+        
+        calculateWeightedScore();
+    }
+
+    function sumInputs(displayId, selector) {
+        const inputs = document.querySelectorAll(selector);
+        let total = 0;
+        inputs.forEach(inp => {
+            const val = parseInt(inp.value, 10);
+            if (!isNaN(val)) total += val;
+        });
+        const el = document.querySelector(displayId);
+        if (el) el.textContent = total;
+        return total;
+    }
+
+    // Auto-dismiss alerts
+    setTimeout(function () {
+        document.querySelectorAll('.alert-success-custom, .alert-error-custom').forEach(el => {
+            el.style.transition = 'opacity 0.5s';
+            el.style.opacity = '0';
+            setTimeout(() => el.remove(), 500);
+        });
+    }, 4000);
+
+    // ── FILE PREVIEW MODAL ──
+    function openFilePreview(fileUrl, fileName) {
+        // Build absolute URL using current origin (e.g. http://localhost:8080)
+        const absoluteUrl = window.location.origin + fileUrl;
+
+        // Update modal title and download button
+        document.getElementById('previewFileName').textContent = fileName;
+        document.getElementById('previewDownloadBtn').href = absoluteUrl;
+        document.getElementById('previewDownloadBtn').download = fileName;
+        document.getElementById('previewOpenBtn').href = absoluteUrl;
+        document.getElementById('previewFileInfo').textContent = fileName;
+
+        // Determine file type by extension
+        const ext = fileName.split('.').pop().toLowerCase();
+        const body = document.getElementById('previewModalBody');
+        body.innerHTML = ''; // Clear previous content
+
+        if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg'].includes(ext)) {
+            // ── Image preview ──
+            const img = document.createElement('img');
+            img.src = absoluteUrl;
+            img.className = 'preview-image';
+            img.alt = fileName;
+            body.appendChild(img);
+
+        } else if (ext === 'pdf') {
+            // ── PDF inline preview via embed ──
+            const embed = document.createElement('embed');
+            embed.setAttribute('src', absoluteUrl + '#toolbar=1&navpanes=0&scrollbar=1');
+            embed.setAttribute('type', 'application/pdf');
+            embed.style.width = '100%';
+            embed.style.height = '580px';
+            embed.style.display = 'block';
+            body.appendChild(embed);
+
+        } else {
+            // ── Unsupported: show download prompt ──
+            const iconMap = {
+                'doc': 'bi-file-earmark-word', 'docx': 'bi-file-earmark-word',
+                'xls': 'bi-file-earmark-excel', 'xlsx': 'bi-file-earmark-excel',
+                'ppt': 'bi-file-earmark-ppt', 'pptx': 'bi-file-earmark-ppt',
+                'txt': 'bi-file-earmark-text', 'zip': 'bi-file-earmark-zip',
+                'rar': 'bi-file-earmark-zip'
+            };
+            const icon = iconMap[ext] || 'bi-file-earmark';
+            body.innerHTML = `
+                <div class="preview-unsupported">
+                    <i class="bi ${icon}"></i>
+                    <p>لا يمكن عرض هذا النوع من الملفات مباشرةً</p>
+                    <p style="font-size:0.82rem; color:#999;">${fileName}</p>
+                    <a href="${absoluteUrl}" download="${fileName}" class="btn-download-file">
+                        <i class="bi bi-download"></i> تحميل الملف
+                    </a>
+                </div>`;
+        }
+
+        // Open the Bootstrap modal
+        const modal = new bootstrap.Modal(document.getElementById('filePreviewModal'));
+        modal.show();
+    }
+
+    // Initialize weighted score on page load
+    window.addEventListener('DOMContentLoaded', function() {
+        calculateWeightedScore();
+    });
+</script>
+</body>
+</html>

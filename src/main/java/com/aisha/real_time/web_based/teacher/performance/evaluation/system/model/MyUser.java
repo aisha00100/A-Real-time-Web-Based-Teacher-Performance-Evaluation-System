@@ -67,6 +67,24 @@ public class MyUser {
 
 
 
+// ⬇️ أضفهما هنا
+public TeacherProfile getTeacherProfile() {
+    return teacherProfile;
+}
+
+public void setTeacherProfile(TeacherProfile teacherProfile) {
+    this.teacherProfile = teacherProfile;
+}
+
+
+
+
+
+
+
+
+
+
 
 //Getter
    public Long getId() { return id; }

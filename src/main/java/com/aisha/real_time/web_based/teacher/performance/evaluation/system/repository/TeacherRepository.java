@@ -1,5 +1,6 @@
 package com.aisha.real_time.web_based.teacher.performance.evaluation.system.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +15,11 @@ public interface TeacherRepository extends JpaRepository<TeacherProfile, Long> {
     Optional<TeacherProfile> findByUserId(Long userId);
     boolean existsByUser(MyUser user);
     boolean existsByUserId(Long userId);
+
+
+      // ⬇️ أضف هؤلاء فقط للمدير
+    List<TeacherProfile> findByDepartment(String department);
+    List<TeacherProfile> findByCollege(String college);
+    List<TeacherProfile> findByUniversity(String university);
+    List<TeacherProfile> findByFirstNameContaining(String name);
 }

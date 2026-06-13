@@ -23,13 +23,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+            
             .csrf(csrf -> csrf.disable())  
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/signin", "/creatUser","/axis","/upload","/teacherquality").permitAll()  // السماح بنهاية دخول وتسجيل جديدة للجميع
-                .requestMatchers("/admin/**", "/register").hasRole("ADMIN")   
-                .requestMatchers("/teacher/**","/teacher/profile","/teacher/form").hasRole("TEACHER")                   // حماية مسار الإدارة للمشرفين فقط
-                .requestMatchers("/teacher/**","/teacher/profile").hasAnyRole("ADMIN","TEACHER")                // حماية مسار المعلمين فقط
-                                            
+            .anyRequest().permitAll() // ⬅️ كل المسارات مفتوحة
             )
             .formLogin(form -> form
                 .loginPage("/signin")                    // صفحة تسجيل دخول مخصصة:contentReference[oaicite:6]{index=6}
@@ -41,9 +38,9 @@ public class SecurityConfig {
                         boolean isTeacher = auth.getAuthorities().stream()
                         .anyMatch(a -> a.getAuthority().equals("ROLE_TEACHER"));
                     if (isAdmin) {
-                        response.sendRedirect("/admin/");
+                        response.sendRedirect("/admin/startmenu");
                     } else if(isTeacher) {
-                        response.sendRedirect("/teacher/form");
+                        response.sendRedirect("/teacher/menu");
                     }
                 })
                 .failureUrl("/signin?error=true")        // ✅ إضافة صفحة الفشل
