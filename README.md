@@ -2,4 +2,12 @@ A web application for evaluating university teaching staff. Teachers submit supp
 Screenshots
 
 Screenshots
-<p align="center"> <img width="400" alt="Login Page" src="https://github.com/user-attachments/assets/1beeba9d-331d-4430-aeb8-91dd257bc848" /> <img width="400" alt="Sign Up Page" src="https://github.com/user-attachments/assets/0d6b7a98-a89f-4860-b97a-3ab2ff19acde" /> </p> <p align="center"> <img width="600" alt="Teacher Data Form" src="https://github.com/user-attachments/assets/1409cfc5-ce3e-4dba-a892-57480906342e" /> </p> <p align="center"> <img width="800" alt="Screenshot 4" src="https://github.com/user-attachments/assets/b2dc9d66-ba35-4475-85a5-efee561696a8" /> </p> <p align="center"> <img width="800" alt="Screenshot 5" src="https://github.com/user-attachments/assets/9699c8b6-1989-4081-901b-ab85bd1f1440" /> </p> <p align="center"> <img width="800" alt="Screenshot 6" src="https://github.com/user-attachments/assets/dcddfba6-ca9b-4ae5-8222-8108b8a756e2" /> </p> <p align="center"> <img width="800" alt="Screenshot 7" src="https://github.com/user-attachments/assets/9f68f2f1-c862-43e0-83c9-17a95ecd26b2" /> </p> <p align="center"> <img width="800" alt="Screenshot 8" src="https://github.com/user-attachments/assets/6c1873fa-0b28-4149-9641-47a847a2b2a4" /> </p>
+<p align="center"> <img width="400" alt="Login Page" src="https://github.com/user-attachments/assets/1beeba9d-331d-4430-aeb8-91dd257bc848" /> <img width="400" alt="Sign Up Page" src="https://github.com/user-attachments/assets/0d6b7a98-a89f-4860-b97a-3ab2ff19acde" /> </p> <p align="center"> 
+
+<p align="center"> <img width="800" alt="Screenshot 5" src="https://github.com/user-attachments/assets/9699c8b6-1989-4081-901b-ab85bd1f1440" /> </p>
+<p align="center"> <img width="800" alt="Screenshot 4" src="https://github.com/user-attachments/assets/b2dc9d66-ba35-4475-85a5-efee561696a8" /> </p> 
+<img width="600" alt="Teacher Data Form" src="https://github.com/user-attachments/assets/1409cfc5-ce3e-4dba-a892-57480906342e" /> </p> 
+<p align="center"> <img width="800" alt="Screenshot 8" src="https://github.com/user-attachments/assets/6c1873fa-0b28-4149-9641-47a847a2b2a4" /> </p>
+<p align="center"> <img width="800" alt="Screenshot 6" src="https://github.com/user-attachments/assets/dcddfba6-ca9b-4ae5-8222-8108b8a756e2" /> </p>
+<p align="center"> <img width="800" alt="Screenshot 7" src="https://github.com/user-attachments/assets/9f68f2f1-c862-43e0-83c9-17a95ecd26b2" /> </p>
+
